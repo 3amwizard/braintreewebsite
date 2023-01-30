@@ -1,0 +1,1716 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Braintree |</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Verde - make every workday a good one.">
+    <meta name="keywords" content="verde, people management, fleet management, power apps, MS teams, leave management, employee lifecycle, vaccine management, covid management, covid-19, employee covid management">
+    <meta name="author" content="Dimitri Kalamoudacos">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon and Touch Icons -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'asets/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'assets/favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'assets/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.ico' %}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="{%static 'assets/favicon/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Vendor Styles -->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/lightgallery/css/lightgallery-bundle.min.css' %}"/>
+
+    <!-- Main Theme Styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/css/theme.min.css' %}">
+
+    <!-- Page loading styles -->
+    <style>
+      .modal-success .modal-content{
+        background-color: MediumSeaGreen;
+        color: #fff;
+      }
+
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      .dark-mode .page-loading {
+        background-color: #131022;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #9397ad;
+      }
+      .dark-mode .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        border: .15em solid #b4b7c9;
+        border-right-color: transparent;
+        border-radius: 50%;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      .dark-mode .page-spinner {
+        border-color: rgba(255,255,255,.4);
+        border-right-color: transparent;
+      }
+      @-webkit-keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+
+    <!-- Theme mode -->
+    <script>
+      let mode = window.localStorage.getItem('mode'),
+          root = document.getElementsByTagName('html')[0];
+      if (mode !== undefined && mode === 'dark') {
+        root.classList.add('dark-mode');
+      } else {
+        root.classList.remove('dark-mode');
+      }
+    </script>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () {
+            preloader.remove();
+          }, 1000);
+        };
+      })();
+    </script>
+  </head>
+
+
+
+  <!-- Body -->
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper for sticky footer -->
+    <!-- Wraps everything except footer to push footer to the bottom of the page if there is little content -->
+    <main class="page-wrapper">
+
+
+      <!-- Navbar -->
+      <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page -->
+      <header class="header navbar navbar-expand-lg navbar-light bg-light navbar-sticky">
+        <div class="container px-3">
+          <a href="{%url 'website:home'%}" class="navbar-brand pe-3">
+            <img src="{%static 'assets/img/bt.svg' %}" width="47" alt="braintree">
+            braintree
+          </a>
+          <div id="navbarNav" class="offcanvas offcanvas-end">
+            <div class="offcanvas-header border-bottom">
+              <h5 class="offcanvas-title">Menu</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Solutions</a>
+                  <div class="dropdown-menu p-0">
+                    <div class="d-lg-flex">
+                      <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/2.svg' %}); margin: -1px;"></div>
+                      <div class="mega-dropdown-column">
+                        <h6 class="px-3 mb-2">BizApps Platform</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">Business Central</a></li>
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">Customer Engage</a></li>
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">Finance & Operations</a></li>
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">DynamicWeb</a></li>
+                        </ul>
+                        <h6 class="px-3 mb-2">Azure Platform</h6>
+                        <ul class="list-unstyled">
+                          <li><a href="{%url 'website:azure'%}" icons class="dropdown-item py-1">Cloud Services</a></li>
+                        </ul>
+                      </div>
+                      <div class="mega-dropdown-column">
+                        <h6 class="px-3 mb-2">Microsoft 365</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="{%url 'website:ms'%}" class="dropdown-item">Apps & Services</a></li> <!--licences office, devices for surface -->
+                        </ul>
+                        <h6 class="px-3 mb-2">Power Platform</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="{%static 'services.html' %}" class="dropdown-item py-1">Power BI</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                
+                <div class="offcanvas-body">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Industry Solutions</a>
+                      <div class="dropdown-menu p-0">
+                        <div class="d-lg-flex">
+                          <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/6.svg' %}); margin: -1px;"></div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2 fs-xl">Industries</h6> <!--change on all-->
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Manufacturing</a></li>
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Financial Services</a></li>
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Retail</a></li>
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Supply Chain</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                
+                <div class="offcanvas-body">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                      <a href="{%url 'website:shop'%}" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Shop</a>
+                      <div class="dropdown-menu p-0">
+                        <div class="d-lg-flex">
+                          <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/3.svg' %}); margin: -1px;"></div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2">Home Office</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:product'%}" class="dropdown-item">Microsoft 365</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Windows 10 Pro</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Windows 10 Home</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">McAfee</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Qwerti IT Support</a></li>
+    
+    
+                            </ul>
+                            <h6 class="px-3 mb-2">Gaming</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Game Pass</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Series S</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Wirelss Remote</a></li>
+                              
+                            </ul>
+                          </div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2">Online Gaming</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Play Station Plus</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">PUBG Mobile</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Game Pass</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Live</a></li>
+
+                            </ul>
+                            <h6 class="px-3 mb-2">Accessories</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item py-1">Mice</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item py-1">Keyboards</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item py-1">Headsets</a></li>
+    
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    </ul>
+
+                    
+
+                    <div class="offcanvas-body">
+                      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                          <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Partners</a>
+                          <div class="dropdown-menu p-0">
+                            <div class="d-lg-flex">
+                              <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/5.svg' %}); margin: -1px;"></div>
+                              <div class="mega-dropdown-column">
+                                <h6 class="px-3 mb-2">Braintree Partners</h6>
+                                <ul class="list-unstyled mb-3">
+                                  <li><a href="{%url 'website:reseller'%}" class="dropdown-item">Learn More</a></li>
+                                  <li><a href="{%url 'website:signup'%}" class="dropdown-item">Sign Up</a></li>
+                                  <li><a href="{%url 'website:reseller'%}" class="dropdown-item">Login</a></li>
+                                  
+                                </ul>
+        
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+            <div class="offcanvas-footer border-top">
+              <a href="{%url 'website:gaming'%}" class="btn btn-primary w-100">
+                <i class="bx bx-game fs-4 lh-1 me-1"></i>
+                &nbsp;Gaming
+              </a>
+            </div>      
+          </div>
+          <div class="form-check form-switch mode-switch pe-lg-1 ms-auto me-4" data-bs-toggle="mode">
+            <input type="checkbox" class="form-check-input" id="theme-mode">
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Light</label>
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Dark</label>
+          </div>
+          <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a href="{%url 'website:gaming'%}" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+            <i class="bx bx-game fs-5 lh-1 me-1"></i>
+            &nbsp;Gaming
+          </a>
+        </div>
+      </header>
+
+
+      <!-- Hero slider + BG parallax -->
+      <section class="jarallax dark-mode bg-dark py-xxl-5" data-jarallax data-speed="0.4">
+        <span class="position-absolute top-0 start-0 w-100 h-100 bg-gradient-dark-translucent"></span>
+        <div class="jarallax-img" style="background-image: url({%static 'assets/img/landing/software-company/hero-bg.jpg' %});"></div>
+        <div class="position-relative text-center zindex-5 overflow-hidden pt-4 py-md-5">
+
+          <!-- Slider controls (Prev / next) -->
+          <button type="button" id="hero-prev" class="btn btn-prev btn-icon btn-xl bg-transparent shadow-none position-absolute top-50 start-0 translate-middle-y d-none d-md-inline-flex ms-n3 ms-lg-2">
+            <i class="bx bx-chevron-left fs-1"></i>
+          </button>
+          <button type="button" id="hero-next" class="btn btn-next btn-icon btn-xl bg-transparent shadow-none position-absolute top-50 end-0 translate-middle-y d-none d-md-inline-flex me-n3 me-lg-2">
+            <i class="bx bx-chevron-right fs-1"></i>
+          </button>
+
+          <!-- Slider -->
+          <div class="container text-center py-xl-5">
+            <div class="row justify-content-center pt-lg-5">
+              <div class="col-xl-8 col-lg-9 col-md-10 col-11">
+                <div class="swiper pt-5 pb-4 py-md-5" data-swiper-options='{
+                  "effect": "fade",
+                  "speed": 500,
+                  "autoplay": {
+                    "delay": 5500,
+                    "disableOnInteraction": false
+                  },
+                  "pagination": {
+                    "el": ".swiper-pagination",
+                    "clickable": true
+                  },
+                  "navigation": {
+                    "prevEl": "#hero-prev",
+                    "nextEl": "#hero-next"
+                  }
+                }'>
+                  <div class="swiper-wrapper">
+
+                    <!-- Item -->
+                    <div class="swiper-slide">
+                      <h2 class="display-2 from-start mb-lg-4">Welcome To Braintree</h2>
+                      <div class="from-end">
+                        <p class="fs-xl text-light opacity-70 pb-2 mb-lg-5">A team of friendly people with the skills to relieve your painpoints and drive growth.</p> <!-- Leave empty for now.-->
+                      </div>
+                      <div class="scale-up delay-1">
+                        <a href="#modalDefault" data-bs-toggle="modal" class="btn btn-primary shadow-primary btn-lg" >Request A Consultation</a> 
+                      </div>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="swiper-slide">
+                      <h2 class="display-2 from-start mb-lg-4">Masters of Microsoft</h2>
+                      <div class="from-end">
+                        <p class="fs-xl text-light opacity-70 pb-2 mb-lg-5">Braintree is a decorated Microsoft partner with multiple reference sites across the continent.</p> <!-- Leave empty for now-->
+                      </div>
+                      <div class="scale-up delay-1">
+                        <a href="{%url 'website:case'%}" class="btn btn-primary shadow-primary btn-lg">View case studies</a>
+                      </div>
+                    </div>
+
+                    <!-- Item -->
+                    <!--
+                    <div class="swiper-slide">
+                      <h2 class="display-2 from-start mb-lg-4">Business Support</h2>
+                      <div class="from-end">
+                        <p class="fs-xl text-light opacity-70 pb-2 mb-lg-5">Training is an important part of any system implementation. We provide face-to-face training and supervise rollout to ensure successful go live & system use.</p>
+                      </div>
+                      <div class="scale-up delay-1">
+                        <a href="#" class="btn btn-primary shadow-primary btn-lg">Work with us</a>
+                      </div>
+                    </div>
+                  </div>
+                not doing this one for now.-->
+
+                  <!-- Pagination (bullets) -->
+                  <div class="swiper-pagination position-relative d-md-none pt-2 mt-5"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container d-flex flex-column flex-sm-row align-items-center justify-content-between position-relative zindex-5 pb-5">
+          <div class="d-flex mb-4 mb-sm-0">
+            <a href="https://www.linkedin.com/company/braintreebyvox/" class="btn btn-icon btn-secondary btn-linkedin rounded-circle me-2">
+              <i class="bx bxl-linkedin"></i>
+            </a>
+            <a href="https://www.facebook.com/BraintreeZA1" class="btn btn-icon btn-secondary btn-facebook rounded-circle me-2">
+              <i class="bx bxl-facebook"></i>
+            </a>
+            <a href="https://twitter.com/braintree_za" class="btn btn-icon btn-secondary btn-twitter rounded-circle me-2">
+              <i class="bx bxl-twitter"></i>
+            </a>
+            <a href="https://www.instagram.com/braintree_by_vox/" class="btn btn-icon btn-secondary btn-instagram rounded-circle me-2">
+              <i class="bx bxl-instagram"></i>
+            </a>
+          </div>
+          <a href="{% url 'website:contact'%}" class="nav-link px-0">
+            Contact Us
+            <i class="bx bx-right-arrow-circle fs-4 ms-2"></i>
+          </a>
+        </div>
+      </section>
+
+<!-- Default modal -->
+<div class="modal fade" id="modalDefault" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!-- Modal header with nav tabs -->
+      <!---->
+    <div class="modal-header">
+      <ul class="nav nav-tabs mb-0" role="tablist">
+        <li class="nav-item fs-sm mb-0">
+          <a class="nav-link active" href="#signin" data-bs-toggle="tab" role="tab" aria-selected="false">
+            <i class="bx bx-phone-call fs-base me-2"></i>
+            Callback Form
+          </a>
+        </li>
+        <li class="nav-item fs-sm mb-0">
+          <a class="nav-link" href="#signup" data-bs-toggle="tab" role="tab" aria-selected="true">
+            <i class="bx bx-user fs-base me-2"></i>
+            Consult Form
+          </a>
+        </li>
+      </ul>
+      <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <!-- Modal body with tab panes -->
+    <div class="modal-body tab-content py-4">
+
+      <!-- Sign in form -->
+      <form class="tab-pane fade show active" autocomplete="off" id="signin">
+        <div class="mb-3">
+          <label class="form-label" for="email1">Name</label>
+          <input class="form-control" type="names" id="names" placeholder="John Doe">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="email1">Email address</label>
+          <input class="form-control" type="email" id="email1" placeholder="johndoe@example.com">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="email2">Contact Number</label>
+          <input class="form-control" type="phone-number" id="phone2" placeholder="+27 82 114 3214">
+        </div>
+        <div class="mb-3 d-flex flex-wrap justify-content-between">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="remember">
+            <label class="form-check-label" for="remember">Agree To T's & C's</label>
+          </div><a class="fs-sm" href="#">Terms & Conditions</a>
+        </div>
+        <button class="btn btn-primary d-block w-100" type="submit">Submit</button>
+      </form>
+
+      <!-- Sign up form -->
+      <form class="tab-pane fade" autocomplete="off" id="signup">
+        <div class="mb-3">
+          <label class="form-label" for="name">Full name</label>
+          <input class="form-control" type="text" id="name" placeholder="John Doe">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="email2">Email address</label>
+          <input class="form-control" type="email" id="email2" placeholder="johndoe@example.com">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="email2">Contact Number</label>
+          <input class="form-control" type="phone-number" id="phone2" placeholder="+27 82 114 3214">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="email2">Business Name</label>
+          <input class="form-control" type="text" id="business-name" placeholder="ABC Holdings">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="email2">Business Size</label>
+          <input class="form-control" type="text" id="business-size" placeholder="100 employees">
+        </div>
+        <div class="mb-3 d-flex flex-wrap justify-content-between">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="remember">
+            <label class="form-check-label" for="remember">Agree To T's & C's</label>
+          </div><a class="fs-sm" href="#">Terms & Conditions</a>
+        </div>
+        <button class="btn btn-primary d-block w-100" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<!--end of modal-->
+
+<!-- Brands (carousel on screens < 1100px) -->
+<section class="container border-bottom-lg pt-sm-2">
+  <div class="swiper mx-n2" data-swiper-options='{
+    "slidesPerView": 2,
+    "pagination": {
+      "el": ".swiper-pagination",
+      "clickable": true
+    },
+    "breakpoints": {
+      "500": {
+        "slidesPerView": 3,
+        "spaceBetween": 8
+      },
+      "650": {
+        "slidesPerView": 4,
+        "spaceBetween": 8
+      },
+      "850": {
+        "slidesPerView": 5,
+        "spaceBetween": 8
+      },
+      "992": {
+        "slidesPerView": 6,
+        "spaceBetween": 8
+      }
+    }
+  }'>
+    <div class="swiper-wrapper">
+
+      <!-- Item -->
+      <div class="swiper-slide py-2">
+        <a href="#" class="px-2 mx-2">
+          <img src="{%static 'assets/img/brands/sabrands/1.svg' %}" class="d-block mx-auto my-2" width="155" alt="Brand">
+        </a>
+      </div>
+
+      <!-- Item -->
+      <div class="swiper-slide py-2">
+        <a href="#" class="px-2 mx-2">
+          <img src="{%static 'assets/img/brands/sabrands/2.svg' %}" class="d-block mx-auto my-2" width="155" alt="Brand">
+        </a>
+      </div>
+
+      <!-- Item -->
+      <div class="swiper-slide py-2">
+        <a href="#" class="px-2 mx-2">
+          <img src="{%static 'assets/img/brands/sabrands/3.svg' %}" class="d-block mx-auto my-2" width="155" alt="Brand">
+        </a>
+      </div>
+
+      <!-- Item -->
+      <div class="swiper-slide py-2">
+        <a href="#" class="px-2 mx-2">
+          <img src="{%static 'assets/img/brands/sabrands/4.svg' %}" class="d-block mx-auto my-2" width="155" alt="Brand">
+        </a>
+      </div>
+
+      <!-- Item -->
+      <div class="swiper-slide py-2">
+        <a href="#" class="px-2 mx-2">
+          <img src="{%static 'assets/img/brands/sabrands/5.svg' %}" class="d-block mx-auto my-2" width="155" alt="Brand">
+        </a>
+      </div>
+
+      <!-- Item -->
+      <div class="swiper-slide py-2">
+        <a href="#" class="px-2 mx-2">
+          <img src="{%static 'assets/img/brands/sabrands/6.svg' %}" class="d-block mx-auto my-2" width="155" alt="Brand">
+        </a>
+      </div>
+    </div>
+
+    <!-- Pagination (bullets) -->
+    <div class="swiper-pagination position-relative pt-3"></div>
+  </div>
+</section>
+
+<!-- Feature section (App) -->
+<section class="container pb-5 mb-md-2 mb-lg-4 mb-xl-5">
+  <div class="row align-items-center pt-2 pb-3">
+
+    <!-- Text -->
+    <div class="col-md-6 col-xl-5 text-center text-md-start mb-5 mb-md-0">
+      <h2 class="h1 pb-2 pb-lg-3">Enter the Braintree Universe With Microsoft</h2>
+      <p class="pb-2 mb-4 mb-lg-5">As a decorated Microsoft partner and a diamond LS Retail partner. We look forward to partnering with you, and driving your business forward through technology.</p>
+      <hr>
+      <div class="d-flex justify-content-center justify-content-md-between pt-4 pt-lg-5">
+        <div class="mx-3 mx-md-0">
+          <div class="display-3 text-dark mb-1">99%</div>
+          <span>Up Time With Azure</span>
+        </div>
+        <div class="mx-3 mx-md-0">
+          <div class="display-3 text-dark mb-1">500+</div>
+          <span>Successful Implementations</span>
+        </div>
+      </div>
+    </div>
+
+      
+
+    <!-- Parallax gfx -->
+    <div class="col-md-6 offset-xl-1">
+      <div class="parallax ratio ratio-1x1 mx-auto" style="max-width: 550px;">
+        <div class="parallax-layer position-absolute zindex-2" data-depth="-0.15">
+          <img src="{%static 'assets/img/landing/saas-3/feature-2/ms.svg' %}" alt="Avatar">
+        </div>
+        <div class="parallax-layer d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100" data-depth="0.1">
+          <div class="rounded-circle bg-primary" style="width: 70%; height: 70%; opacity: .06;"></div>
+        </div>
+        <div class="parallax-layer d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100" data-depth="0.2">
+          <div class="rounded-circle bg-primary" style="width: 55%; height: 55%; opacity: .06;"></div>
+        </div>
+        <div class="parallax-layer d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 zindex-3" data-depth="0.4">
+          <div class="d-flex justify-content-center align-items-center rounded-circle bg-primary" style="width: 105px; height: 105px; box-shadow: 0 .1875rem 1.875rem -.125rem rgba(4, 235, 109, .85); ">
+            <span class="h5 text-light mb-0">Braintree</span>
+          </div>
+        </div>
+        <div class="parallax-layer d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100" data-depth="0.3">
+          <div class="rounded-circle bg-primary" style="width: 40%; height: 40%; opacity: .06;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+      <!-- About -->
+      <!--
+      <section class="container pt-5 mt-2 mt-md-4 mt-lg-5">
+        <div class="row pt-xl-3">
+          <div class="col-md-5 text-center text-md-start pb-5">
+            <h1 class="mb-4">Award-Winning Software Company</h1>
+            <p class="fs-lg pb-lg-3 mb-4">We create diverse, complex, web and mobile solutions for any business need. With us you get quality software and perfect service every time.</p>
+            <a href="about-v2.html" class="btn btn-primary shadow-primary btn-lg">More about us</a>
+            <div class="mt-3 mt-sm-0 pt-4 pt-sm-5 mt-xl-4">
+              <h2 class="h6 mb-4">Some of our awards:</h2>
+              <img src="{%static 'assets/img/landing/software-company/awards.svg' %}" alt="Awards">
+            </div>
+          </div>
+          <div class="col-xl-6 col-md-7 offset-xl-1 pb-4 pb-sm-3 pb-lg-0 mb-4 mb-sm-5 mb-lg-0">
+            <img src="{%static 'assets/img/landing/software-company/about-img.jpg' %}" class="rounded-3 shadow-sm" alt="Image">
+          </div>
+        </div>
+      </section>
+-->
+
+     <!-- Courses slider -->
+     <p>
+      &nbsp;
+    </p>
+    <!-- Heading -->
+    <section class="container pb-5 mb-3 mb-md-4 mb-lg-5">
+      <h2 class="h1 text-center">Braintree Shop</h2>
+      <p class="text-center pb-1 pb-sm-0 mb-4 mb-sm-5">Something for you and your business.</p>
+
+      <!-- Product slider -->
+     <div class="swiper swiper-nav-onhover mx-n2" data-swiper-options='{
+      "slidesPerView": 1,
+      "spaceBetween": 8,
+      "pagination": {
+        "el": ".swiper-pagination",
+        "clickable": true
+      },
+      "navigation": {
+        "prevEl": "#popular-prev",
+        "nextEl": "#popular-next"
+      },
+      "breakpoints": {
+        "560": {
+          "slidesPerView": 2
+        },
+        "768": {
+          "slidesPerView": 1
+        },
+        "850": {
+          "slidesPerView": 2
+        },
+        "1200": {
+          "slidesPerView": 3
+        }
+      }
+    }'>
+      <div class="swiper-wrapper">
+
+        <!-- Item -->
+        <div class="swiper-slide h-auto pb-3">
+          <article class="card h-100 border-0 shadow-sm mx-2">
+            <div class="position-relative">
+              <a href="{%url 'website:product'%}" class="d-block position-absolute w-100 h-100 top-0 start-0"></a>
+              <span class="badge bg-success position-absolute top-0 start-0 zindex-2 mt-3 ms-3">Best Seller</span>
+              <a href="#" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-2 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Save to Favorites">
+                <i class="bx bx-bookmark"></i>
+              </a>
+              <img src="{%static 'assets/img/portfolio/courses/msoffice.png' %}" class="card-img-top" alt="Image">
+            </div>
+            <center>
+            <div class="card-body pb-3">
+              <h3 class="h5 mb-2">
+                <a href="{%url 'website:product'%}">Microsoft 365 Personal</a>
+              </h3>
+              
+                <p class="fs-sm mb-2">Word, Excel, Outlook, Teams, PowerPoint and more!</p>
+                <p class="fs-lg fw-semibold text-primary mb-0">R 849.50</p>
+              </div>
+              <div class="card-footer d-flex justify-content-center align-items-center fs-sm text-muted py-4">
+                <a href="{%url 'website:product'%}" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+                  <i class="bx bx-cart fs-5 lh-1 me-1"></i>
+                  &nbsp;Buy Now
+                </a>
+              </div>
+          </article>
+        </div>
+      </center>
+        <!-- Item -->
+        <div class="swiper-slide h-auto pb-3">
+          <article class="card h-100 border-0 shadow-sm mx-2">
+            <div class="position-relative">
+              <a href="{%url 'website:product'%}" class="d-block position-absolute w-100 h-100 top-0 start-0"></a>
+              <a href="{%url 'website:product'%}" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-2 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Save to Favorites">
+                <i class="bx bx-bookmark"></i>
+              </a>
+              <img src="{%static 'assets/img/portfolio/courses/mcafee.png' %}" class="card-img-top" alt="Image">
+            </div>
+            <center>
+              <div class="card-body pb-3">
+                <h3 class="h5 mb-2">
+                  <a href="{%url 'website:product'%}">McAfee Internet Security</a>
+                </h3>
+                
+                  <p class="fs-sm mb-2">Award winning virus protection seucrring your online life.</p>
+                  <p class="fs-lg fw-semibold text-primary mb-0">R 349.50</p>
+                </div>
+                <div class="card-footer d-flex justify-content-center align-items-center fs-sm text-muted py-4">
+                  <a href="https://braintree.co.za/Default.aspx?ID=6748&GroupID=GROUP317&ProductID=PROD410" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+                    <i class="bx bx-cart fs-5 lh-1 me-1"></i>
+                    &nbsp;Buy Now
+                  </a>
+                </div>
+            </article>
+          </div>
+        </center>
+
+        <!-- Item -->
+        <div class="swiper-slide h-auto pb-3">
+          <article class="card h-100 border-0 shadow-sm mx-2">
+            <div class="position-relative">
+              <a href="{%url 'website:product'%}" class="d-block position-absolute w-100 h-100 top-0 start-0"></a>
+              <span class="badge bg-danger position-absolute top-0 start-0 zindex-2 mt-3 ms-3">Sale!</span>
+              <a href="#" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-2 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Save to Favorites">
+                <i class="bx bx-bookmark"></i>
+              </a>
+              <img src="{%static 'assets/img/portfolio/courses/xbox.png' %}" class="card-img-top" alt="Image">
+            </div>
+            <center>
+              <div class="card-body pb-3">
+                <h3 class="h5 mb-2">
+                  <a href="{%url 'website:product'%}">Xbox Series S 512 GB</a>
+                </h3>
+                
+                  <p class="fs-sm mb-2">Enter a world of entertainment and competition with the series S Xbox!</p>
+                  <p class="fs-lg fw-semibold text-primary mb-0">R 6 799.50</p>
+                </div>
+                <div class="card-footer d-flex justify-content-center align-items-center fs-sm text-muted py-4">
+                  <a href="https://braintree.co.za/Default.aspx?ID=6748&ProductID=PROD312" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+                    <i class="bx bx-cart fs-5 lh-1 me-1"></i>
+                    &nbsp;Buy Now
+                  </a>
+                </div>
+            </article>
+          </div>
+        </center>
+
+        <!-- Item -->
+        <div class="swiper-slide h-auto pb-3">
+          <article class="card h-100 border-0 shadow-sm mx-2">
+            <div class="position-relative">
+              <a href="{%url 'website:product'%}" class="d-block position-absolute w-100 h-100 top-0 start-0"></a>
+              <a href="#" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-2 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Save to Favorites">
+                <i class="bx bx-bookmark"></i>
+              </a>
+              <img src="{%static 'assets/img/portfolio/courses/remote.png' %}" class="card-img-top" alt="Image">
+            </div>
+            <<center>
+              <div class="card-body pb-3">
+                <h3 class="h5 mb-2">
+                  <a href="{%url 'website:product'%}">Xbox Wireless Controller</a>
+                </h3>
+                
+                  <p class="fs-sm mb-2">Black is the new...black never goes out of fashion so buy the remote.</p>
+                  <p class="fs-lg fw-semibold text-primary mb-0">R 1 299.50</p>
+                </div>
+                <div class="card-footer d-flex justify-content-center align-items-center fs-sm text-muted py-4">
+                  <a href="https://braintree.co.za/Default.aspx?ID=6748&ProductID=PROD433" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+                    <i class="bx bx-cart fs-5 lh-1 me-1"></i>
+                    &nbsp;Buy Now
+                  </a>
+                </div>
+            </article>
+          </div>
+        </center>
+
+        <!-- Item -->
+        <div class="swiper-slide h-auto pb-3">
+          <article class="card h-100 border-0 shadow-sm mx-2">
+            <div class="position-relative">
+              <a href="{%url 'website:product'%}" class="d-block position-absolute w-100 h-100 top-0 start-0"></a>
+              <a href="#" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-2 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Save to Favorites">
+                <i class="bx bx-bookmark"></i>
+              </a>
+              <img src="{%static 'assets/img/portfolio/courses/xboxlive.png' %}" class="card-img-top" alt="Image">
+              <center>
+                <div class="card-body pb-3">
+                  <h3 class="h5 mb-2">
+                    <a href="{%url 'website:product'%}">Xbox Live</a>
+                  </h3>
+                  
+                    <p class="fs-sm mb-2">Join the online Xbox community and enter into the relm of the elite, not sure if it's for you, give it a shot for 3 months and find out.</p>
+                    <p class="fs-lg fw-semibold text-primary mb-0">R 849.50</p>
+                  </div>
+                  <div class="card-footer d-flex justify-content-center align-items-center fs-sm text-muted py-4">
+                    <a href="{%url 'website:product'%}" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+                      <i class="bx bx-cart fs-5 lh-1 me-1"></i>
+                      &nbsp;Buy Now
+                    </a>
+                  </div>
+              </article>
+            </div>
+          </center>
+
+      <!-- Pagination (bullets) -->
+      <div class="swiper-pagination position-relative pt-2 pt-sm-3 mt-4"></div>
+    </div>
+    <a href="{%url 'website:product'%}" class="btn btn-outline-primary btn-lg w-100 d-md-none mt-3">
+      See all courses
+      <i class="bx bx-right-arrow-alt fs-xl ms-2"></i>
+    </a>
+  </div>
+</div>
+<!-- CTA Button -->
+<div class="d-flex flex-column flex-sm-row justify-content-center pt-3 pt-sm-4">
+  <a href="{%url 'website:shop'%}" class="btn btn-primary shadow-primary btn-lg">View Shop</a>
+</div>
+</section>
+
+<p>
+  &nbsp;
+</p>
+<!-- Dental services -->
+<section class="container pb-5 mb-3 mb-md-4 mb-lg-5">
+  <h2 class="h1 text-center">Braintree Values</h2>
+  <p class="text-center pb-1 pb-sm-0 mb-4 mb-sm-5">The type of people you can expect to meet at Braintree.</p>
+  <div class="row align-items-lg-center">
+    <div class="col-sm-6 col-lg-3">
+      <div class="pe-lg-4 pe-xl-5">
+        <div class="text-center text-lg-end pb-2 mb-4 mb-xl-5">
+          <img src="{% static 'assets/img/landing/app-showcase/features/idea.svg' %}" class="d-inline-block" width="56" alt="Icon">
+          <h3 class="h5 pt-1 my-2">Innovative</h3>
+          <p class="fs-sm mb-0">Innovation is at the core of Braintree, dirving our problem soloving and product development initiatives.</p>
+        </div>
+        <div class="text-center text-lg-end pb-2 mb-4 mb-xl-5">
+          <img src="{% static 'assets/img/landing/app-showcase/features/statistics.svg' %}"class="d-inline-block" width="56" alt="Icon">
+          <h3 class="h5 pt-1 my-2">Growth Conscience</h3>
+          <p class="fs-sm mb-0">Growth starts by investing in people and projects externally as business growth.</p>
+        </div>
+        <div class="text-center text-lg-end">
+          <img src="{% static 'assets/img/landing/app-showcase/features/security.svg' %}" class="d-inline-block" width="56" alt="Icon">
+          <h3 class="h5 pt-1 my-2">Strong</h3>
+          <p class="fs-sm mb-0">The competative landscape of today requires strong character and mind something our people share.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 d-none d-lg-block">
+      <div class="ratio ratio-1x1 border rounded-circle position-relative mx-auto" style="max-width: 580px;">
+        <div class="p-5">
+          <img src="{%static 'assets/img/services/single/bt.png' %}" class="rounded-square" alt="Tooth">
+          <div class="position-absolute top-0 start-0 w-100 h-100 zindex-5 d-flex align-items-center justify-content-center">
+            <a href="https://youtu.be/lvgpRrGcwtA" class="btn btn-video btn-icon bg-white btn-xl stretched-link" data-bs-toggle="video">
+              <i class="bx bx-play"></i>
+            </a>
+         
+    
+      </div>
+    </div>
+
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="ps-lg-4 ps-xl-5">
+        <div class="text-center text-lg-start pb-2 mb-4 mb-xl-5">
+          <img src="{% static 'assets/img/landing/app-showcase/features/support.svg' %}" class="d-inline-block" width="56" alt="Icon">
+          <h3 class="h5 pt-1 my-2">Inquisitive</h3>
+          <p class="fs-sm mb-0">You know what they say about assume, questions for the foundation of understanding so expect them when dealing with our people.</p>
+        </div>
+        <div class="text-center text-lg-start pb-2 mb-4 mb-xl-5">
+          <img src="{% static 'assets/img/landing/app-showcase/features/team.svg' %}" class="d-inline-block" width="56" alt="Icon">
+          <h3 class="h5 pt-1 my-2">Team Focused</h3>
+          <p class="fs-sm mb-0">Synergy within the Braintree company is the essence of what drives us forward.</p>
+        </div>
+        <div class="text-center text-lg-start">
+          <img src="{% static 'assets/img/landing/app-showcase/features/happy.svg' %}" class="d-inline-block" width="56" alt="Icon">
+          <h3 class="h5 pt-1 my-2">Friendly</h3>
+          <p class="fs-sm mb-0">Braintree people are positive and happy people always willing to chat.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="d-flex flex-column flex-sm-row justify-content-center pt-3 pt-sm-4">
+  <a href="#modalDefault" data-bs-toggle="modal" class="btn btn-primary shadow-primary btn-lg">Request A Call</a>
+</div>
+
+      <!-- Features -->
+      <section class="container py-5 my-2 my-md-4 my-lg-5">
+        <h2 class="h1 text-center pt-1 pt-xl-2 mb-4">Why Choose Us?</h2>
+        <p class="fs-lg text-muted text-center pb-4 mb-2 mb-lg-3">With over 20 years of experience and hundreds of successful implementations we are confident in our ability to implement solutions for your business.</p>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 pb-xl-3">
+          <div class="col text-center border-end">
+            <div class="d-table bg-light rounded-circle shadow-sm p-3 mx-auto mb-4">
+              <img src="{%static 'assets/img/landing/software-company/features/01.svg' %}" width="32" alt="Icon">
+            </div>
+            <h3 class="h5 mb-2 mb-lg-0 text-primary">99% up time is not just our goal, it's our promise to you with Azure.</h3>
+          </div>
+          <div class="col text-center border-end">
+            <div class="d-table bg-light rounded-circle shadow-sm p-3 mx-auto mb-4">
+              <img src="{%static 'assets/img/landing/software-company/features/03.svg' %}" width="32" alt="Icon">
+            </div>
+            <h3 class="h5 mb-2 mb-lg-0 text-primary">Work with the Microsoft Business Apps implementation specialists</h3>
+          </div>
+          <div class="col text-center">
+            <div class="d-table bg-light rounded-circle shadow-sm p-3 mx-auto mb-4">
+              <img src="{%static 'assets/img/landing/software-company/features/04.svg' %}" width="32" alt="Icon">
+            </div>
+            <h3 class="h5 mb-2 mb-lg-0 text-primary">Talk to the people that understand your business and ensure success.</h3>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Testimonials (Slider) -->
+      <section class="container pb-5 mb-md-2 mb-xl-4">
+        <div class="row pb-lg-2">
+          <div class="col-md-5 mb-4 mb-md-0">
+            <div class="card justify-content-center bg-dark h-100 p-4 p-lg-5">
+              <div class="p-2">
+                <h3 class="display-4 text-primary mb-1">Braintree</h3>
+                <h2 class="text-light pb-5 mb-2">Join Our Happy Customers</h2>
+                <a href="#choiceModal" data-target="#choiceModal" data-toggle="modal" class="d-inline-flex align-items-center rounded-3 text-decoration-none py-3 px-4" style="background-color: #3e4265;">
+                  <div class="pe-3">
+                    <img src="{% static 'assets/img/landing/app-showcase/features/happy.svg' %}"  width="97" alt="Clutch">
+                  </div>
+                  <div class="ps-1">
+                    <div class="text-nowrap mb-2">
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                    </div>
+                    <div class="text-light opacity-70">Click here</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="card border-0 shadow-sm p-4 p-xxl-5">
+
+              <!-- Slider prev/next buttons + Quotation mark -->
+              <div class="d-flex justify-content-between pb-4 mb-2">
+                <span class="btn btn-icon btn-primary btn-lg shadow-primary pe-none">
+                  <i class="bx bxs-quote-left"></i>
+                </span>
+                <div class="d-flex">
+                  <button type="button" id="testimonial-prev" class="btn btn-prev btn-icon btn-sm me-2">
+                    <i class="bx bx-chevron-left"></i>
+                  </button>
+                  <button type="button" id="testimonial-next" class="btn btn-next btn-icon btn-sm ms-2">
+                    <i class="bx bx-chevron-right"></i>
+                  </button>
+                </div>
+              </div>   
+              
+              <!-- Slider -->
+              <div class="swiper mx-0 mb-md-n2 mb-xxl-n3" data-swiper-options='{
+                "spaceBetween": 24,
+                "loop": true,
+                "pagination": {
+                  "el": ".swiper-pagination",
+                  "clickable": true
+                },
+                "navigation": {
+                  "prevEl": "#testimonial-prev",
+                  "nextEl": "#testimonial-next"
+                }
+              }'>
+                <div class="swiper-wrapper">
+        
+                  <!-- Item -->
+                  <div class="swiper-slide h-auto" data-swiper-tab="#author-1">
+                    <figure class="card h-100 position-relative border-0 bg-transparent">
+                      <blockquote class="card-body p-0 mb-0">
+                        <p class="fs-lg mb-0">Thanks to Verde’s Engage module, we were able to capture information such as work location, health check-in’s, and provide easy access corporate information and policies that help us comply with legislation, which has improved our ability to fulfil our responsibilities of protecting our staff, partners and customers while still delivering exceptional service to our customers as a leading South African telecommunications provider.</p>
+                      </blockquote>
+                      <figcaption class="card-footer border-0 d-flex align-items-center w-100 pb-2">
+                        <img src="{%static 'assets/img/avatar/tim.jpeg' %}" width="48" class="rounded-circle" alt="Ralph Edwards">
+                        <div class="ps-3">
+                          <h5 class="fw-semibold lh-base mb-0">Tim Wood</h5>
+                          <span class="fs-sm text-muted">Excecutive Head - IS & IT</span>
+                        </div>
+                      </figcaption>
+                    </figure>
+                  </div>
+        
+                  <!-- Item -->
+                  <div class="swiper-slide h-auto" data-swiper-tab="#author-2">
+                    <figure class="card h-100 position-relative border-0 bg-transparent">
+                      <blockquote class="card-body p-0 mb-0">
+                        <p class="fs-lg mb-0">Mi semper risus ultricies orci pulvinar in at enim orci. Quis facilisis nunc pellentesque in ullamcorper sit. Lorem blandit arcu sapien, senectus libero, amet dapibus cursus quam. Eget pellentesque eu purus volutpat adipiscing malesuada. Purus nisi, tortor vel lacus. Donec diam molestie ultrices vitae eget pulvinar fames. Velit lacus mi purus velit justo, amet.</p>
+                      </blockquote>
+                      <figcaption class="card-footer border-0 d-flex align-items-center w-100 pb-2">
+                        <img src="{%static 'assets/img/avatar/06.jpg' %}" width="48" class="rounded-circle" alt="Annette Black">
+                        <div class="ps-3">
+                          <h5 class="fw-semibold lh-base mb-0">Annette Black</h5>
+                          <span class="fs-sm text-muted">Strategic Advisor at Ipsum Ltd.</span>
+                        </div>
+                      </figcaption>
+                    </figure>
+                  </div>
+        
+                  <!-- Item -->
+                  <div class="swiper-slide h-auto" data-swiper-tab="#author-3">
+                    <figure class="card h-100 position-relative border-0 bg-transparent">
+                      <blockquote class="card-body p-0 mb-0">
+                        <p class="fs-lg mb-0">Ac at sed sit senectus massa. Massa ante amet ultrices magna porta tempor. Aliquet diam in et magna ultricies mi at. Lectus enim, vel enim egestas nam pellentesque et leo. Elit mi faucibus laoreet aliquam pellentesque sed aliquet integer massa. Orci leo tortor ornare id mattis auctor aliquam volutpat aliquet. Odio lectus viverra eu blandit nunc malesuada vitae eleifend pulvinar.</p>
+                      </blockquote>
+                      <figcaption class="card-footer border-0 d-flex align-items-center w-100 pb-2">
+                        <img src="{%static 'assets/img/avatar/01.jpg' %}" width="48" class="rounded-circle" alt="Darrell Steward">
+                        <div class="ps-3">
+                          <h5 class="fw-semibold lh-base mb-0">Darrell Steward</h5>
+                          <span class="fs-sm text-muted">Project Manager at Company Ltd.</span>
+                        </div>
+                      </figcaption>
+                    </figure>
+                  </div>
+                </div>
+        
+                <!-- Pagination (bullets) -->
+                <div class="swiper-pagination position-relative pt-3 mt-4"></div>
+              </div>        
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Brands (Carousel) -->
+      <section class="container pb-5">
+        <div class="swiper mx-n2" data-swiper-options='{
+          "slidesPerView": 2,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "clickable": true
+          },
+          "breakpoints": {
+            "500": {
+              "slidesPerView": 3,
+              "spaceBetween": 8
+            },
+            "650": {
+              "slidesPerView": 4,
+              "spaceBetween": 8
+            },
+            "900": {
+              "slidesPerView": 5,
+              "spaceBetween": 8
+            },
+            "1100": {
+              "slidesPerView": 6,
+              "spaceBetween": 8
+            }
+          }
+        }'>
+          <div class="swiper-wrapper">
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img src="{%static 'assets/img/brands/sabrands/gifs/1.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img src="{%static 'assets/img/brands/sabrands/gifs/2.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img src="{%static 'assets/img/brands/sabrands/gifs/3.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img src="{%static 'assets/img/brands/sabrands/gifs/4.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img src="{%static 'assets/img/brands/sabrands/gifs/5.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img src="{%static 'assets/img/brands/sabrands/gifs/1.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+              </a>
+            </div>
+          </div>
+
+          <!-- Pagination (bullets) -->
+          <div class="swiper-pagination position-relative pt-2 mt-4"></div>
+        </div>
+      </section>
+</main>
+
+
+      <!-- News slider -->
+      <section class="bg-secondary border-bottom border-light py-5">
+        <div class="container py-md-3 py-lg-5">
+          <h2 class="h1 text-center pb-2">News &amp; Insights</h2>
+          <div class="position-relative mx-md-2 px-md-5">
+
+            <!-- Slider controls (Prev / next) -->
+            <button type="button" id="news-prev" class="btn btn-prev btn-icon btn-sm position-absolute top-50 start-0 translate-middle-y mt-n4 d-none d-md-inline-flex">
+              <i class="bx bx-chevron-left"></i>
+            </button>
+            <button type="button" id="news-next" class="btn btn-next btn-icon btn-sm position-absolute top-50 end-0 translate-middle-y mt-n4 d-none d-md-inline-flex">
+              <i class="bx bx-chevron-right"></i>
+            </button>
+
+            <!-- Swiper slider -->
+            <div class="swiper swiper-nav-onhover mx-n2" data-swiper-options='{
+              "slidesPerView": 1,
+              "loop": true,
+              "spaceBetween": 8,
+              "pagination": {
+                "el": ".swiper-pagination",
+                "clickable": true
+              },
+              "navigation": {
+                "prevEl": "#news-prev",
+                "nextEl": "#news-next"
+              },
+              "breakpoints": {
+                "0": {
+                  "slidesPerView": 1
+                },
+                "560": {
+                  "slidesPerView": 2
+                },
+                "992": {
+                  "slidesPerView": 3
+                }
+              }
+            }'>
+              <div class="swiper-wrapper">
+    
+                <!-- Item -->
+                <div class="swiper-slide h-auto py-3">
+                  <article class="card p-md-3 p-2 border-0 shadow-sm card-hover-primary h-100 mx-2">
+                    <div class="card-body pb-0">
+                      <div class="d-flex align-items-center justify-content-between mb-3">
+                        <a href="#" class="badge fs-sm text-nav bg-secondary text-decoration-none position-relative zindex-2">Tech</a>
+                        <span class="fs-sm text-muted">1 day ago</span>
+                      </div>
+                      <h3 class="h4">
+                        <a href="{%url 'website:case'%}" class="stretched-link">How Leverage Tech In Loadshedding</a>
+                      </h3>
+                      <p class="mb-0">The president may have opened the gates to private power suppliers but we still have loadshedding, here's how tech can help you through it.</p>
+                    </div>
+                    <div class="card-footer d-flex align-items-center py-4 text-muted border-top-0">
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-like fs-lg me-1"></i>
+                        <span class="fs-sm">2</span>
+                      </div>
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-comment fs-lg me-1"></i>
+                        <span class="fs-sm">0</span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <i class="bx bx-share-alt fs-lg me-1"></i>
+                        <span class="fs-sm">3</span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+    
+                <!-- Item -->
+                <div class="swiper-slide h-auto py-3">
+                  <article class="card p-md-3 p-2 border-0 shadow-sm card-hover-primary h-100 mx-2">
+                    <div class="card-body pb-0">
+                      <div class="d-flex align-items-center justify-content-between mb-3">
+                        <a href="#" class="badge fs-sm text-nav bg-secondary text-decoration-none position-relative zindex-2">Strategy</a>
+                        <span class="fs-sm text-muted">12 hours ago</span>
+                      </div>
+                      <h3 class="h4">
+                        <a href="{%url 'website:case'%}" class="stretched-link">PowerApps Is Not Just A Nice Idea</a>
+                      </h3>
+                      <p class="mb-0">PowerApps is microsofts answer to affordable app development and business automation and we think you can leverage it to drive growth. </p>
+                    </div>
+                    <div class="card-footer d-flex align-items-center py-4 text-muted border-top-0">
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-like fs-lg me-1"></i>
+                        <span class="fs-sm">8</span>
+                      </div>
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-comment fs-lg me-1"></i>
+                        <span class="fs-sm">4</span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <i class="bx bx-share-alt fs-lg me-1"></i>
+                        <span class="fs-sm">2</span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+    
+                <!-- Item -->
+                <div class="swiper-slide h-auto py-3">
+                  <article class="card p-md-3 p-2 border-0 shadow-sm card-hover-primary h-100 mx-2">
+                    <div class="card-body pb-0">
+                      <div class="d-flex align-items-center justify-content-between mb-3">
+                        <a href="#" class="badge fs-sm text-nav bg-secondary text-decoration-none position-relative zindex-2">Retail</a>
+                        <span class="fs-sm text-muted">May 24, 2021</span>
+                      </div>
+                      <h3 class="h4">
+                        <a href="{%url 'website:case'%}" class="stretched-link">LS Retail Customer Loyalty</a>
+                      </h3>
+                      <p class="mb-0">Loyalty programs have become a huge trend and for good reason, they delight customers but they are expensive to implement...not anymore.</p>
+                    </div>
+                    <div class="card-footer d-flex align-items-center py-4 text-muted border-top-0">
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-like fs-lg me-1"></i>
+                        <span class="fs-sm">6</span>
+                      </div>
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-comment fs-lg me-1"></i>
+                        <span class="fs-sm">1</span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <i class="bx bx-share-alt fs-lg me-1"></i>
+                        <span class="fs-sm">5</span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+    
+                <!-- Item -->
+                <div class="swiper-slide h-auto py-3">
+                  <article class="card p-md-3 p-2 border-0 shadow-sm card-hover-primary h-100 mx-2">
+                    <div class="card-body pb-0">
+                      <div class="d-flex align-items-center justify-content-between mb-3">
+                        <a href="#" class="badge fs-sm text-nav bg-secondary text-decoration-none position-relative zindex-2">Startups</a>
+                        <span class="fs-sm text-muted">Sep 3, 2021</span>
+                      </div>
+                      <h3 class="h4">
+                        <a href="{%url 'website:case'%}" class="stretched-link">5 Bad Landing Page Examples & How We Would Fix Them</a>
+                      </h3>
+                      <p class="mb-0">Totam, soluta placeat hic adipisci reprehenderit iusto est nulla dolorum doloremque inventore suscipit consequuntur distinctio id.</p>
+                    </div>
+                    <div class="card-footer d-flex align-items-center py-4 text-muted border-top-0">
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-like fs-lg me-1"></i>
+                        <span class="fs-sm">8</span>
+                      </div>
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-comment fs-lg me-1"></i>
+                        <span class="fs-sm">7</span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <i class="bx bx-share-alt fs-lg me-1"></i>
+                        <span class="fs-sm">3</span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+    
+                <!-- Item -->
+                <div class="swiper-slide h-auto py-3">
+                  <article class="card p-md-3 p-2 border-0 shadow-sm card-hover-primary h-100 mx-2">
+                    <div class="card-body pb-0">
+                      <div class="d-flex align-items-center justify-content-between mb-3">
+                        <a href="#" class="badge fs-sm text-nav bg-secondary text-decoration-none position-relative zindex-2">Technology</a>
+                        <span class="fs-sm text-muted">Aug 19, 2021</span>
+                      </div>
+                      <h3 class="h4">
+                        <a href="{%url 'website:case'%}" class="stretched-link">Why UX Design Matters and How it Affects Ranking</a>
+                      </h3>
+                      <p class="mb-0">Quaerat quos assumenda numquam dolorem, repellendus est, itaque sint et odio perferendis laudantium laboriosam.</p>
+                    </div>
+                    <div class="card-footer d-flex align-items-center py-4 text-muted border-top-0">
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-like fs-lg me-1"></i>
+                        <span class="fs-sm">5</span>
+                      </div>
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-comment fs-lg me-1"></i>
+                        <span class="fs-sm">3</span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <i class="bx bx-share-alt fs-lg me-1"></i>
+                        <span class="fs-sm">9</span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </div>
+    
+              <!-- Pagination (bullets) -->
+              <div class="swiper-pagination position-relative pt-2 pt-sm-3 mt-4"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+    <!-- Footer -->
+    <footer class="footer dark-mode bg-dark pt-5 pb-4 pb-lg-5">
+      <div class="container pt-lg-4">
+        <div class="row pb-5">
+          <div class="col-lg-4 col-md-6">
+            <div class="navbar-brand text-dark p-0 me-0 mb-3 mb-lg-4">
+              <img src="{%static 'assets/img/bt.svg' %}" width="47" alt="Silicon">
+              braintree
+            </div>
+            <p class="fs-sm text-light opacity-70 pb-lg-3 mb-4">A Gold Certified Partner 
+              trusted by thousands of customers for their homes 
+              and businesses. We make a difference to our 
+              customers by unlocking the potential of
+              the cloud, software, and hardware so that
+              they can digitally transform and provide them
+              with support centres to keep them productive,
+              and having fun.</p>
+            <form class="needs-validation" novalidate>
+              <label for="subscr-email" class="form-label">Subscribe to our newsletter</label>
+              <div class="input-group">
+                <input type="email" id="subscr-email" class="form-control rounded-start ps-5" placeholder="Your email" required>
+                <i class="bx bx-envelope fs-lg text-muted position-absolute top-50 start-0 translate-middle-y ms-3 zindex-5"></i>
+                <div class="invalid-tooltip position-absolute top-100 start-0">Please provide a valid email address.</div>
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+              </div>
+            </form>
+          </div>
+          <div class="col-xl-6 col-lg-7 col-md-5 offset-xl-2 offset-md-1 pt-4 pt-md-1 pt-lg-0">
+            <div id="footer-links" class="row">
+              <div class="col-lg-4">
+                <h6 class="mb-2">
+                  <a href="#useful-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Useful Links</a>
+                </h6>
+                <div id="useful-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+                  <ul class="nav flex-column pb-lg-1 mb-lg-3">
+                    <li class="nav-item"><a href="{%url 'website:home'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Home</a></li>
+                    <li class="nav-item"><a href="{%url 'website:shop'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Shop</a></li>
+                    <li class="nav-item"><a href="{%url 'website:reseller'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Partners</a></li>
+                    <li class="nav-item"><a href="{%url 'website:case'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">News &amp; Insights</a></li>
+                    <li class="nav-item"><a href="{%url 'website:contact'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Contact Us</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-3">
+                <h6 class="mb-2">
+                  <a href="#social-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Socials</a>
+                </h6>
+                <div id="social-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+                  <ul class="nav flex-column mb-2 mb-lg-0">
+                    <li class="nav-item"><a href="https://www.facebook.com/BraintreeZA1" class="nav-link d-inline-block px-0 pt-1 pb-2">Facebook</a></li>
+                    <li class="nav-item"><a href="https://www.linkedin.com/company/braintreebyvox/" class="nav-link d-inline-block px-0 pt-1 pb-2">LinkedIn</a></li>
+                    <li class="nav-item"><a href="https://twitter.com/braintree_za" class="nav-link d-inline-block px-0 pt-1 pb-2">Twitter</a></li>
+                    <li class="nav-item"><a href="https://www.instagram.com/braintree_by_vox/" class="nav-link d-inline-block px-0 pt-1 pb-2">Instagram</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-3">
+                <h6 class="mb-2">
+                  <a href="#social-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Socials</a>
+                </h6>
+                <div id="social-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+                  <ul class="nav flex-column mb-2 mb-lg-0">
+                <h6 class="mb-2">Resources</h6>
+                <li class="nav-item"><a href="https://www.braintree.co.za/Files/Files/Business%20Documents/2021-2022%20BEE%20Verification%20Certifciate.pdf" class="nav-link">BEE Certification</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/Files/Images/PAIA-manual-Braintree.pdf" class="nav-link">PAIA</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/take-down-notice" class="nav-link">Take Down Notice</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/terms-and-conditions" class="nav-link">Terms & Conditions</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/code-of-conduct" class="nav-link">Code of Conduct</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/privacy-policy" class="nav-link">Privacy Policy</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/acceptable-use" class="nav-link">Acceptable Use</a></li>
+                <li class="nav-item"><a href="https://powerapps.microsoft.com/en-gb/support/" class="nav-link">Dev Support</a></li>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="fs-xs text-center text-md-start pb-2 pb-lg-0 mb-0">
+          <span class="text-light opacity-50">&copy; All rights reserved. Made by </span>
+          <a class="nav-link d-inline-block p-0" href="https://za.linkedin.com/in/dimitri-k-8b70b18b" target="_blank" rel="noopener">Dimitri Kalamoudacos</a>
+        </p>
+      </div>
+    </footer>
+
+    
+
+    <!-- Back to top button -->
+    <a href="#top" class="btn-scroll-top" data-scroll>
+      <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+      <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+    </a>
+
+    <!-- JS Implementing Plugins -->
+  {%block plug%}
+  {%endblock%}
+
+  <!-- JS Space -->
+  {%block space%}
+  {%endblock%}
+
+  {%block js%}
+  <script>
+    $(window).on('load', function () {
+      // initialization of HSMegaMenu component
+      $('.js-mega-menu').HSMegaMenu({
+        event: 'hover',
+        pageContainer: $('.container'),
+        breakpoint: 991,
+        hideTimeOut: 0
+      });
+    });
+
+    $(document).on('ready', function () {
+      // initialization of header
+      $.HSCore.components.HSHeader.init($('#header'));
+
+      // initialization of unfold component
+      $.HSCore.components.HSUnfold.init($('[data-unfold-target]'), {
+        afterOpen: function () {
+          if (!$('body').hasClass('IE11')) {
+            $(this).find('input[type="search"]').focus();
+          }
+        }
+      });
+
+      // initialization of form validation
+      $.HSCore.components.HSValidation.init('.js-validate', {
+        rules: {
+          confirmPassword: {
+            equalTo: '#password'
+          }
+        }
+      });
+
+      // initialization of forms
+      $.HSCore.helpers.HSFocusState.init();
+
+      // initialization of malihu scrollbar
+      $.HSCore.components.HSMalihuScrollBar.init($('.js-scrollbar'));
+
+      // initialization of autonomous popups
+      $.HSCore.components.HSModalWindow.init('[data-modal-target]', '.js-signup-modal', {
+        autonomous: true
+      });
+
+      // initialization of show animations
+      $.HSCore.components.HSShowAnimation.init('.js-animation-link');
+
+      // initialization of slick carousel
+      $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel');
+
+      // initialization of fancybox
+      $.HSCore.components.HSFancyBox.init('.js-fancybox');
+
+      // initialization of go to
+      $.HSCore.components.HSGoTo.init('.js-go-to');
+    });
+  </script>
+    {%endblock%}
+
+    <!--Modal-->
+    {%block script%}
+    <script type="text/javascript">
+  
+      $('#callback-form').on('submit', function(event){
+          event.preventDefault();
+          document.getElementById('callback-sub').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    
+          $.ajax({
+              url : '{%url "website:home"%}',
+              type : 'POST',
+              data : { callback_name : $('#id_callback_name').val(), callback_email : $('#id_callback_email').val(), callback_phone: $('#id_callback_phone').val()},
+    
+              success : function(json){
+                  console.log(json);
+                  document.getElementById('callback-sub').innerHTML = 'Request A Consultation';
+                  $("#modal_5").modal();
+              }
+          });
+      });
+    
+      function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie != '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = jQuery.trim(cookies[i]);
+                  if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+    
+      var csrftoken = getCookie('csrftoken');
+    
+      function csrfSafeMethod(method) {
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+      $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+          }
+      });
+
+      $('#learn-more-form').on('submit', function(event){
+      event.preventDefault();
+      document.getElementById('lm-sub').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+      $.ajax({
+          url : '{%url "website:home"%}',
+          type : 'POST',
+          data : { callback_name : $('#id_lm_name').val(), callback_email : $('#id_lm_email').val(), callback_phone: $('#id_lm_phone').val()},
+
+          success : function(json){
+              console.log(json);
+              document.getElementById('lm-sub').innerHTML = 'Submit';
+              Custombox.modal.close();
+              $("#modal_5").modal();
+          }
+      });
+  });
+
+  function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+              if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
+  var csrftoken = getCookie('csrftoken');
+
+  function csrfSafeMethod(method) {
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+      }
+  });
+
+      </script>
+      {%endblock%}
+
+    <!-- Vendor Scripts -->
+    <script src="{%static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/parallax-js/dist/parallax.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/rellax/rellax.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/jarallax/dist/jarallax.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/jarallax/dist/jarallax-element.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/lightgallery/lightgallery.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/lightgallery/plugins/video/lg-video.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/custombox/dist/custombox.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/custombox/dist/custombox.legacy.min.js' %}"></script>
+    <script src="{%static 'assets/js/components/hs.fancybox.js' %}"></script>
+    <script src="{%static 'assets/js/components/hs.go-to.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- Main Theme Script -->
+    <script src="{%static 'assets/js/theme.min.js' %}"></script>
+    <script>
+      $(window).on('load', function () {
+        // initialization of HSMegaMenu component
+        $('.js-mega-menu').HSMegaMenu({
+          event: 'hover',
+          pageContainer: $('.container'),
+          breakpoint: 767.98,
+          hideTimeOut: 0
+        });
+  
+        // initialization of svg injector module
+        $.HSCore.components.HSSVGIngector.init('.js-svg-injector');
+  
+        $.HSCore.components.HSScrollNav.init($('.js-scroll-nav'), {
+          duration: 700
+        });
+  
+      });
+  
+      $(document).on('ready', function () {
+        // initialization of header
+        $.HSCore.components.HSHeader.init($('#header'));
+  
+        // initialization of text animation (typing)
+        var typed = new Typed(".u-text-animation.u-text-animation--typing", {
+          strings: ["grow", "thrive", "succeed"],
+          typeSpeed: 60,
+          loop: true,
+          backSpeed: 25,
+          backDelay: 1500
+        });
+  
+        // initialization of fancybox
+        $.HSCore.components.HSFancyBox.init('.js-fancybox');
+  
+        // initialization of go to
+        $.HSCore.components.HSGoTo.init('.js-go-to');
+  
+      });
+
+      // initialize lightgallery come back to this...
+      $.HSCore.components.HSGoTo.init('lightgallery');
+</script>
+  
+    </script>
+  
+  <script type="text/javascript">
+  
+    $('#landing-form').on('submit', function(event){
+        event.preventDefault();
+        document.getElementById('landing-sub').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  
+        $.ajax({
+            url : '{%url "website:home"%}',
+            type : 'POST',
+            data : { name : $('#id_name').val(), email : $('#id_email').val(), phone: $('#id_phone').val()},
+  
+            success : function(json){
+                console.log(json);
+                document.getElementById('landing-sub').innerHTML = 'Submit';
+                $("#modal_6").modal('toggle');
+                $("#modal_5").modal();
+            }
+        });
+    });
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });</script>  
+</body>
+</html>

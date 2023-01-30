@@ -1,0 +1,747 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Braintree |</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Verde - make every workday a good one.">
+    <meta name="keywords" content="verde, people management, fleet management, power apps, MS teams, leave management, employee lifecycle, vaccine management, covid management, covid-19, employee covid management">
+    <meta name="author" content="Dimitri Kalamoudacos">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon and Touch Icons -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'asets/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'assets/favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'assets/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.ico' %}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="{%static 'assets/favicon/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Vendor Styles -->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}"/>
+
+    <!-- Main Theme Styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/css/theme.min.css' %}">
+
+    <!-- Page loading styles -->
+    <style>
+      .modal-success .modal-content{
+        background-color: MediumSeaGreen;
+        color: #fff;
+      }
+
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      .dark-mode .page-loading {
+        background-color: #131022;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #9397ad;
+      }
+      .dark-mode .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        border: .15em solid #b4b7c9;
+        border-right-color: transparent;
+        border-radius: 50%;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      .dark-mode .page-spinner {
+        border-color: rgba(255,255,255,.4);
+        border-right-color: transparent;
+      }
+      @-webkit-keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+
+    <!-- Theme mode -->
+    <script>
+      let mode = window.localStorage.getItem('mode'),
+          root = document.getElementsByTagName('html')[0];
+      if (mode !== undefined && mode === 'dark') {
+        root.classList.add('dark-mode');
+      } else {
+        root.classList.remove('dark-mode');
+      }
+    </script>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () {
+            preloader.remove();
+          }, 1000);
+        };
+      })();
+    </script>
+  </head>
+
+
+
+  <!-- Body -->
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper for sticky footer -->
+    <!-- Wraps everything except footer to push footer to the bottom of the page if there is little content -->
+    <main class="page-wrapper">
+
+
+      <!-- Navbar -->
+      <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page -->
+      <header class="header navbar navbar-expand-lg bg-dark navbar-sticky">
+        <div class="container px-3">
+          <a href="{%url 'website:gaming'%}" class="navbar-brand pe-3">
+            <img src="{%static 'assets/img/bt.svg' %}" width="47" alt="braintree">
+            BG
+          </a>
+          <div id="navbarNav" class="offcanvas offcanvas-end">
+            <div class="offcanvas-header border-bottom">
+              <h5 class="offcanvas-title">Menu</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                  <a href="{%url 'website:tournaments'%}" class="nav-link text-primary">Tournaments</a>
+                </li>
+                
+                <div class="offcanvas-body">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Blog</a>
+                      <div class="dropdown-menu p-0">
+                        <div class="d-lg-flex">
+                          <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/menu/5.svg' %}); margin: -1px;"></div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2 fs-xl">Latest News</h6> <!--change on all-->
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:blogG'%}" class="dropdown-item">Tournaments</a></li>
+                              <li><a href="{%url 'website:blogG'%}" class="dropdown-item">Events</a></li>
+                              <li><a href="{%url 'website:blogG'%}" class="dropdown-item">New Releases</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                
+                <div class="offcanvas-body">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                      <a href="{%url 'website:shopG'%}" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Shop</a>
+                      <div class="dropdown-menu p-0">
+                        <div class="d-lg-flex">
+                          <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/menu/1.svg' %}); margin: -1px;"></div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2">Console Gaming</h6> <!--Mobile Gaming, PC Gaming & Console Gaming-->
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shopG'%}" class="dropdown-item">Xbox Game Pass</a></li>
+                              <li><a href="{%url 'website:shopG'%}" class="dropdown-item">Xbox Series S</a></li>
+                              <li><a href="{%url 'website:shopG'%}" class="dropdown-item">Xbox Wirelss Remote</a></li>
+                            </ul>
+
+                              <h6 class="px-3 mb-2">PC Gaming</h6> <!--Mobile Gaming, PC Gaming & Console Gaming-->
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shopG'%}" class="dropdown-item">Xbox Game Pass</a></li>
+                              <li><a href="{%url 'website:shopG'%}" class="dropdown-item">Xbox Series S</a></li>
+                              <li><a href="{%url 'website:shopG'%}" class="dropdown-item">Xbox Wirelss Remote</a></li>
+                              
+                            </ul>
+                          </div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2">Mobile Gaming</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shopG'%}" class="dropdown-item">Play Station Plus</a></li>
+                              <li><a href="{%url 'website:shopG'%}" class="dropdown-item">PUBG Mobile</a></li>
+                              <li><a href="{%url 'website:shopG'%}" class="dropdown-item">Xbox Game Pass</a></li>
+                              <li><a href="{%url 'website:shopG'%}" class="dropdown-item">Xbox Live</a></li>
+
+                            </ul>
+                            <h6 class="px-3 mb-2">Accessories</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shopG'%}" class="dropdown-item py-1">Mice</a></li>
+                              <li><a href="{%url 'website:shopG'%}" class="dropdown-item py-1">Keyboards</a></li>
+                              <li><a href="{%url 'website:shopG'%}" class="dropdown-item py-1">Headsets</a></li>
+    
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    </ul>
+                    <div class="offcanvas-body">
+                      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Community</a>
+                          <div class="dropdown-menu p-0">
+                            <div class="d-lg-flex">
+                              <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/menu/4.gif' %}); margin: -1px;"></div>
+                              <div class="mega-dropdown-column">
+                                <h6 class="px-3 mb-2">Braintree Gamers</h6>
+                                <ul class="list-unstyled mb-3">
+                                  <li><a href="{%url 'website:shopG'%}" class="dropdown-item">Deals</a></li>
+                                  <li><a href="{%url 'website:signupG'%}" class="dropdown-item">Sign Up</a></li>
+                                  <li><a href="{%url 'website:account'%}" class="dropdown-item">Login</a></li>
+                                  
+                                </ul>
+        
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+            <div class="offcanvas-footer border-top">
+              <a href="{%url 'website:gaming'%}" class="btn btn-primary w-100">
+                <i class="bx bx-game fs-4 lh-1 me-1"></i>
+                &nbsp;Shop
+              </a>
+            </div>      
+          </div>
+          <div class="form-check form-switch mode-switch pe-lg-1 ms-auto me-4" data-bs-toggle="mode">
+            <input type="checkbox" class="form-check-input" id="theme-mode">
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Light</label>
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Dark</label>
+          </div>
+          <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a href="{%url 'website:gaming'%}" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+            <i class="bx bx-game fs-5 lh-1 me-1"></i>
+            &nbsp;Shop
+          </a>
+        </div>
+      </header>
+
+
+      <!-- Page content -->
+      <section class="position-relative h-100 pt-5 pb-4">
+
+        <!-- Sign up form -->
+        <div class="container d-flex flex-wrap justify-content-center justify-content-xl-start h-100 pt-5">
+          <div class="w-100 align-self-end pt-1 pt-md-4 pb-4" style="max-width: 526px;">
+            <h1 class="text-center text-xl-start">Join The BG Community</h1>
+            <p class="text-center text-xl-start pb-3 mb-3">Already have an account? <a href="{%url 'website:account'%}">Sign in here.</a></p>
+            <form class="needs-validation" novalidate>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="position-relative mb-4">
+                    <label for="name" class="form-label fs-base">Full name</label>
+                    <input type="text" id="name" class="form-control form-control-lg" required>
+                    <div class="invalid-feedback position-absolute start-0 top-100">Please enter your name!</div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="position-relative mb-4">
+                    <label for="email" class="form-label fs-base">Email</label>
+                    <input type="email" id="email" class="form-control form-control-lg" required>
+                    <div class="invalid-feedback position-absolute start-0 top-100">Please enter a valid email address!</div>
+                  </div>
+                </div>
+                <div class="col-12 mb-4">
+                  <label for="password" class="form-label fs-base">Password</label>
+                  <div class="password-toggle">
+                    <input type="password" id="password" class="form-control form-control-lg" required>
+                    <label class="password-toggle-btn" aria-label="Show/hide password">
+                      <input class="password-toggle-check" type="checkbox">
+                      <span class="password-toggle-indicator"></span>
+                    </label>
+                    <div class="invalid-feedback position-absolute start-0 top-100">Please enter a password!</div>
+                  </div>
+                </div>
+                <div class="col-12 mb-4">
+                  <label for="password-confirm" class="form-label fs-base">Confirm password</label>
+                  <div class="password-toggle">
+                    <input type="password" id="password-confirm" class="form-control form-control-lg" required>
+                    <label class="password-toggle-btn" aria-label="Show/hide password">
+                      <input class="password-toggle-check" type="checkbox">
+                      <span class="password-toggle-indicator"></span>
+                    </label>
+                    <div class="invalid-feedback position-absolute start-0 top-100">Please enter a password!</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-4">
+                <div class="form-check">
+                  <input type="checkbox" id="terms" class="form-check-input">
+                  <label for="terms" class="form-check-label fs-base">I agree to <a href="#">Terms &amp; Conditions</a></label>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary shadow-primary btn-lg w-100">Sign up</button>
+            </form>
+            <hr class="my-4">
+            <h6 class="text-center mb-4">Or sign up with your social network</h6>
+            <div class="row row-cols-1 row-cols-sm-2">
+              <div class="col mb-3">
+                <a href="#" class="btn btn-icon btn-secondary btn-google btn-lg w-100">
+                  <i class="bx bxl-google fs-xl me-2"></i>
+                  Google
+                </a>
+              </div>
+              <div class="col mb-3">
+                <a href="#" class="btn btn-icon btn-secondary btn-facebook btn-lg w-100">
+                  <i class="bx bxl-facebook fs-xl me-2"></i>
+                  Facebook
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="w-100 align-self-end">
+            <p class="nav d-block fs-xs text-center text-xl-start pb-2 mb-0">
+              &copy; All rights reserved. Made by 
+              <a class="nav-link d-inline-block p-0" href="https://www.linkedin.com/in/dimitri-k-8b70b18b/" target="_blank" rel="noopener">Dimitri Kalamoudacos</a>
+            </p>    
+          </div>
+        </div>
+        
+        <!-- Background -->
+        <div class="position-absolute top-0 end-0 w-50 h-100 bg-position-center bg-repeat-0 bg-size-cover d-none d-xl-block" style="background-image: url({%static 'assets/img/account/1.png' %});"></div>
+      </section>
+    </main>
+
+
+    <!-- Back to top button -->
+    <a href="#top" class="btn-scroll-top" data-scroll>
+      <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+      <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+    </a>
+
+
+<!-- Footer -->
+<footer class="footer dark-mode bg-dark pt-5 pb-4 pb-lg-5">
+  <div class="container pt-lg-4">
+    <div class="row pb-5">
+      <div class="col-lg-4 col-md-6">
+        <div class="navbar-brand text-dark p-0 me-0 mb-3 mb-lg-4">
+          <img src="{%static 'assets/img/bt.svg' %}" width="47" alt="Silicon">
+          braintree
+        </div>
+        <p class="fs-sm text-light opacity-70 pb-lg-3 mb-4">A Gold Certified Partner 
+          trusted by thousands of customers for their homes 
+          and businesses. We make a difference to our 
+          customers by unlocking the potential of
+          the cloud, software, and hardware so that
+          they can digitally transform and provide them
+          with support centres to keep them productive,
+          and having fun.</p>
+        <form class="needs-validation" novalidate>
+          <label for="subscr-email" class="form-label">Subscribe to our newsletter</label>
+          <div class="input-group">
+            <input type="email" id="subscr-email" class="form-control rounded-start ps-5" placeholder="Your email" required>
+            <i class="bx bx-envelope fs-lg text-muted position-absolute top-50 start-0 translate-middle-y ms-3 zindex-5"></i>
+            <div class="invalid-tooltip position-absolute top-100 start-0">Please provide a valid email address.</div>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-xl-6 col-lg-7 col-md-5 offset-xl-2 offset-md-1 pt-4 pt-md-1 pt-lg-0">
+        <div id="footer-links" class="row">
+          <div class="col-lg-4">
+            <h6 class="mb-2">
+              <a href="#useful-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Useful Links</a>
+            </h6>
+            <div id="useful-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+              <ul class="nav flex-column pb-lg-1 mb-lg-3">
+                <li class="nav-item"><a href="{%url 'website:home'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Home</a></li>
+                <li class="nav-item"><a href="{%url 'website:shop'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Shop</a></li>
+                <li class="nav-item"><a href="{%url 'website:reseller'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Partners</a></li>
+                <li class="nav-item"><a href="{%url 'website:case'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">News &amp; Insights</a></li>
+                <li class="nav-item"><a href="{%url 'website:contact'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Contact Us</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-3">
+            <h6 class="mb-2">
+              <a href="#social-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Socials</a>
+            </h6>
+            <div id="social-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+              <ul class="nav flex-column mb-2 mb-lg-0">
+                <li class="nav-item"><a href="https://www.facebook.com/BraintreeZA1" class="nav-link d-inline-block px-0 pt-1 pb-2">Facebook</a></li>
+                <li class="nav-item"><a href="https://www.linkedin.com/company/braintreebyvox/" class="nav-link d-inline-block px-0 pt-1 pb-2">LinkedIn</a></li>
+                <li class="nav-item"><a href="https://twitter.com/braintree_za" class="nav-link d-inline-block px-0 pt-1 pb-2">Twitter</a></li>
+                <li class="nav-item"><a href="https://www.instagram.com/braintree_by_vox/" class="nav-link d-inline-block px-0 pt-1 pb-2">Instagram</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-3">
+            <h6 class="mb-2">
+              <a href="#social-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Socials</a>
+            </h6>
+            <div id="social-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+              <ul class="nav flex-column mb-2 mb-lg-0">
+            <h6 class="mb-2">Resources</h6>
+            <li class="nav-item"><a href="https://www.braintree.co.za/Files/Files/Business%20Documents/2021-2022%20BEE%20Verification%20Certifciate.pdf" class="nav-link">BEE Certification</a></li>
+            <li class="nav-item"><a href="https://www.braintree.co.za/Files/Images/PAIA-manual-Braintree.pdf" class="nav-link">PAIA</a></li>
+            <li class="nav-item"><a href="https://www.braintree.co.za/take-down-notice" class="nav-link">Take Down Notice</a></li>
+            <li class="nav-item"><a href="https://www.braintree.co.za/terms-and-conditions" class="nav-link">Terms & Conditions</a></li>
+            <li class="nav-item"><a href="https://www.braintree.co.za/code-of-conduct" class="nav-link">Code of Conduct</a></li>
+            <li class="nav-item"><a href="https://www.braintree.co.za/privacy-policy" class="nav-link">Privacy Policy</a></li>
+            <li class="nav-item"><a href="https://www.braintree.co.za/acceptable-use" class="nav-link">Acceptable Use</a></li>
+            <li class="nav-item"><a href="https://powerapps.microsoft.com/en-gb/support/" class="nav-link">Dev Support</a></li>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="fs-xs text-center text-md-start pb-2 pb-lg-0 mb-0">
+      <span class="text-light opacity-50">&copy; All rights reserved. Made by </span>
+      <a class="nav-link d-inline-block p-0" href="https://za.linkedin.com/in/dimitri-k-8b70b18b" target="_blank" rel="noopener">Dimitri Kalamoudacos</a>
+    </p>
+  </div>
+</footer>
+
+
+
+<!-- Back to top button -->
+<a href="#top" class="btn-scroll-top" data-scroll>
+  <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+  <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+</a>
+
+<!-- JS Implementing Plugins -->
+{%block plug%}
+{%endblock%}
+
+<!-- JS Space -->
+{%block space%}
+{%endblock%}
+
+{%block js%}
+<script>
+$(window).on('load', function () {
+  // initialization of HSMegaMenu component
+  $('.js-mega-menu').HSMegaMenu({
+    event: 'hover',
+    pageContainer: $('.container'),
+    breakpoint: 991,
+    hideTimeOut: 0
+  });
+});
+
+$(document).on('ready', function () {
+  // initialization of header
+  $.HSCore.components.HSHeader.init($('#header'));
+
+  // initialization of unfold component
+  $.HSCore.components.HSUnfold.init($('[data-unfold-target]'), {
+    afterOpen: function () {
+      if (!$('body').hasClass('IE11')) {
+        $(this).find('input[type="search"]').focus();
+      }
+    }
+  });
+
+  // initialization of form validation
+  $.HSCore.components.HSValidation.init('.js-validate', {
+    rules: {
+      confirmPassword: {
+        equalTo: '#password'
+      }
+    }
+  });
+
+  // initialization of forms
+  $.HSCore.helpers.HSFocusState.init();
+
+  // initialization of malihu scrollbar
+  $.HSCore.components.HSMalihuScrollBar.init($('.js-scrollbar'));
+
+  // initialization of autonomous popups
+  $.HSCore.components.HSModalWindow.init('[data-modal-target]', '.js-signup-modal', {
+    autonomous: true
+  });
+
+  // initialization of show animations
+  $.HSCore.components.HSShowAnimation.init('.js-animation-link');
+
+  // initialization of slick carousel
+  $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel');
+
+  // initialization of fancybox
+  $.HSCore.components.HSFancyBox.init('.js-fancybox');
+
+  // initialization of go to
+  $.HSCore.components.HSGoTo.init('.js-go-to');
+});
+</script>
+{%endblock%}
+
+<!--Modal-->
+{%block script%}
+<script type="text/javascript">
+
+  $('#callback-form').on('submit', function(event){
+      event.preventDefault();
+      document.getElementById('callback-sub').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+      $.ajax({
+          url : '{%url "website:home"%}',
+          type : 'POST',
+          data : { callback_name : $('#id_callback_name').val(), callback_email : $('#id_callback_email').val(), callback_phone: $('#id_callback_phone').val()},
+
+          success : function(json){
+              console.log(json);
+              document.getElementById('callback-sub').innerHTML = 'Request A Consultation';
+              $("#modal_5").modal();
+          }
+      });
+  });
+
+  function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+              if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
+  var csrftoken = getCookie('csrftoken');
+
+  function csrfSafeMethod(method) {
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+      }
+  });
+
+  $('#learn-more-form').on('submit', function(event){
+  event.preventDefault();
+  document.getElementById('lm-sub').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+  $.ajax({
+      url : '{%url "website:home"%}',
+      type : 'POST',
+      data : { callback_name : $('#id_lm_name').val(), callback_email : $('#id_lm_email').val(), callback_phone: $('#id_lm_phone').val()},
+
+      success : function(json){
+          console.log(json);
+          document.getElementById('lm-sub').innerHTML = 'Submit';
+          Custombox.modal.close();
+          $("#modal_5").modal();
+      }
+  });
+});
+
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie != '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+          var cookie = jQuery.trim(cookies[i]);
+          if (cookie.substring(0, name.length + 1) == (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+
+var csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+  return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+  beforeSend: function(xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      }
+  }
+});
+
+  </script>
+  {%endblock%}
+
+<!-- Vendor Scripts -->
+<script src="{%static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{%static 'assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js' %}"></script>
+<script src="{%static 'assets/vendor/parallax-js/dist/parallax.min.js' %}"></script>
+<script src="{%static 'assets/vendor/rellax/rellax.min.js' %}"></script>
+<script src="{%static 'assets/vendor/jarallax/dist/jarallax.min.js' %}"></script>
+<script src="{%static 'assets/vendor/jarallax/dist/jarallax-element.min.js' %}"></script>
+<script src="{%static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{%static 'assets/vendor/lightgallery/lightgallery.min.js' %}"></script>
+<script src="{%static 'assets/vendor/lightgallery/plugins/video/lg-video.min.js' %}"></script>
+<script src="{%static 'assets/vendor/custombox/dist/custombox.min.js' %}"></script>
+<script src="{%static 'assets/vendor/custombox/dist/custombox.legacy.min.js' %}"></script>
+<script src="{%static 'assets/js/components/hs.fancybox.js' %}"></script>
+<script src="{%static 'assets/js/components/hs.go-to.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<!-- Main Theme Script -->
+<script src="{%static 'assets/js/theme.min.js' %}"></script>
+<script>
+  $(window).on('load', function () {
+    // initialization of HSMegaMenu component
+    $('.js-mega-menu').HSMegaMenu({
+      event: 'hover',
+      pageContainer: $('.container'),
+      breakpoint: 767.98,
+      hideTimeOut: 0
+    });
+
+    // initialization of svg injector module
+    $.HSCore.components.HSSVGIngector.init('.js-svg-injector');
+
+    $.HSCore.components.HSScrollNav.init($('.js-scroll-nav'), {
+      duration: 700
+    });
+
+  });
+
+  $(document).on('ready', function () {
+    // initialization of header
+    $.HSCore.components.HSHeader.init($('#header'));
+
+    // initialization of text animation (typing)
+    var typed = new Typed(".u-text-animation.u-text-animation--typing", {
+      strings: ["grow", "thrive", "succeed"],
+      typeSpeed: 60,
+      loop: true,
+      backSpeed: 25,
+      backDelay: 1500
+    });
+
+    // initialization of fancybox
+    $.HSCore.components.HSFancyBox.init('.js-fancybox');
+
+    // initialization of go to
+    $.HSCore.components.HSGoTo.init('.js-go-to');
+
+  });
+
+</script>
+
+<script type="text/javascript">
+
+$('#landing-form').on('submit', function(event){
+    event.preventDefault();
+    document.getElementById('landing-sub').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+    $.ajax({
+        url : '{%url "website:home"%}',
+        type : 'POST',
+        data : { name : $('#id_name').val(), email : $('#id_email').val(), phone: $('#id_phone').val()},
+
+        success : function(json){
+            console.log(json);
+            document.getElementById('landing-sub').innerHTML = 'Submit';
+            $("#modal_6").modal('toggle');
+            $("#modal_5").modal();
+        }
+    });
+});
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+var csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});</script>  
+</body>
+</html>

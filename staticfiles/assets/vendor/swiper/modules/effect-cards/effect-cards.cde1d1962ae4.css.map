@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAC;EACZ,QAAQ,EAAE,OAAO;CAKlB;;AAND,AAEE,aAFW,CAEX,aAAa,CAAC;EACZ,gBAAgB,EAAE,aAAa;EAC/B,mBAAmB,EAAE,MAAM;CAC5B",
+    "sources": [
+        "effect-cards.cde1d1962ae4.scss"
+    ],
+    "names": [],
+    "file": "effect-cards.cde1d1962ae4.css"
+}

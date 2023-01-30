@@ -1,0 +1,1292 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Braintree |</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Verde - make every workday a good one.">
+    <meta name="keywords" content="verde, people management, fleet management, power apps, MS teams, leave management, employee lifecycle, vaccine management, covid management, covid-19, employee covid management">
+    <meta name="author" content="Dimitri Kalamoudacos">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon and Touch Icons -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'asets/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'assets/favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'assets/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.ico' %}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="{%static 'assets/favicon/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Vendor Styles -->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/lightgallery/css/lightgallery-bundle.min.css' %}"/>
+
+    <!-- Main Theme Styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/css/theme.min.css' %}">
+
+    <!-- Page loading styles -->
+    <style>
+      .modal-success .modal-content{
+        background-color: MediumSeaGreen;
+        color: #fff;
+      }
+
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      .dark-mode .page-loading {
+        background-color: #131022;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #9397ad;
+      }
+      .dark-mode .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        border: .15em solid #b4b7c9;
+        border-right-color: transparent;
+        border-radius: 50%;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      .dark-mode .page-spinner {
+        border-color: rgba(255,255,255,.4);
+        border-right-color: transparent;
+      }
+      @-webkit-keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+
+    <!-- Theme mode -->
+    <script>
+      let mode = window.localStorage.getItem('mode'),
+          root = document.getElementsByTagName('html')[0];
+      if (mode !== undefined && mode === 'dark') {
+        root.classList.add('dark-mode');
+      } else {
+        root.classList.remove('dark-mode');
+      }
+    </script>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () {
+            preloader.remove();
+          }, 1000);
+        };
+      })();
+    </script>
+  </head>
+
+
+
+  <!-- Body -->
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper for sticky footer -->
+    <!-- Wraps everything except footer to push footer to the bottom of the page if there is little content -->
+    <main class="page-wrapper">
+
+
+      <!-- Navbar -->
+      <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page -->
+      <header class="header navbar navbar-expand-lg navbar-light bg-light navbar-sticky">
+        <div class="container px-3">
+          <a href="{%url 'website:home'%}" class="navbar-brand pe-3">
+            <img src="{%static 'assets/img/bt.svg' %}" width="47" alt="braintree">
+            braintree
+          </a>
+          <div id="navbarNav" class="offcanvas offcanvas-end">
+            <div class="offcanvas-header border-bottom">
+              <h5 class="offcanvas-title">Menu</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Solutions</a>
+                  <div class="dropdown-menu p-0">
+                    <div class="d-lg-flex">
+                      <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/2.svg' %}); margin: -1px;"></div>
+                      <div class="mega-dropdown-column">
+                        <h6 class="px-3 mb-2">BizApps Platform</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">Business Central</a></li>
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">Customer Engage</a></li>
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">Finance & Operations</a></li>
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">DynamicWeb</a></li>
+                        </ul>
+                        <h6 class="px-3 mb-2">Azure Platform</h6>
+                        <ul class="list-unstyled">
+                          <li><a href="{%url 'website:azure'%}" icons class="dropdown-item py-1">Cloud Services</a></li>
+                        </ul>
+                      </div>
+                      <div class="mega-dropdown-column">
+                        <h6 class="px-3 mb-2">Microsoft 365</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="{%url 'website:ms'%}" class="dropdown-item">Apps & Services</a></li> <!--licences office, devices for surface -->
+                        </ul>
+                        <h6 class="px-3 mb-2">Power Platform</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="{%static 'services.html' %}" class="dropdown-item py-1">Power BI</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                
+                <div class="offcanvas-body">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Industry Solutions</a>
+                      <div class="dropdown-menu p-0">
+                        <div class="d-lg-flex">
+                          <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/6.svg' %}); margin: -1px;"></div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2 fs-xl">Industries</h6> <!--change on all-->
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Manufacturing</a></li>
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Financial Services</a></li>
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Retail</a></li>
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Supply Chain</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                
+                <div class="offcanvas-body">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                      <a href="{%url 'website:shop'%}" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Shop</a>
+                      <div class="dropdown-menu p-0">
+                        <div class="d-lg-flex">
+                          <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/3.svg' %}); margin: -1px;"></div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2">Home Office</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:product'%}" class="dropdown-item">Microsoft 365</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Windows 10 Pro</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Windows 10 Home</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">McAfee</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Qwerti IT Support</a></li>
+    
+    
+                            </ul>
+                            <h6 class="px-3 mb-2">Gaming</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Game Pass</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Series S</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Wirelss Remote</a></li>
+                              
+                            </ul>
+                          </div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2">Online Gaming</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Play Station Plus</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">PUBG Mobile</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Game Pass</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Live</a></li>
+
+                            </ul>
+                            <h6 class="px-3 mb-2">Accessories</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item py-1">Mice</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item py-1">Keyboards</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item py-1">Headsets</a></li>
+    
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    </ul>
+
+                    
+
+                    <div class="offcanvas-body">
+                      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                          <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Partners</a>
+                          <div class="dropdown-menu p-0">
+                            <div class="d-lg-flex">
+                              <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/5.svg' %}); margin: -1px;"></div>
+                              <div class="mega-dropdown-column">
+                                <h6 class="px-3 mb-2">Braintree Partners</h6>
+                                <ul class="list-unstyled mb-3">
+                                  <li><a href="{%url 'website:reseller'%}" class="dropdown-item">Learn More</a></li>
+                                  <li><a href="{%url 'website:signup'%}" class="dropdown-item">Sign Up</a></li>
+                                  <li><a href="{%url 'website:reseller'%}" class="dropdown-item">Login</a></li>
+                                  
+                                </ul>
+        
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+            <div class="offcanvas-footer border-top">
+              <a href="{%url 'website:gaming'%}" class="btn btn-primary w-100">
+                <i class="bx bx-game fs-4 lh-1 me-1"></i>
+                &nbsp;Gaming
+              </a>
+            </div>      
+          </div>
+          <div class="form-check form-switch mode-switch pe-lg-1 ms-auto me-4" data-bs-toggle="mode">
+            <input type="checkbox" class="form-check-input" id="theme-mode">
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Light</label>
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Dark</label>
+          </div>
+          <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a href="{%url 'website:gaming'%}" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+            <i class="bx bx-game fs-5 lh-1 me-1"></i>
+            &nbsp;Gaming
+          </a>
+        </div>
+      </header>
+
+
+      <!-- Hero section with layer parallax gfx -->
+      <section class="position-relative overflow-hidden py-4 mb-3">
+        <div class="container pt-lg-3">
+          <div class="row flex-lg-nowrap">
+            <div class="col-lg-6 col-xl-5 text-center text-lg-start pt-5 mt-xl-4">
+              <h1 class="display-4 pt-5 pb-2 pb-lg-3 mt-sm-2 mt-lg-5">Microsoft Azure <br>By Braintree</h1>
+              <p class="fs-lg mb-4 mb-lg-5">Take your business into the Stratosphere with Microsoft Azure and work with a team that knows how to successfully implement cloud environments in Africa.</p>
+              <a href="#modalDefault" data-bs-toggle="modal" class="btn btn-primary shadow-primary btn-lg" >Request A Consultation</a> 
+              <div class="pt-5 mt-xl-5">
+                <h6 class="pt-xl-3 pb-3 pb-lg-4">Trusted by some of South Africa's favourites</h6>
+                <div class="d-flex justify-content-center justify-content-lg-start mx-xl-n2">
+                  <a href="#" class="d-block me-2">
+                    <img src="{%static 'assets/img/brands/sabrands/1.svg' %}" width="135" alt="Logo">
+                  </a>
+                  <a href="#" class="d-block me-2">
+                    <img src="{%static 'assets/img/brands/sabrands/2.svg' %}" width="135" alt="Logo">
+                  </a>
+                  <a href="#" class="d-block me-2">
+                    <img src="{%static 'assets/img/brands/sabrands/3.svg' %}" width="135" alt="Logo">
+                  </a>
+                  <a href="#" class="d-block me-2">
+                    <img src="{%static 'assets/img/brands/sabrands/4.svg' %}" width="135" alt="Logo">
+                  </a>
+                </div>
+              </div>
+            </div>
+<!-- Default modal -->
+<div class="modal fade" id="modalDefault" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!-- Modal header with nav tabs -->
+      <!---->
+    <div class="modal-header">
+      <ul class="nav nav-tabs mb-0" role="tablist">
+        <li class="nav-item fs-sm mb-0">
+          <a class="nav-link active" href="#signin" data-bs-toggle="tab" role="tab" aria-selected="false">
+            <i class="bx bx-phone-call fs-base me-2"></i>
+            Callback Form
+          </a>
+        </li>
+        <li class="nav-item fs-sm mb-0">
+          <a class="nav-link" href="#signup" data-bs-toggle="tab" role="tab" aria-selected="true">
+            <i class="bx bx-user fs-base me-2"></i>
+            Consult Form
+          </a>
+        </li>
+      </ul>
+      <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <!-- Modal body with tab panes -->
+    <div class="modal-body tab-content py-4">
+
+      <!-- Sign in form -->
+      <form class="tab-pane fade show active" autocomplete="off" id="signin">
+        <div class="mb-3">
+          <label class="form-label" for="email1">Name</label>
+          <input class="form-control" type="names" id="names" placeholder="John Doe">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="email1">Email address</label>
+          <input class="form-control" type="email" id="email1" placeholder="johndoe@example.com">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="email2">Contact Number</label>
+          <input class="form-control" type="phone-number" id="phone2" placeholder="+27 82 114 3214">
+        </div>
+        <div class="mb-3 d-flex flex-wrap justify-content-between">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="remember">
+            <label class="form-check-label" for="remember">Agree To T's & C's</label>
+          </div><a class="fs-sm" href="#">Terms & Conditions</a>
+        </div>
+        <button class="btn btn-primary d-block w-100" type="submit">Submit</button>
+      </form>
+
+      <!-- Sign up form -->
+      <form class="tab-pane fade" autocomplete="off" id="signup">
+        <div class="mb-3">
+          <label class="form-label" for="name">Full name</label>
+          <input class="form-control" type="text" id="name" placeholder="John Doe">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="email2">Email address</label>
+          <input class="form-control" type="email" id="email2" placeholder="johndoe@example.com">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="email2">Contact Number</label>
+          <input class="form-control" type="phone-number" id="phone2" placeholder="+27 82 114 3214">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="email2">Business Name</label>
+          <input class="form-control" type="text" id="business-name" placeholder="ABC Holdings">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="email2">Business Size</label>
+          <input class="form-control" type="text" id="business-size" placeholder="100 employees">
+        </div>
+        <div class="mb-3 d-flex flex-wrap justify-content-between">
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="remember">
+            <label class="form-check-label" for="remember">Agree To T's & C's</label>
+          </div><a class="fs-sm" href="#">Terms & Conditions</a>
+        </div>
+        <button class="btn btn-primary d-block w-100" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<!--end of modal-->
+
+            <!-- Layer parallax -->
+            <div class="parallax mt-4 ms-4 me-lg-0 ms-lg-n5 ms-xl-n3 mt-lg-n4">
+              <div class="parallax-layer" data-depth="0.1">
+                <img src="{%static 'assets/img/landing/saas-1/hero/azure/1.png' %}" width="1416" alt="Layer">
+              </div>
+              <div class="parallax-layer zindex-2" data-depth="0.15">
+                <img src="{%static 'assets/img/landing/saas-1/hero/azure/2.png' %}" alt="Layer">
+              </div>
+              <div class="parallax-layer zindex-2" data-depth="0.35">
+                <img src="{%static 'assets/img/landing/saas-1/hero/azure/3.png' %}" alt="Layer">
+              </div>
+              <div class="parallax-layer zindex-2" data-depth="0.25">
+                <img src="{%static 'assets/img/landing/saas-1/hero/azure/4.png' %}" alt="Layer">
+              </div>
+              <div class="parallax-layer zindex-2" data-depth="0.4">
+                <img src="{%static 'assets/img/landing/saas-1/hero/azure/5.png' %}" alt="Layer">
+              </div>
+              <div class="parallax-layer zindex-2" data-depth="0.28">
+                <img src="{%static 'assets/img/landing/saas-1/hero/azure/6.png' %}" alt="Layer">
+              </div>
+              <div class="parallax-layer zindex-2" data-depth="0.35">
+                <img src="{%static 'assets/img/landing/saas-1/hero/azure/7.png' %}" alt="Layer">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Features (Icon + Text) -->
+      <section class="container">
+        <h2 class="h1 text-center pb-4 pb-lg-5">Microsoft Azure</h2>
+        <div class="row">
+          <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
+            <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
+              <img src="{%static 'assets/img/landing/saas-1/features/azure/azure-arc.svg' %}" width="32" alt="Icon">
+            </div>
+            <h3 class="h5 pb-1 mb-2">Azure Arc</h3>
+            <p class="fs-sm">Strengthen security for multicloud and hybrid environments.</p>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
+            <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
+              <img src="{%static 'assets/img/landing/saas-1/features/azure/azure-devops.svg' %}" width="32" alt="Icon">
+            </div>
+            <h3 class="h5 pb-1 mb-2">Azure Dev-Ops</h3>
+            <p class="fs-sm">Share code, track work, and ship software with modern dev services.</p>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
+            <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
+              <img src="{%static 'assets/img/landing/saas-1/features/azure/azure.svg' %}" width="32" alt="Icon">
+            </div>
+            <h3 class="h5 pb-1 mb-2">Microsoft Defender for Cloud</h3>
+            <p class="fs-sm">Strengthen security for multicloud and hybrid environments.</p>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
+            <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
+              <img src="{%static 'assets/img/landing/saas-1/features/azure/backup.svg' %}" width="32" alt="Icon">
+            </div>
+            <h3 class="h5 pb-1 mb-2">Azure Backup</h3>
+            <p class="fs-sm">Simplify data protection with built-in, back-up management at scale.</p>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
+            <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
+              <img src="{%static 'assets/img/landing/saas-1/features/azure/kubernetes-service.svg' %}" width="32" alt="Icon">
+            </div>
+            <h3 class="h5 pb-1 mb-2">Azure Kubernetes Service</h3>
+            <p class="fs-sm">Make and scale apps with managed Kubernetes.</p>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
+            <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
+              <img src="{%static 'assets/img/landing/saas-1/features/azure/purview.svg' %}" width="32" alt="Icon">
+            </div>
+            <h3 class="h5 pb-1 mb-2">Microsoft Purview</h3>
+            <p class="fs-sm">Maximise the business value of data with unified data governance.</p>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
+            <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
+              <img src="{%static 'assets/img/landing/saas-1/features/azure/azure-stack.svg' %}" width="32" alt="Icon">
+            </div>
+            <h3 class="h5 pb-1 mb-2">Azure Stack</h3>
+            <p class="fs-sm">Build apps across on-premises, cloud and the edge.</p>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
+            <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
+              <img src="{%static 'assets/img/landing/saas-1/features/azure/azure-sentinel.svg' %}" width="32" alt="Icon">
+            </div>
+            <h3 class="h5 pb-1 mb-2">Azure Sentinel</h3>
+            <p class="fs-sm">Stop threats with intelligent security analytics.</p>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Dashboard -->
+      <section class="container pt-3 pt-md-4 pt-lg-5 pb-2 mt-lg-2 mt-xl-4">
+        <div class="row align-items-center">
+          <div class="rellax col-md-7" data-rellax-percentage="0.5" data-rellax-speed="-0.6" data-disable-parallax-down="lg">
+            <img src="{%static 'assets/img/landing/saas-1/overview.svg' %}" class="d-block mx-auto" width="746" alt="Image">
+          </div>
+          <div class="rellax col-md-5 col-xl-4 offset-xl-1 d-flex d-sm-block flex-column" data-rellax-percentage="0.5" data-rellax-speed="0.8" data-disable-parallax-down="lg">
+            <h2 class="pb-3 pt-2 pt-md-0">Azure Overview</h2>
+            <ul class="list-unstyled pb-2">
+              <li class="d-flex align-items-center pb-1 mb-2">
+                <i class="bx bx-check-circle text-primary fs-xl me-2"></i>
+                Security
+              </li>
+              <li class="d-flex align-items-center pb-1 mb-2">
+                <i class="bx bx-check-circle text-primary fs-xl me-2"></i>
+                Infastructure
+              </li>
+              <li class="d-flex align-items-center pb-1 mb-2">
+                <i class="bx bx-check-circle text-primary fs-xl me-2"></i>
+                Digital and app innovation
+              </li>
+              <li class="d-flex align-items-center pb-1 mb-2">
+                <i class="bx bx-check-circle text-primary fs-xl me-2"></i>
+                Data and AI
+              </li>
+              <li class="d-flex align-items-center pb-1 mb-2">
+                <i class="bx bx-check-circle text-primary fs-xl me-2"></i>
+                Business Applications
+              </li>
+              <li class="d-flex align-items-center pb-1 mb-2">
+                <i class="bx bx-check-circle text-primary fs-xl me-2"></i>
+                Modern work
+              </li>
+            </ul>
+            <a href="#modalDefault" data-bs-toggle="modal" class="btn btn-primary">
+              Learn more
+              <i class="bx bx-right-arrow-alt fs-xl ms-2"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Use cases (Tabs) -->
+      <section class="container pt-5 pb-2 mt-3 mt-sm-4 mt-xl-5">
+        <h2 class="h1 text-center pb-3 pb-lg-4">One Tool — Endless Use Cases</h2>
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs flex-nowrap justify-content-lg-center overflow-auto pb-2 mb-3 mb-lg-4" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap active" id="industry-tab" data-bs-toggle="tab" data-bs-target="#industry" type="button" role="tab" aria-controls="industry" aria-selected="true">
+              <i class="bx bx-briefcase-alt-2 fs-lg opacity-60 me-2"></i>
+              Industry
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab" aria-controls="security" aria-selected="false">
+              <i class="bx bx-shield-quarter fs-lg opacity-60 me-2"></i>
+              Security
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap" id="infrastructure-tab" data-bs-toggle="tab" data-bs-target="#infrastructure" type="button" role="tab" aria-controls="infrastructure" aria-selected="false">
+              <i class="bx bx-building fs-lg opacity-60 me-2"></i>
+              Infrastructure
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap" id="digital-app-innovation-tab" data-bs-toggle="tab" data-bs-target="#digital-app-innovation" type="button" role="tab" aria-controls="digital-app-innovation" aria-selected="false">
+              <i class="bx bx-rocket fs-lg opacity-60 me-2"></i>
+              Digital & App Innovation
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap" id="data-ai-tab" data-bs-toggle="tab" data-bs-target="#data-ai" type="button" role="tab" aria-controls="data-ai" aria-selected="false">
+              <i class="bx bx-bar-chart-alt-2 fs-lg opacity-60 me-2"></i>
+              Data & AI
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap" id="business-applications-tab" data-bs-toggle="tab" data-bs-target="#business-applications" type="button" role="tab" aria-controls="business-applicationsg" aria-selected="false">
+              <i class="bx bx-windows fs-lg opacity-60 me-2"></i>
+              Business Applications
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap" id="modern-work-tab" data-bs-toggle="tab" data-bs-target="#modern-work" type="button" role="tab" aria-controls="modern-work" aria-selected="false">
+              <i class="bx bx-star fs-lg opacity-60 me-2"></i>
+              Modern Work
+            </button>
+          </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content bg-secondary rounded-3 py-4">
+
+          <!-- Industry -->
+          <div class="tab-pane fade show active" id="industry" role="tabpanel" aria-labelledby="industry-tab">
+            <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 px-sm-4 px-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">Industry</h3>
+                <p>Unleash value quickly, build for the future, and exceed customer expectations with Microsoft industry clouds. They’re modular and extensible, so your organization can start with what you need and adapt as you grow.​</p>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-md-4">
+                <img src="{%static 'assets/img/landing/saas-1/use-cases/azure/01.svg' %}" class="d-block my-lg-2 mx-auto me-md-0" width="595" alt="Image">
+              </div>
+            </div>
+          </div>
+
+          <!-- Security -->
+          <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+            <div class="row align-items-center pt-3 pb-2 pb-sm-3 pt-sm-4 pt-md-0 px-3 px-sm-4 px-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">Security</h3>
+                <p>Help protect and defend your business with security, compliance, identity, and management solutions that work across all of your platforms, clouds, and apps.</p>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-md-4">
+                <img src="{%static 'assets/img/landing/saas-1/use-cases/azure/02.svg' %}" class="d-block my-lg-2 mx-auto me-md-0" width="502" alt="Image">
+              </div>
+            </div>
+          </div>
+
+          <!-- Infrastructure -->
+          <div class="tab-pane fade" id="infrastructure" role="tabpanel" aria-labelledby="infrastructure-tab">
+            <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 pe-sm-4 pe-md-0 ps-sm-4 ps-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">Infrastructure</h3>
+                <p>Improve time-to-value and reduce costs with the most complete tech stack from cloud to edge. Build, monitor, and manage your critical infrastructure using trusted Microsoft cloud technology.</p>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-n3 mt-md-1">
+                <img src="{%static 'assets/img/landing/saas-1/use-cases/azure/03.svg' %}" class="d-block mb-lg-2 mx-auto me-md-0" width="525" alt="Image">
+              </div>
+            </div>
+          </div>
+
+          <!-- Digital-App-Innovation -->
+          <div class="tab-pane fade" id="digital-app-innovation" role="tabpanel" aria-labelledby="digital-app-innovation-tab">
+            <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 pe-sm-4 pe-md-0 ps-sm-4 ps-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">Digital & App Innovation</h3>
+                <p>Elevate and enhance every stage of software development.</p>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-n3 mt-md-1">
+                <img src="{%static 'assets/img/landing/saas-1/use-cases/azure/04.svg' %}" class="d-block mb-lg-2 mx-auto me-md-0" width="525" alt="Image">
+              </div>
+            </div>
+          </div>
+          
+          <!-- Data-AI -->
+          <div class="tab-pane fade" id="data-ai" role="tabpanel" aria-labelledby="data-ai-tab">
+            <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 pe-sm-4 pe-md-0 ps-sm-4 ps-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">Data & AI</h3>
+                <p>Maximize the value of your data with the Microsoft Intelligent Data Platform, a comprehensive platform for databases, analytics, and data governance.</p>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-n3 mt-md-1">
+                <img src="{%static 'assets/img/landing/saas-1/use-cases/azure/05.svg' %}" class="d-block mb-lg-2 mx-auto me-md-0" width="525" alt="Image">
+              </div>
+            </div>
+          </div>
+
+          <!-- Business-Applications -->
+          <div class="tab-pane fade" id="business-applications" role="tabpanel" aria-labelledby="business-applications-tab">
+            <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 pe-sm-4 pe-md-0 ps-sm-4 ps-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">Business Applications</h3>
+                <p>Empower exceptional customer experiences and operational agility with applications that unite people, insights, and processes across every line of business.</p>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-n3 mt-md-1">
+                <img src="{%static 'assets/img/landing/saas-1/use-cases/azure/06.svg' %}" class="d-block mb-lg-2 mx-auto me-md-0" width="525" alt="Image">
+              </div>
+            </div>
+          </div>
+
+          <!-- Modern Work -->
+          <div class="tab-pane fade" id="modern-work" role="tabpanel" aria-labelledby="modern-work-tab">
+            <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 pe-sm-4 pe-md-0 ps-sm-4 ps-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">Modern Work</h3>
+                <p>Empower team members to focus on, build, share, and protect their most important ideas so that they can make the greatest impact possible from anywhere, on any device.</p>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-n3 mt-md-1">
+                <img src="{%static 'assets/img/landing/saas-1/use-cases/azure/07.svg' %}" class="d-block mb-lg-2 mx-auto me-md-0" width="545" alt="Image">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- News slider -->
+      <section class="container py-5 mb-1 mb-md-4 mb-lg-5">
+        <div class="container py-md-3 py-lg-5">
+          <h2 class="h1 text-center pb-2">News &amp; Insights</h2>
+          <div class="position-relative mx-md-2 px-md-5">
+
+            <!-- Slider controls (Prev / next) -->
+            <button type="button" id="news-prev" class="btn btn-prev btn-icon btn-sm position-absolute top-50 start-0 translate-middle-y mt-n4 d-none d-md-inline-flex">
+              <i class="bx bx-chevron-left"></i>
+            </button>
+            <button type="button" id="news-next" class="btn btn-next btn-icon btn-sm position-absolute top-50 end-0 translate-middle-y mt-n4 d-none d-md-inline-flex">
+              <i class="bx bx-chevron-right"></i>
+            </button>
+
+            <!-- Swiper slider -->
+            <div class="swiper swiper-nav-onhover mx-n2" data-swiper-options='{
+              "slidesPerView": 1,
+              "loop": true,
+              "spaceBetween": 8,
+              "pagination": {
+                "el": ".swiper-pagination",
+                "clickable": true
+              },
+              "navigation": {
+                "prevEl": "#news-prev",
+                "nextEl": "#news-next"
+              },
+              "breakpoints": {
+                "0": {
+                  "slidesPerView": 1
+                },
+                "560": {
+                  "slidesPerView": 2
+                },
+                "992": {
+                  "slidesPerView": 3
+                }
+              }
+            }'>
+              <div class="swiper-wrapper">
+    
+                <!-- Item -->
+                <div class="swiper-slide h-auto py-3">
+                  <article class="card p-md-3 p-2 border-0 shadow-sm card-hover-primary h-100 mx-2">
+                    <div class="card-body pb-0">
+                      <div class="d-flex align-items-center justify-content-between mb-3">
+                        <a href="#" class="badge fs-sm text-nav bg-secondary text-decoration-none position-relative zindex-2">Tech</a>
+                        <span class="fs-sm text-muted">1 day ago</span>
+                      </div>
+                      <h3 class="h4">
+                        <a href="{%url 'website:case'%}" class="stretched-link">How Leverage Tech In Loadshedding</a>
+                      </h3>
+                      <p class="mb-0">The president may have opened the gates to private power suppliers but we still have loadshedding, here's how tech can help you through it.</p>
+                    </div>
+                    <div class="card-footer d-flex align-items-center py-4 text-muted border-top-0">
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-like fs-lg me-1"></i>
+                        <span class="fs-sm">2</span>
+                      </div>
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-comment fs-lg me-1"></i>
+                        <span class="fs-sm">0</span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <i class="bx bx-share-alt fs-lg me-1"></i>
+                        <span class="fs-sm">3</span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+    
+                <!-- Item -->
+                <div class="swiper-slide h-auto py-3">
+                  <article class="card p-md-3 p-2 border-0 shadow-sm card-hover-primary h-100 mx-2">
+                    <div class="card-body pb-0">
+                      <div class="d-flex align-items-center justify-content-between mb-3">
+                        <a href="#" class="badge fs-sm text-nav bg-secondary text-decoration-none position-relative zindex-2">Strategy</a>
+                        <span class="fs-sm text-muted">12 hours ago</span>
+                      </div>
+                      <h3 class="h4">
+                        <a href="{%url 'website:case'%}" class="stretched-link">PowerApps Is Not Just A Nice Idea</a>
+                      </h3>
+                      <p class="mb-0">PowerApps is microsofts answer to affordable app development and business automation and we think you can leverage it to drive growth. </p>
+                    </div>
+                    <div class="card-footer d-flex align-items-center py-4 text-muted border-top-0">
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-like fs-lg me-1"></i>
+                        <span class="fs-sm">8</span>
+                      </div>
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-comment fs-lg me-1"></i>
+                        <span class="fs-sm">4</span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <i class="bx bx-share-alt fs-lg me-1"></i>
+                        <span class="fs-sm">2</span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+    
+                <!-- Item -->
+                <div class="swiper-slide h-auto py-3">
+                  <article class="card p-md-3 p-2 border-0 shadow-sm card-hover-primary h-100 mx-2">
+                    <div class="card-body pb-0">
+                      <div class="d-flex align-items-center justify-content-between mb-3">
+                        <a href="#" class="badge fs-sm text-nav bg-secondary text-decoration-none position-relative zindex-2">Retail</a>
+                        <span class="fs-sm text-muted">May 24, 2021</span>
+                      </div>
+                      <h3 class="h4">
+                        <a href="{%url 'website:case'%}" class="stretched-link">LS Retail Customer Loyalty</a>
+                      </h3>
+                      <p class="mb-0">Loyalty programs have become a huge trend and for good reason, they delight customers but they are expensive to implement...not anymore.</p>
+                    </div>
+                    <div class="card-footer d-flex align-items-center py-4 text-muted border-top-0">
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-like fs-lg me-1"></i>
+                        <span class="fs-sm">6</span>
+                      </div>
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-comment fs-lg me-1"></i>
+                        <span class="fs-sm">1</span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <i class="bx bx-share-alt fs-lg me-1"></i>
+                        <span class="fs-sm">5</span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+    
+                <!-- Item -->
+                <div class="swiper-slide h-auto py-3">
+                  <article class="card p-md-3 p-2 border-0 shadow-sm card-hover-primary h-100 mx-2">
+                    <div class="card-body pb-0">
+                      <div class="d-flex align-items-center justify-content-between mb-3">
+                        <a href="#" class="badge fs-sm text-nav bg-secondary text-decoration-none position-relative zindex-2">Startups</a>
+                        <span class="fs-sm text-muted">Sep 3, 2021</span>
+                      </div>
+                      <h3 class="h4">
+                        <a href="{%url 'website:case'%}" class="stretched-link">5 Bad Landing Page Examples & How We Would Fix Them</a>
+                      </h3>
+                      <p class="mb-0">Totam, soluta placeat hic adipisci reprehenderit iusto est nulla dolorum doloremque inventore suscipit consequuntur distinctio id.</p>
+                    </div>
+                    <div class="card-footer d-flex align-items-center py-4 text-muted border-top-0">
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-like fs-lg me-1"></i>
+                        <span class="fs-sm">8</span>
+                      </div>
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-comment fs-lg me-1"></i>
+                        <span class="fs-sm">7</span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <i class="bx bx-share-alt fs-lg me-1"></i>
+                        <span class="fs-sm">3</span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+    
+                <!-- Item -->
+                <div class="swiper-slide h-auto py-3">
+                  <article class="card p-md-3 p-2 border-0 shadow-sm card-hover-primary h-100 mx-2">
+                    <div class="card-body pb-0">
+                      <div class="d-flex align-items-center justify-content-between mb-3">
+                        <a href="#" class="badge fs-sm text-nav bg-secondary text-decoration-none position-relative zindex-2">Technology</a>
+                        <span class="fs-sm text-muted">Aug 19, 2021</span>
+                      </div>
+                      <h3 class="h4">
+                        <a href="{%url 'website:case'%}" class="stretched-link">Why UX Design Matters and How it Affects Ranking</a>
+                      </h3>
+                      <p class="mb-0">Quaerat quos assumenda numquam dolorem, repellendus est, itaque sint et odio perferendis laudantium laboriosam.</p>
+                    </div>
+                    <div class="card-footer d-flex align-items-center py-4 text-muted border-top-0">
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-like fs-lg me-1"></i>
+                        <span class="fs-sm">5</span>
+                      </div>
+                      <div class="d-flex align-items-center me-3">
+                        <i class="bx bx-comment fs-lg me-1"></i>
+                        <span class="fs-sm">3</span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <i class="bx bx-share-alt fs-lg me-1"></i>
+                        <span class="fs-sm">9</span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </div>
+    
+              <!-- Pagination (bullets) -->
+              <div class="swiper-pagination position-relative pt-2 pt-sm-3 mt-4"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Testimonials (Slider) -->
+      <section class="container pb-5 mb-md-2 mb-xl-4">
+        <div class="row pb-lg-2">
+          <div class="col-md-5 mb-4 mb-md-0">
+            <div class="card justify-content-center bg-dark h-100 p-4 p-lg-5">
+              <div class="p-2">
+                <h3 class="display-4 text-primary mb-1">Braintree</h3>
+                <h2 class="text-light pb-5 mb-2">Join Our Happy Customers</h2>
+                <a href="#choiceModal" data-target="#choiceModal" data-toggle="modal" class="d-inline-flex align-items-center rounded-3 text-decoration-none py-3 px-4" style="background-color: #3e4265;">
+                  <div class="pe-3">
+                    <img src="{% static 'assets/img/landing/app-showcase/features/happy.svg' %}"  width="97" alt="Clutch">
+                  </div>
+                  <div class="ps-1">
+                    <div class="text-nowrap mb-2">
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                    </div>
+                    <div class="text-light opacity-70">Click here</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="card border-0 shadow-sm p-4 p-xxl-5">
+
+              <!-- Slider prev/next buttons + Quotation mark -->
+              <div class="d-flex justify-content-between pb-4 mb-2">
+                <span class="btn btn-icon btn-primary btn-lg shadow-primary pe-none">
+                  <i class="bx bxs-quote-left"></i>
+                </span>
+                <div class="d-flex">
+                  <button type="button" id="testimonial-prev" class="btn btn-prev btn-icon btn-sm me-2">
+                    <i class="bx bx-chevron-left"></i>
+                  </button>
+                  <button type="button" id="testimonial-next" class="btn btn-next btn-icon btn-sm ms-2">
+                    <i class="bx bx-chevron-right"></i>
+                  </button>
+                </div>
+              </div>   
+              
+              <!-- Slider -->
+              <div class="swiper mx-0 mb-md-n2 mb-xxl-n3" data-swiper-options='{
+                "spaceBetween": 24,
+                "loop": true,
+                "pagination": {
+                  "el": ".swiper-pagination",
+                  "clickable": true
+                },
+                "navigation": {
+                  "prevEl": "#testimonial-prev",
+                  "nextEl": "#testimonial-next"
+                }
+              }'>
+                <div class="swiper-wrapper">
+        
+                  <!-- Item -->
+                  <div class="swiper-slide h-auto" data-swiper-tab="#author-1">
+                    <figure class="card h-100 position-relative border-0 bg-transparent">
+                      <blockquote class="card-body p-0 mb-0">
+                        <p class="fs-lg mb-0">When Braintree approached us with a free security assessment we thought, why not? Little do we know what we had instore for us. Shortly after the seucrity assessment we had a breach in security, through a vulnerability that Braintree wanred us about! We immediately implemented their services and we were able to secure our systems once again and we haven't had a problem since.</p>
+                      </blockquote>
+                      <figcaption class="card-footer border-0 d-flex align-items-center w-100 pb-2">
+                        <img src="{%static 'assets/img/avatar/tim.jpeg' %}" width="48" class="rounded-circle" alt="Ralph Edwards">
+                        <div class="ps-3">
+                          <h5 class="fw-semibold lh-base mb-0">Tim Wood</h5>
+                          <span class="fs-sm text-muted">Excecutive Head - IS & IT</span>
+                        </div>
+                      </figcaption>
+                    </figure>
+                  </div>
+        
+                  <!-- Item -->
+                  <div class="swiper-slide h-auto" data-swiper-tab="#author-2">
+                    <figure class="card h-100 position-relative border-0 bg-transparent">
+                      <blockquote class="card-body p-0 mb-0">
+                        <p class="fs-lg mb-0">Mi semper risus ultricies orci pulvinar in at enim orci. Quis facilisis nunc pellentesque in ullamcorper sit. Lorem blandit arcu sapien, senectus libero, amet dapibus cursus quam. Eget pellentesque eu purus volutpat adipiscing malesuada. Purus nisi, tortor vel lacus. Donec diam molestie ultrices vitae eget pulvinar fames. Velit lacus mi purus velit justo, amet.</p>
+                      </blockquote>
+                      <figcaption class="card-footer border-0 d-flex align-items-center w-100 pb-2">
+                        <img src="{%static 'assets/img/avatar/06.jpg' %}" width="48" class="rounded-circle" alt="Annette Black">
+                        <div class="ps-3">
+                          <h5 class="fw-semibold lh-base mb-0">Annette Black</h5>
+                          <span class="fs-sm text-muted">Strategic Advisor at Ipsum Ltd.</span>
+                        </div>
+                      </figcaption>
+                    </figure>
+                  </div>
+        
+                  <!-- Item -->
+                  <div class="swiper-slide h-auto" data-swiper-tab="#author-3">
+                    <figure class="card h-100 position-relative border-0 bg-transparent">
+                      <blockquote class="card-body p-0 mb-0">
+                        <p class="fs-lg mb-0">Ac at sed sit senectus massa. Massa ante amet ultrices magna porta tempor. Aliquet diam in et magna ultricies mi at. Lectus enim, vel enim egestas nam pellentesque et leo. Elit mi faucibus laoreet aliquam pellentesque sed aliquet integer massa. Orci leo tortor ornare id mattis auctor aliquam volutpat aliquet. Odio lectus viverra eu blandit nunc malesuada vitae eleifend pulvinar.</p>
+                      </blockquote>
+                      <figcaption class="card-footer border-0 d-flex align-items-center w-100 pb-2">
+                        <img src="{%static 'assets/img/avatar/01.jpg' %}" width="48" class="rounded-circle" alt="Darrell Steward">
+                        <div class="ps-3">
+                          <h5 class="fw-semibold lh-base mb-0">Darrell Steward</h5>
+                          <span class="fs-sm text-muted">Project Manager at Company Ltd.</span>
+                        </div>
+                      </figcaption>
+                    </figure>
+                  </div>
+                </div>
+        
+                <!-- Pagination (bullets) -->
+                <div class="swiper-pagination position-relative pt-3 mt-4"></div>
+              </div>        
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Integrations -->
+      <section class="container py-5 my-md-2 my-lg-4 my-xl-5">
+        <div class="row justify-content-center pt-1 pb-1 mb-2 mb-md-3 mb-lg-4">
+          <div class="col-lg-8 col-md-9 text-center">
+            <h2 class="h1 mb-4">Integrate Top Work Tools</h2>
+            <p class="fs-lg text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin volutpat mollis egestas. Nam luctus facilisis ultrices. Pellentesque volutpat ligula est. Mattis fermentum, at nec lacus.</p>
+          </div>
+        </div>
+        <div class="swiper swiper-nav-onhover mx-n2" data-swiper-options='{
+          "slidesPerView": 2,
+          "spaceBetween": 8,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "clickable": true
+          },
+          "breakpoints": {
+            "500": {
+              "slidesPerView": 3
+            },
+            "600": {
+              "slidesPerView": 4
+            },
+            "768": {
+              "slidesPerView": 5
+            },
+            "850": {
+              "slidesPerView": 6
+            },
+            "1000": {
+              "slidesPerView": 7
+            },
+            "1200": {
+              "slidesPerView": 8
+            }
+          }
+        }'>
+          <div class="swiper-wrapper">
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="{%static 'assets/img/brands/google.svg' %}" class="d-block mx-auto" alt="Google">
+                </div>
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="{%static 'assets/img/brands/zoom.svg' %}" class="d-block mx-auto" alt="Zoom">
+                </div>
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="{%static 'assets/img/brands/slack.svg' %}" class="d-block mx-auto" alt="Slack">
+                </div>
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="{%static 'assets/img/brands/gmail.svg' %}" class="d-block mx-auto" alt="Gmail">
+                </div>
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="{%static 'assets/img/brands/trello.svg' %}" class="d-block mx-auto" alt="Trello">
+                </div>
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="{%static 'assets/img/brands/mailchimp.svg' %}" class="d-block mx-auto" alt="Mailchimp">
+                </div>
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="{%static 'assets/img/brands/dropbox.svg' %}" class="d-block mx-auto" alt="Dropbox">
+                </div>
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-hover border-0 shadow-sm py-3 mx-2">
+                <div class="card-body">
+                  <img src="{%static 'assets/img/brands/evernote.svg' %}" class="d-block mx-auto" alt="Evernote">
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Pagination (bullets) -->
+          <div class="swiper-pagination position-relative pt-3 mt-4"></div>
+        </div>
+        <div class="text-center my-3 mt-xl-n2">
+          <a href="#" class="btn btn-primary">View all integrations</a>
+        </div>
+      </section>
+
+
+      <!-- Sign up CTA -->
+      <section class="container">
+        <div class="bg-dark border border-light rounded-3 py-5 px-4 px-sm-0">
+          <div class="row justify-content-center py-sm-2 py-lg-5">
+            <div class="col-xl-6 col-lg-7 col-md-8 col-sm-10 text-center">
+              <h2 class="h1 text-light mb-4">Ready to Get Started?</h2>
+              <p class="fs-lg text-light opacity-70 pb-4 mb-3">Organize your tasks with a 14-day free trial</p>
+
+              <!-- Desktop form -->
+              <form class="input-group input-group-lg d-none d-sm-flex needs-validation mb-3" novalidate>
+                <input type="email" class="form-control rounded-start ps-5" placeholder="Your email" required>
+                <i class="bx bx-envelope fs-lg text-muted position-absolute top-50 start-0 translate-middle-y ms-3 zindex-5"></i>
+                <div class="invalid-tooltip position-absolute top-100 start-0">Please provide a valid email address.</div>
+                <button type="submit" class="btn btn-primary">Get started for free</button>
+              </form>
+
+              <!-- Mobile form -->
+              <form class="needs-validation d-sm-none mb-3" novalidate>
+                <div class="position-relative mb-3">
+                  <input type="email" class="form-control form-control-lg rounded-start ps-5" placeholder="Your email" required>
+                  <i class="bx bx-envelope fs-lg text-muted position-absolute top-50 start-0 translate-middle-y ms-3 zindex-5"></i>
+                  <div class="invalid-tooltip position-absolute top-0 start-0 mt-n4">Please provide a valid email address.</div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100">Get started for free</button>
+              </form>
+              <p class="fs-sm text-light opacity-50 mb-0">No subscriptions. No annual fees. No lock-ins.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer dark-mode bg-dark pt-5 pb-4 pb-lg-5">
+      <div class="container pt-lg-4">
+        <div class="row pb-5">
+          <div class="col-lg-4 col-md-6">
+            <div class="navbar-brand text-dark p-0 me-0 mb-3 mb-lg-4">
+              <img src="{%static 'assets/img/bt.svg' %}" width="47" alt="Silicon">
+              braintree
+            </div>
+            <p class="fs-sm text-light opacity-70 pb-lg-3 mb-4">A Gold Certified Partner 
+              trusted by thousands of customers for their homes 
+              and businesses. We make a difference to our 
+              customers by unlocking the potential of
+              the cloud, software, and hardware so that
+              they can digitally transform and provide them
+              with support centres to keep them productive,
+              and having fun.</p>
+            <form class="needs-validation" novalidate>
+              <label for="subscr-email" class="form-label">Subscribe to our newsletter</label>
+              <div class="input-group">
+                <input type="email" id="subscr-email" class="form-control rounded-start ps-5" placeholder="Your email" required>
+                <i class="bx bx-envelope fs-lg text-muted position-absolute top-50 start-0 translate-middle-y ms-3 zindex-5"></i>
+                <div class="invalid-tooltip position-absolute top-100 start-0">Please provide a valid email address.</div>
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+              </div>
+            </form>
+          </div>
+          <div class="col-xl-6 col-lg-7 col-md-5 offset-xl-2 offset-md-1 pt-4 pt-md-1 pt-lg-0">
+            <div id="footer-links" class="row">
+              <div class="col-lg-4">
+                <h6 class="mb-2">
+                  <a href="#useful-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Useful Links</a>
+                </h6>
+                <div id="useful-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+                  <ul class="nav flex-column pb-lg-1 mb-lg-3">
+                    <li class="nav-item"><a href="{%url 'website:home'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Home</a></li>
+                    <li class="nav-item"><a href="{%url 'website:shop'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Shop</a></li>
+                    <li class="nav-item"><a href="{%url 'website:reseller'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Partners</a></li>
+                    <li class="nav-item"><a href="{%url 'website:case'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">News &amp; Insights</a></li>
+                    <li class="nav-item"><a href="{%url 'website:contact'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Contact Us</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-3">
+                <h6 class="mb-2">
+                  <a href="#social-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Socials</a>
+                </h6>
+                <div id="social-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+                  <ul class="nav flex-column mb-2 mb-lg-0">
+                    <li class="nav-item"><a href="https://www.facebook.com/BraintreeZA1" class="nav-link d-inline-block px-0 pt-1 pb-2">Facebook</a></li>
+                    <li class="nav-item"><a href="https://www.linkedin.com/company/braintreebyvox/" class="nav-link d-inline-block px-0 pt-1 pb-2">LinkedIn</a></li>
+                    <li class="nav-item"><a href="https://twitter.com/braintree_za" class="nav-link d-inline-block px-0 pt-1 pb-2">Twitter</a></li>
+                    <li class="nav-item"><a href="https://www.instagram.com/braintree_by_vox/" class="nav-link d-inline-block px-0 pt-1 pb-2">Instagram</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-3">
+                <h6 class="mb-2">
+                  <a href="#social-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Socials</a>
+                </h6>
+                <div id="social-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+                  <ul class="nav flex-column mb-2 mb-lg-0">
+                <h6 class="mb-2">Resources</h6>
+                <li class="nav-item"><a href="https://www.braintree.co.za/Files/Files/Business%20Documents/2021-2022%20BEE%20Verification%20Certifciate.pdf" class="nav-link">BEE Certification</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/Files/Images/PAIA-manual-Braintree.pdf" class="nav-link">PAIA</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/take-down-notice" class="nav-link">Take Down Notice</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/terms-and-conditions" class="nav-link">Terms & Conditions</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/code-of-conduct" class="nav-link">Code of Conduct</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/privacy-policy" class="nav-link">Privacy Policy</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/acceptable-use" class="nav-link">Acceptable Use</a></li>
+                <li class="nav-item"><a href="https://powerapps.microsoft.com/en-gb/support/" class="nav-link">Dev Support</a></li>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="fs-xs text-center text-md-start pb-2 pb-lg-0 mb-0">
+          <span class="text-light opacity-50">&copy; All rights reserved. Made by </span>
+          <a class="nav-link d-inline-block p-0" href="https://za.linkedin.com/in/dimitri-k-8b70b18b" target="_blank" rel="noopener">Dimitri Kalamoudacos</a>
+        </p>
+      </div>
+    </footer>
+
+
+    <!-- Back to top button -->
+    <a href="#top" class="btn-scroll-top" data-scroll>
+      <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+      <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+    </a>
+
+
+    <!-- Vendor Scripts -->
+    <script src="{%static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/parallax-js/dist/parallax.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/jarallax/dist/jarallax.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/rellax/rellax.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+    <!-- Main Theme Script -->
+    <script src="{%static 'assets/js/theme.min.js' %}"></script>
+  </body>
+</html>

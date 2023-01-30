@@ -1,0 +1,1142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Verde | Vaccine Management</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Verde - make every workday a good one.">
+    <meta name="keywords" content="verde, people management, fleet management, power apps, MS teams, leave management, employee lifecycle, vaccine management, covid management, covid-19, employee covid management">
+    <meta name="author" content="Dimitri Kalamoudacos">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon and Touch Icons -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'asets/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'assets/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'assets/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.ico' %}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="{%static 'assets/favicon/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Vendor Styles -->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/lightgallery.js/dist/css/lightgallery.min.css' %}"/>
+
+    <!-- Main Theme Styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/css/theme.min.css' %}">
+
+    <!-- Page loading styles -->
+    <style>
+      .modal-success .modal-content{
+        background-color: MediumSeaGreen;
+        color: #fff;
+      }
+
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      .dark-mode .page-loading {
+        background-color: #131022;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #9397ad;
+      }
+      .dark-mode .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        border: .15em solid #b4b7c9;
+        border-right-color: transparent;
+        border-radius: 50%;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      .dark-mode .page-spinner {
+        border-color: rgba(255,255,255,.4);
+        border-right-color: transparent;
+      }
+      @-webkit-keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+
+    <!-- Theme mode -->
+    <script>
+      let mode = window.localStorage.getItem('mode'),
+          root = document.getElementsByTagName('html')[0];
+      if (mode !== undefined && mode === 'dark') {
+        root.classList.add('dark-mode');
+      } else {
+        root.classList.remove('dark-mode');
+      }
+    </script>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () {
+            preloader.remove();
+          }, 1000);
+        };
+      })();
+    </script>
+  </head>
+
+
+  <!-- Body -->
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper for sticky footer -->
+    <!-- Wraps everything except footer to push footer to the bottom of the page if there is little content -->
+    <main class="page-wrapper">
+
+
+      <!-- Navbar -->
+      <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page -->
+      <header class="header navbar navbar-expand-lg navbar-dark position-absolute navbar-sticky">
+        <div class="container px-3">
+          <a href="index.html" class="navbar-brand pe-3">
+            <img src="{% static 'assets/img/verde.svg' %}" width="47" alt="Verde">
+            Verde
+          </a>
+          <div id="navbarNav" class="offcanvas offcanvas-end">
+            <div class="offcanvas-header border-bottom">
+              <h5 class="offcanvas-title">Menu</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">In the news</a>
+                  <div class="dropdown-menu p-0">
+                    <div class="d-lg-flex">
+                      <div class="mega-dropdown-column pt-lg-3 pb-lg-4">
+                        <ul class="list-unstyled mb-0">
+                          <li><a href="https://businesstech.co.za/news/business/569370/here-are-the-updated-vaccination-rules-planned-for-workers-in-south-africa/" class="dropdown-item">Businesstech</a></li>
+                          <li><a href="https://www.news24.com/citypress/news/mandatory-workplace-vaccinations-ccma-confirms-117-disputes-lodged-20220208" class="dropdown-item">News 24</a></li>
+                          <li><a href="https://www.werksmans.com/legal-updates-and-opinions/ccma-pronounces-on-mandatory-vaccination-policy/" class="dropdown-item">Werksmans</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>    
+          </div>
+          <div class="form-check form-switch mode-switch pe-lg-1 ms-auto me-4" data-bs-toggle="mode">
+            <input type="checkbox" class="form-check-input" id="theme-mode">
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Light</label>
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Dark</label>
+          </div>
+          <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a href="https://braintreeverde.net/home" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+            <i class="bx bx-user-circle fs-5 lh-1 me-1"></i>
+            &nbsp;Login
+          </a>
+        </div>
+      </header>
+
+
+      <!-- Hero -->
+      <section class="overflow-hidden pt-5" style="background: radial-gradient(116.18% 118% at 50% 100%, rgba(99, 102, 241, 0.1) 0%, rgba(218, 70, 239, 0.05) 41.83%, rgba(241, 244, 253, 0.07) 82.52%);">
+        <div class="container pt-4 pt-xl-5">
+          <div class="row pt-md-2 pt-lg-5">
+            <div class="col-md-5 d-flex flex-column mt-md-4 pt-5 pb-3 pb-sm-4 py-md-5">
+              <h1 class="display-4 text-center text-md-start mb-4">Verde, Make Every Workday A Good One</h1>
+              <p class="fs-lg text-center text-md-start pb-2 pb-md-3 mb-4 mb-lg-5">Enjoy a modular business automation experience with Verde. Empowering you and your organisation.</p>
+              <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-start">
+                <a href="#" class="btn btn-dark btn-lg px-3 py-2 me-sm-3 me-lg-4 mb-3">
+                  <img src="{% static 'assets/img/market/appstore-light.svg' %}" class="light-mode-img" width="124" alt="App Store">
+                  <img src="{% static 'assets/img/market/appstore-dark.svg' %}" class="dark-mode-img" width="124" alt="App Store">
+                </a>
+                <a href="#" class="btn btn-dark btn-lg px-3 py-2 mb-3">
+                  <img src="{% static 'assets/img/market/googleplay-light.svg' %}" class="light-mode-img" width="139" alt="Google Play">
+                  <img src="{% static 'assets/img/market/googleplay-dark.svg' %}" class="dark-mode-img" width="139" alt="Google Play">
+                </a>
+              </div>
+              <div class="position-relative d-inline-flex align-items-center justify-content-center justify-content-md-start mt-auto pt-3 pt-md-4 pb-xl-2">
+                <a href="#features" class="btn btn-icon btn-light bg-white stretched-link rounded-circle me-3" data-scroll data-scroll-offset="120">
+                  <i class="bx bx-chevron-down"></i>
+                </a>
+                <span class="fs-sm">Discover more</span>
+              </div>     
+            </div>
+            <div class="col-md-7 align-self-end">
+              <div class="position-relative overflow-hidden mt-4 pb-3 pt-4 mx-auto me-md-0" style="max-width: 632px;">
+                <div class="ratio ratio-1x1"></div>
+                <img src="{% static 'assets/img/landing/app-showcase/verdesplash.png' %}" class="position-absolute top-0 start-0 zindex-2" data-jarallax-element="-40" data-disable-parallax-down="md" alt="Phone">
+                <img src="{% static 'assets/img/landing/app-showcase/verdef.png' %}" class="position-absolute top-0 start-0" data-jarallax-element="-80" data-disable-parallax-down="md" alt="Phone">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section id="features" class="container pt-lg-2 pt-xl-3 pb-3 pb-xl-5 mt-n2 mt-sm-0 mb-2 mb-md-4 mb-lg-5">
+        <div class="row pb-xl-3">
+
+          <!-- Parallax gfx -->
+          <div class="col-lg-5 d-none d-lg-block">
+            <div class="position-relative" style="max-width: 348px;">
+              <img src="{% static 'assets/img/landing/app-showcase/features/verde1.png' %}" alt="Phone">
+              <img src="{% static 'assets/img/landing/app-showcase/features/verde2.png' %}" class="position-absolute top-0 start-0" data-jarallax-element="0 -25" data-disable-parallax-down="lg" alt="Card">
+            </div>
+          </div>
+
+          <!-- Feature list -->
+          <div class="col-lg-7">
+            <h2 class="h1 text-center text-md-start mb-4">Verde Vaccine Management Features</h2>
+            <p class="fs-lg text-muted text-center text-md-start mb-4 mb-xl-5">Verde is a user-managed solution designed to make work days better for the whole organisation. Verde caters for the modern workplace and its many hurdles both legislative and social.</p>
+            <div class="row row-cols-1 row-cols-sm-2 pt-2 pt-sm-3 pt-xl-2">
+
+              <!-- Item -->
+              <div class="col pb-2 pb-xl-0 mb-4 mb-xl-5">
+                <div class="d-flex align-items-start pe-xl-3">
+                  <div class="d-table bg-secondary rounded-3 flex-shrink-0 p-3 mb-3">
+                    <img src="{% static 'assets/img/landing/app-showcase/features/idea.svg' %}" alt="Easy Payments" width="28" height="28">
+                  </div>
+                  <div class="ps-4 ps-sm-3 ps-md-4">
+                    <h3 class="h5 pb-1 mb-2">Self Diagnosis</h3>
+                    <p class="mb-0">Verde's simple health diagnostic solution helps employers protect thier employees.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item -->
+              <div class="col pb-2 pb-xl-0 mb-4 mb-xl-5">
+                <div class="d-flex align-items-start ps-xl-3">
+                  <div class="d-table bg-secondary rounded-3 flex-shrink-0 p-3 mb-3">
+                    <img src="{% static 'assets/img/landing/app-showcase/features/security.svg' %}" alt="Data Security">
+                  </div>
+                  <div class="ps-4 ps-sm-3 ps-md-4">
+                    <h3 class="h5 pb-1 mb-2">Data Security</h3>
+                    <p class="mb-0">Verde is built in MS PowerApps, giving organisations confidence in central security.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item -->
+              <div class="col pb-2 pb-xl-0 mb-4 mb-xl-5">
+                <div class="d-flex align-items-start pe-xl-3">
+                  <div class="d-table bg-secondary rounded-3 flex-shrink-0 p-3 mb-3">
+                    <img src="{% static 'assets/img/landing/app-showcase/features/statistics.svg' %}" alt="Data Security">
+                  </div>
+                  <div class="ps-4 ps-sm-3 ps-md-4">
+                    <h3 class="h5 pb-1 mb-2">User-Driven</h3>
+                    <p class="mb-0">Verde user-driven approach automates workflows focussing on efficiency and profitability.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item -->
+              <div class="col pb-2 pb-xl-0 mb-4 mb-xl-5">
+                <div class="d-flex align-items-start ps-xl-3">
+                  <div class="d-table bg-secondary rounded-3 flex-shrink-0 p-3 mb-3">
+                    <img src="{% static 'assets/img/landing/app-showcase/features/support.svg' %}" alt="Support 24/7">
+                  </div>
+                  <div class="ps-4 ps-sm-3 ps-md-4">
+                    <h3 class="h5 pb-1 mb-2">Support 24/7</h3>
+                    <p class="mb-0">Verde's support desk take is open to all Verde users, as a customer satisfaction gaurantee.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item -->
+              <div class="col pb-2 pb-xl-0 mb-4 mb-xl-5">
+                <div class="d-flex align-items-start pe-xl-3">
+                  <div class="d-table bg-secondary rounded-3 flex-shrink-0 p-3 mb-3">
+                    <img src="{% static 'assets/img/landing/app-showcase/features/team.svg' %}" alt="Teams" width="28" height="28">
+                  </div>
+                  <div class="ps-4 ps-sm-3 ps-md-4">
+                    <h3 class="h5 pb-1 mb-2">Teams</h3>
+                    <p class="mb-0">Verde sits comfortably in the MS Teams environment, reducing user training and change management efforts.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item -->
+              <div class="col pb-2 pb-xl-0 mb-4 mb-xl-5">
+                <div class="d-flex align-items-start ps-xl-3">
+                  <div class="d-table bg-secondary rounded-3 flex-shrink-0 p-3 mb-3">
+                    <img src="{% static 'assets/img/landing/app-showcase/features/happy.svg' %}" alt="Policy Compliance">
+                  </div>
+                  <div class="ps-4 ps-sm-3 ps-md-4">
+                    <h3 class="h5 pb-1 mb-2">Policy Compliance</h3>
+                    <p class="mb-0">Verde's vaccine management aligns with company policy keeping both business and its people happy.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- How it works (Slider) -->
+      <section class="position-relative bg-secondary py-5">
+        <div class="container mt-3 pt-md-2 pt-lg-4 pb-2 pb-md-4 pb-lg-5">
+          <h2 class="h1 text-center pb-2 pb-md-0 mb-4 mb-md-5">How Does It Work?</h2>
+          <div class="position-relative mx-5">
+
+            <!-- Slider prev/next buttons -->
+            <button type="button" id="prev-screen" class="btn btn-prev btn-icon position-absolute top-50 start-0 ms-n5 translate-middle-y">
+              <i class="bx bx-chevron-left"></i>
+            </button>
+            <button type="button" id="next-screen" class="btn btn-next btn-icon position-absolute top-50 end-0 me-n5 translate-middle-y">
+              <i class="bx bx-chevron-right"></i>
+            </button>
+
+            <!-- Phone frame -->
+            <div class="position-absolute top-0 start-50 translate-middle-x h-100 w-100 w-md-33 zindex-5">
+              <div class="d-flex bg-repeat-0 bg-size-cover w-100 h-100 mx-auto" style="max-width: 328px; background-image: url({% static 'assets/img/landing/app-showcase/screens/phone-frame.png' %});"></div>
+            </div>
+
+            <!-- Phone screen -->
+            <div class="position-absolute top-0 start-50 translate-middle-x h-100 w-100 w-md-33">
+              <div class="d-flex bg-repeat-0 bg-size-cover w-100 h-100 mx-auto" style="max-width: 328px; background-image: url({% static 'assets/img/landing/app-showcase/screens/phone-screen.png' %});"></div>
+            </div>
+
+            <!-- Swiper slider -->
+            <div class="swiper mobile-app-slider" data-swiper-options='{
+              "slidesPerView": 1,
+              "centeredSlides": true,
+              "loop": true,
+              "tabs": true,
+              "pagination": {
+                "el": "#swiper-progress",
+                "type": "progressbar"
+              },
+              "navigation": {
+                "prevEl": "#prev-screen",
+                "nextEl": "#next-screen"
+              },
+              "breakpoints": {
+                "768": {
+                  "slidesPerView": 3
+                }
+              }
+            }'>
+              <div class="swiper-wrapper">
+
+                <!-- Item -->
+                <div class="swiper-slide" data-swiper-tab="#text-1">
+                  <img src="{% static 'assets/img/landing/app-showcase/screens/home.svg' %}" class="d-block mx-auto" width="328" alt="Screen">
+                </div>
+
+                <!-- Item -->
+                <div class="swiper-slide" data-swiper-tab="#text-2">
+                  <img src="{% static 'assets/img/landing/app-showcase/screens/health.svg' %}" class="d-block mx-auto" width="328" alt="Screen">
+                </div>
+
+                <!-- Item -->
+                <div class="swiper-slide" data-swiper-tab="#text-3">
+                  <img src="{% static 'assets/img/landing/app-showcase/screens/health.svg' %}" class="d-block mx-auto" width="328" alt="Screen">
+                </div>
+
+                <!-- Item -->
+                <div class="swiper-slide" data-swiper-tab="#text-4">
+                  <img src="{% static 'assets/img/landing/app-showcase/screens/risk.svg' %}" class="d-block mx-auto" width="328" alt="Screen">
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Swiper tabs (Description text) -->
+          <div class="row justify-content-center pt-4 mt-2 mt-md-3">
+            <div class="swiper-tabs col-xl-6 col-lg-7 col-md-8 text-center">
+
+              <!-- Text 1 -->
+              <div id="text-1" class="swiper-tab active">
+                <h3 class="h4 pb-1 mb-2">Step 1. Open Verde</h3>
+                <p class="mb-0">The Verde is a flexible solution that can be accessed through MS Teams, PowerApps and USSD. This flexibility makes it compatibale with various industries.</p>
+              </div>
+
+              <!-- Text 2 -->
+              <div id="text-2" class="swiper-tab">
+                <h3 class="h4 pb-1 mb-2">Step 2. Complete The Health Check</h3>
+                <p class="mb-0">Verde's self diagnosis tool presents a series of questions to assess employee health and then automatically actions company policy.</p>
+              </div>
+
+              <!-- Text 3 -->
+              <div id="text-3" class="swiper-tab">
+                <h3 class="h4 pb-1 mb-2">Step 3. Proof of Vaccine or Objection</h3>
+                <p class="mb-0">Employees can upload proof of vaccination or lodge an objection through the legally required steps to ensure legal compliance.</p>
+              </div>
+
+              <!-- Text 4 -->
+              <div id="text-4" class="swiper-tab">
+                <h3 class="h4 pb-1 mb-2">Step 4. Risk Management</h3>
+                <p class="mb-0">Verde provides health risk management notifications to ensure that administrators are aware of the risk to thier workforce and overall productivity.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slider progress -->
+        <div id="swiper-progress" class="swiper-pagination bottom-0" style="top: auto;"></div>
+      </section>
+
+
+      <!-- Video showcase -->
+      <section class="container py-5 my-2 my-md-4 my-lg-5">
+        <div class="row align-items-center pb-2 py-xl-3">
+          <div class="col-xl-4 col-md-5 order-2 order-md-1" data-jarallax-element="20" data-disable-parallax-down="lg">
+            <h2 class="pb-3 mb-2 mb-lg-3">Simple &amp; Easy to Use</h2>
+            <ul class="list-unstyled pb-4 mb-0">
+              <li class="d-flex align-items-center pb-1 mb-2">
+                <i class="bx bx-check-circle fs-xl text-primary me-2"></i>
+                Open Teams
+              </li>
+              <li class="d-flex align-items-center pb-1 mb-2">
+                <i class="bx bx-check-circle fs-xl text-primary me-2"></i>
+                Tap on the Verde icon
+              </li>
+              <li class="d-flex align-items-center pb-1 mb-2">
+                <i class="bx bx-check-circle fs-xl text-primary me-2"></i>
+                Complete the questionnaire
+              </li>
+              <li class="d-flex align-items-center pb-1 mb-2">
+                <i class="bx bx-check-circle fs-xl text-primary me-2"></i>
+                Get to work safely
+              </li>
+            </ul>
+            <a href="#contact-form" class="btn btn-primary w-100 w-md-auto">
+              Request A Demo
+              <i class="bx bx-right-arrow-alt fs-xl ms-2 me-n1"></i>
+            </a>
+          </div>
+          <div class="col-md-7 offset-xl-1 order-1 order-md-2 pb-2 pb-md-0 mb-4 mb-md-0" data-jarallax-element="-20" data-disable-parallax-down="lg">
+            <div class="position-relative rounded-3 overflow-hidden">
+              <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center zindex-5">
+                <a href="https://www.youtube.com/watch?v=9uKMZHDIVT8" class="btn btn-video btn-icon btn-xl stretched-link bg-white" data-bs-toggle="video">
+                  <i class="bx bx-play"></i>
+                </a>
+              </div>
+              <span class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-35"></span>
+              <img src="{% static 'assets/img/landing/app-showcase/verde-lifestyle.png' %}" alt="Cover image">
+            </div>
+          </div>
+        </div>
+      </section>
+<!-- Testimonials -->
+<section class="container pb-5 mb-2 mb-md-4 mb-lg-5">
+  <h2 class="h1 pb-3 pb-lg-4">What Our Clients Say</h2>
+  <div class="row">
+    <div class="col-md-4 d-none d-md-block">
+
+      <!-- Swiper tabs (Author images) -->
+      <div class="swiper-tabs">
+
+        <!-- Author 1 image -->
+        <div id="author-1" class="card bg-transparent border-0 swiper-tab active">
+          <div class="card-body p-0 rounded-3 bg-size-cover bg-repeat-0 bg-position-top-center" style="background-image: url({% static 'assets/img/testimonials/04.jpeg' %});"></div>
+        </div>
+
+        <!-- Author 2 image -->
+        <div id="author-2" class="card bg-transparent border-0 swiper-tab">
+          <div class="card-body p-0 rounded-3 bg-size-cover bg-repeat-0 bg-position-top-center" style="background-image: url({% static 'assets/img/testimonials/05.jpeg' %});"></div>
+        </div>
+
+        <!-- Author 3 image -->
+        <div id="author-3" class="card bg-transparent border-0 swiper-tab">
+          <div class="card-body p-0 rounded-3 bg-size-cover bg-repeat-0 bg-position-top-center" style="background-image: url({% static 'assets/img/testimonials/06.jpg' %});"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card border-0 shadow-sm mt-4 pt-5 p-4 p-xxl-5 ms-xxl-5">
+        <span class="btn btn-icon btn-primary btn-lg shadow-primary pe-none position-absolute top-0 translate-middle-y">
+          <i class="bx bxs-quote-left"></i>
+        </span>
+
+        
+        <!-- Slider -->
+        <div class="swiper mx-0 mb-md-n2 mb-xxl-n3" data-swiper-options='{
+          "spaceBetween": 24,
+          "loop": true,
+          "tabs": true,
+          "navigation": {
+            "prevEl": "#prev",
+            "nextEl": "#next"
+          }
+        }'>
+          <div class="swiper-wrapper">
+
+            <!-- Item -->
+            <div class="swiper-slide h-auto" data-swiper-tab="#author-1">
+              <figure class="card h-100 position-relative border-0 bg-transparent">
+                <blockquote class="card-body p-0 mb-0">
+                  <p class="fs-lg mb-0">Thank you to Pieter Cornelius and the Verde team for working tirelessly to get our COVID-19 screening App and USSD tool funtional and customised for our business, which has made a huge improvement on our on-site screening process and has reduced the need for human resources to facilitate this process on campus.</p>
+                </blockquote>
+                <figcaption class="card-footer border-0 d-sm-flex w-100 pb-2">
+                  <div class="d-flex align-items-center border-end-sm pe-sm-4 me-sm-2">
+                    <img src="{% static 'assets/img/testimonials/tam.jpeg' %}" width="48" class="d-md-none rounded-circle" alt="Pamela Talma">
+                    <div class="ps-3 ps-md-0">
+                      <h5 class="fw-semibold lh-base mb-0">Pamela Talma</h5>
+                      <span class="fs-sm text-muted">HR Team Manager</span>
+                    </div>
+                  </div>
+                  <img src="{% static 'assets/img/brands/out.svg' %}" width="160" class="d-block mt-2 ms-5 mt-sm-0 ms-sm-0" alt="Company logo">
+                </figcaption>
+              </figure>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide h-auto" data-swiper-tab="#author-2">
+              <figure class="card h-100 position-relative border-0 bg-transparent">
+                <blockquote class="card-body p-0 mb-0">
+                  <p class="fs-lg mb-0">Thanks to Verde’s Engage module, we were able to capture information such as work location, health check-in’s, and provide easy access corporate information and policies that help us comply with legislation, which has improved our ability to fulfil our responsibilities of protecting our staff, partners and customers while still delivering exceptional service to our customers as a leading South African telecommunications provider ​</p>
+                </blockquote>
+                <figcaption class="card-footer border-0 d-sm-flex w-100 pb-2">
+                  <div class="d-flex align-items-center border-end-sm pe-sm-4 me-sm-2">
+                    <img src="{% static 'assets/img/testimonials/tim.jpeg' %}" width="48" class="d-md-none rounded-circle" alt="Annette Black">
+                    <div class="ps-3 ps-md-0">
+                      <h5 class="fw-semibold lh-base mb-0">Tim Wood</h5>
+                      <span class="fs-sm text-muted">Excecutive Head - IS & IT</span>
+                    </div>
+                  </div>
+                  <img src="{% static 'assets/img/brands/vox.svg' %}" width="160" class="d-block mt-2 ms-5 mt-sm-0 ms-sm-0" alt="Company logo">
+                </figcaption>
+              </figure>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide h-auto" data-swiper-tab="#author-3">
+              <figure class="card h-100 position-relative border-0 bg-transparent">
+                <blockquote class="card-body p-0 mb-0">
+                  <p class="fs-lg mb-0">The amount of detail and information the app has managed for us in this Covid Pandemic has been remarkable. We are able to brief our Directors on a daily basis at a click of a button and provide them with exactly which of the staff are in office, which members are off ill and with what exactly they are ill with. This app has helped us to manage the contamination and spread of the virus to other staff simply by managing the whereabouts of everyone via the app. This has certainly made our daughting task of keeping everyone safe a lot easier to manage. We extended our recommendation to those that wish to make use of this affordable solution.</p>
+                </blockquote>
+                <figcaption class="card-footer border-0 d-sm-flex w-100 pb-2">
+                  <div class="d-flex align-items-center border-end-sm pe-sm-4 me-sm-2">
+                    <img src="{% static 'assets/img/avatar/alexsa.jpg' %}" width="48" class="d-md-none rounded-circle" alt="Ralph Edwards">
+                    <div class="ps-3 ps-md-0">
+                      <h5 class="fw-semibold lh-base mb-0">Alexsa Da Costa</h5>
+                      <span class="fs-sm text-muted">Office Manager</span>
+                    </div>
+                  </div>
+                  <img src="{% static 'assets/img/brands/01.svg' %}" width="160" class="d-block mt-2 ms-5 mt-sm-0 ms-sm-0" alt="Company logo">
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+
+  <!-- Slider Prev / Next buttons -->
+  <div class="d-flex justify-content-center justify-content-md-start pt-3 mt-2 mt-md-3">
+    <button type="button" id="prev" class="btn btn-prev btn-icon btn-sm me-2">
+      <i class="bx bx-chevron-left"></i>
+    </button>
+    <button type="button" id="next" class="btn btn-next btn-icon btn-sm ms-2">
+      <i class="bx bx-chevron-right"></i>
+    </button>
+  </div>
+</section>
+
+<!-- Contact form -->
+<section class="container mb-md-2 mb-lg-4">
+  <div class="bg-secondary rounded-3 py-5 px-3 px-sm-4 px-lg-0">
+    <div class="row align-items-center pt-1 pb-2 py-lg-4">
+      <div class="col-xl-4 col-lg-5 col-md-6 offset-lg-1 mb-4 pb-3 mb-md-0 pb-md-0">
+        <h2 class="h1 mb-lg-4">Get in Touch</h2>
+        <p class="pb-2 pb-md-4 pb-lg-5"> Fill out the form and we will get back to you as soon as possible. </p>
+        <h3 class="mb-lg-4">Contact Info</h3>
+        <ul class="list-unstyled pb-3 pb-md-4 pb-lg-5 mb-2">
+          <li class="mb-2">
+            <a href="tel:0114556248" class="nav-link d-flex align-items-center p-0">
+              <i class="bx bx-phone-call fs-xl text-primary me-2"></i>
+              (011) 455 6248
+            </a>
+          </li>
+          <li class="mb-2">
+            <a href="mailto:sales@verde.work" class="nav-link d-flex align-items-center p-0">
+              <i class="bx bx-envelope fs-xl text-primary me-2"></i>
+              sales@verde.work
+            </a>
+          </li>
+          <li class="mb-2">
+            <a href="#" class="nav-link d-flex align-items-center p-0">
+              <i class="bx bx-map fs-xl text-primary me-2"></i>
+              1 Scott St, Waverley, Johannesburg, 2090
+            </a>
+          </li>
+        </ul>
+        <div class="d-flex">
+          <a href="https://www.facebook.com/BraintreeZA1" class="btn btn-icon btn-outline-secondary btn-facebook me-3">
+            <i class="bx bxl-facebook"></i>
+          </a>
+          <a href="https://twitter.com/braintree_za" class="btn btn-icon btn-outline-secondary btn-twitter me-3">
+            <i class="bx bxl-twitter"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/braintreebyvox/" class="btn btn-icon btn-outline-secondary btn-linkedin me-3">
+            <i class="bx bxl-linkedin"></i>
+          </a>
+          <a href="https://www.instagram.com/braintree_by_vox/" class="btn btn-icon btn-outline-secondary btn-instagram">
+            <i class="bx bxl-instagram"></i>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-5 col-md-6 offset-xl-1">
+        <div class="card border-0 shadow-sm p-sm-2">
+          <form class="card-body" id="contact-form" method="POST">
+            {%csrf_token%}
+            <div class="mb-4">
+              <label for="service" class="form-label fs-base">Service</label>
+              <select name="service" id="id_service" class="form-select form-select-lg" required>
+                <option value="" selected disabled>What would you like to know more about?</option>
+                <option value="Verde People">Verde People</option>
+                <option value="Verde Fleet">Verde Fleet</option>
+                <option value="Verde Leave">Verde Leave</option>
+                <option value="Verde Gift Reg">Verde Gift Reg</option>
+                <option value="Verde Claims">Verde Claims</option>
+                <option value="Verde ELC">Verde Employee Life Cycle</option>
+                <option value="Verde Policy">Verde Policy</option>
+              </select>
+              <div class="invalid-feedback">Please choose a listed option!</div>
+            </div>
+            <div class="mb-4">
+              <label for="name" class="form-label fs-base">Name & Surname</label>
+              <input type="text" name="name" id="id_name" class="form-control form-control-lg" required>
+              <div class="invalid-feedback">Please enter your name!</div>
+            </div>
+            <div class="mb-4">
+              <label for="name" class="form-label fs-base">Business Name</label>
+              <input type="text" name="business_name" id="id_business_name" class="form-control form-control-lg" required>
+              <div class="invalid-feedback">Please enter your business name!</div>
+            </div>
+            <div class="mb-4">
+              <label for="size" class="form-label fs-base">Business Size</label>
+              <select name="size" id="id_size" class="form-select form-select-lg" required>
+                <option value="" selected disabled>Number of Employees</option>
+                <option value="1-10">1-10</option>
+                <option value="11-50">11-50</option>
+                <option value="51-100">51-100</option>
+                <option value="101-500">101-500</option>
+                <option value="501-100">501-1000</option>
+                <option value="Over 1001">Over 1001</option>
+              </select>
+              <div class="invalid-feedback">Please choose a listed option!</div>
+            </div>
+            <div class="mb-4">
+              <label for="email" class="form-label fs-base">Email address</label>
+              <input type="email" name="email" id="id_email" class="form-control form-control-lg" required>
+              <div class="invalid-feedback">Please provide a valid email address!</div>
+            </div>
+            <div class="mb-4 pb-2">
+              <label for="message" class="form-label fs-base">Message</label>
+              <textarea name="message" id="id_message" class="form-control form-control-lg" rows="3" placeholder="Tell us about your project" required></textarea>
+              <div class="invalid-feedback">Please enter you message!</div>
+            </div>
+            <button type="submit" class="btn btn-primary shadow-primary btn-lg" id="sub">Send request</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+      <!-- Coming Soon -->
+      <section class="pb-lg-4 pb-xl-5 mb-5">
+        <h2 class="h1 text-center pb-3 pb-md-4 pb-xl-5">Coming Soon</h2>
+        <div class="px-2 px-sm-0">
+          <div class="swiper" data-swiper-options='{
+            "slidesPerView": 1,
+            "centeredSlides": true,
+            "spaceBetween": 8,
+            "loop": true,
+            "pagination": {
+              "el": ".swiper-pagination",
+              "clickable": true
+            },
+            "breakpoints": {
+              "500": {
+                "slidesPerView": 2,
+                "spaceBetween": 24
+              },
+              "1000": {
+                "slidesPerView": 4,
+                "spaceBetween": 24
+              },
+              "1500": {
+                "slidesPerView": 6,
+                "spaceBetween": 24
+              }
+            }
+          }'>
+            <div class="swiper-wrapper">
+
+              <!-- Item -->
+              <div class="swiper-slide h-auto pt-4">
+                <figure class="d-flex flex-column h-100 px-2 px-sm-0 mb-0">
+                  <div class="card h-100 position-relative border-0 shadow-sm pt-4">
+                    <span class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4">
+                      <i class="bx bxs-user-circle"></i>
+                    </span>
+                    <blockquote class="card-body pb-3 mb-0">
+                      <p class="mb-0"><h3>Verde People</h3>A powerful people management solution designed to empower people and businesses through user-driven process and business automation. Putting the power in the hands of the people.</p>
+                    </blockquote>
+                    
+                  </div>
+                  <figcaption class="d-flex align-items-center ps-4 pt-4">
+                    <img src="{% static 'assets/img/avatar/verde.svg' %}" width="48" class="rounded-square" alt="Verde People">
+                    <div class="ps-3">
+                    </div>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <!-- Item -->
+              <div class="swiper-slide h-auto pt-4">
+                <figure class="d-flex flex-column h-100 px-2 px-sm-0 mb-0">
+                  <div class="card h-100 position-relative border-0 shadow-sm pt-4">
+                    <span class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4">
+                      <i class="bx bxs-car"></i>
+                    </span>
+                    <blockquote class="card-body pb-3 mb-0">
+                      <p class="mb-0"><h3>Verde Fleet</h3>A fleet solution that drives compliance through user-driven storage of license data as well as tracking drivers and vehicle data. Managing requests and requirements in once place.</p>
+                    </blockquote>
+                  </div>
+                  <figcaption class="d-flex align-items-center ps-4 pt-4">
+                    <img src="{% static 'assets/img/avatar/verde.svg' %}" width="48" class="rounded-square" alt="Verde Fleet">
+                    <div class="ps-3">
+                    </div>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <!-- Item -->
+              <div class="swiper-slide h-auto pt-4">
+                <figure class="d-flex flex-column h-100 px-2 px-sm-0 mb-0">
+                  <div class="card h-100 position-relative border-0 shadow-sm pt-4">
+                    <span class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4">
+                      <i class="bx bxs-building-house"></i>
+                    </span>
+                    <blockquote class="card-body pb-3 mb-0">
+                      <p class="mb-0"><h3>Verde Leave</h3>This solution gives employees the power to view leave accured and submit request for approval through the touch of a button whilst Verde automates the rest.</p>
+                    </blockquote>
+                  </div>
+                  <figcaption class="d-flex align-items-center ps-4 pt-4">
+                    <img src="{% static 'assets/img/avatar/verde.svg' %}" width="48" class="rounded-square" alt="Verde Leave">
+                    <div class="ps-3">
+                    </div>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <!-- Item -->
+              <div class="swiper-slide h-auto pt-4">
+                <figure class="d-flex flex-column h-100 px-2 px-sm-0 mb-0">
+                  <div class="card h-100 position-relative border-0 shadow-sm pt-4">
+                    <span class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4">
+                      <i class="bx bxs-gift"></i>
+                    </span>
+                    <blockquote class="card-body pb-3 mb-0">
+                      <p class="mb-0"><h3>Verde Gift Reg</h3>Gifting is a sensative topic in business and Verde's Gift Register helps businesses and employees comply with legal regulations through approval processes and policy requirements.</p>
+                    </blockquote>
+                  </div>
+                  <figcaption class="d-flex align-items-center ps-4 pt-4">
+                    <img src="{% static 'assets/img/avatar/verde.svg' %}" width="48" class="rounded-square" alt="Verde Gift Reg">
+                    <div class="ps-3">
+                    </div>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <!-- Item -->
+              <div class="swiper-slide h-auto pt-4">
+                <figure class="d-flex flex-column h-100 px-2 px-sm-0 mb-0">
+                  <div class="card h-100 position-relative border-0 shadow-sm pt-4">
+                    <span class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4">
+                      <i class="bx bxs-credit-card"></i>
+                    </span>
+                    <blockquote class="card-body pb-3 mb-0">
+                      <p class="mb-0"><h3>Verde Claims</h3>Expense claims be tedious, not anymore. With Verde Expense Claims, employees can use their phones take a picture of thier reciepts and submit a claim in a single process on the app.</p>
+                    </blockquote>
+                  </div>
+                  <figcaption class="d-flex align-items-center ps-4 pt-4">
+                    <img src="{% static 'assets/img/avatar/verde.svg' %}" width="48" class="rounded-square" alt="Verde Claims">
+                    <div class="ps-3">
+                    </div>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <!-- Item -->
+              <div class="swiper-slide h-auto pt-4">
+                <figure class="d-flex flex-column h-100 px-2 px-sm-0 mb-0">
+                  <div class="card h-100 position-relative border-0 shadow-sm pt-4">
+                    <span class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4">
+                      <i class="bx bxs-user-pin"></i>
+                    </span>
+                    <blockquote class="card-body pb-3 mb-0">
+                      <p class="mb-0"><h3>Verde ELC</h3>Verde's Employee Life Cycle solution provides businesses and employees with a place to manage on-boarding and off-boarding, store certifications and develop succession plans.</p>
+                    </blockquote>
+                  </div>
+                  <figcaption class="d-flex align-items-center ps-4 pt-4">
+                    <img src="{% static 'assets/img/avatar/verde.svg' %}" width="48" class="rounded-square" alt="Verde Employee Life Cycle">
+                    <div class="ps-3">
+                    </div>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <!-- Item -->
+              <div class="swiper-slide h-auto pt-4">
+                <figure class="d-flex flex-column h-100 px-2 px-sm-0 mb-0">
+                  <div class="card h-100 position-relative border-0 shadow-sm pt-4">
+                    <span class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4">
+                      <i class="bx bxs-file"></i>
+                    </span>
+                    <blockquote class="card-body pb-3 mb-0">
+                      <p class="mb-0"><h3>Verde Policy</h3>Policy can be difficult to manage as a business and needs constant updates as legislation changes. Verde gives users easy access to policy and serves relevant updates. Managing user acceptance and potential liability</p>
+                    </blockquote>
+                    </div>
+                        <figcaption class="d-flex align-items-center ps-4 pt-4">
+                          <img src="{% static 'assets/img/avatar/verde.svg' %}" width="48" class="rounded-square" alt="Verde Policy">
+                          <div class="ps-3">
+                          </div>
+                        </figcaption>
+                      </figure>
+                    </div>
+
+            <!-- Pagination (bullets) -->
+            <div class="swiper-pagination position-relative pt-1 pt-sm-3 mt-5"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <!--
+      <section class="container mt-n1 mt-sm-0 pb-5">
+        <div class="row pb-2 pb-md-4 pb-lg-5">
+          <div class="col-xl-4 col-md-5 text-center text-md-start pb-2 pb-md-0 mb-4 mb-md-0 mt-md-5 pt-md-5" data-jarallax-element="60" data-disable-parallax-down="md">
+            <h2 class="pb-3 mb-1 mb-lg-3">Any questions? <br class="d-none d-md-inline">Check out the FAQs</h2>
+            <p class="fs-lg pb-3 mb-2 mb-lg-3">Still have unanswered questions and need to get in touch?</p>
+            <a href="contacts-v2.html" class="btn btn-primary">Contact us now</a>
+          </div>
+          <div class="col-md-7 offset-xl-1">
+            <div class="accordion" id="faq">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="q1-heading">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#q1" aria-expanded="true" aria-controls="q1">
+                    Is any of my personal information stored in the App?
+                  </button>
+                </h2>
+                <div id="q1" class="accordion-collapse collapse show" aria-labelledby="q1-heading" data-bs-parent="#faq">
+                  <div class="accordion-body fs-sm">
+                    <p>Nunc duis id aenean gravida tincidunt eu, tempor ullamcorper. Viverra aliquam arcu, viverra et, cursus. Aliquet pretium cursus adipiscing gravida et consequat lobortis arcu velit. Nibh pharetra fermentum duis accumsan lectus non. Massa cursus molestie lorem scelerisque pellentesque. Nisi, enim, arcu purus gravida adipiscing euismod montes, duis egestas. Vehicula eu etiam quam tristique tincidunt suspendisse ut consequat.</p>
+                    <p class="mb-0">Ornare senectus fusce dignissim ut. Integer consequat in eu tortor, faucibus et lacinia posuere. Turpis sit viverra lorem suspendisse lacus aliquam auctor vulputate. Quis egestas aliquam nunc purus lacus, elit leo elit facilisi. Dignissim amet adipiscing massa integer.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="q2-heading">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q2" aria-expanded="false" aria-controls="q2">
+                    What formats can I download my transaction history in?
+                  </button>
+                </h2>
+                <div id="q2" class="accordion-collapse collapse" aria-labelledby="q2-heading" data-bs-parent="#faq">
+                  <div class="accordion-body fs-sm">
+                    <p>Nunc duis id aenean gravida tincidunt eu, tempor ullamcorper. Viverra aliquam arcu, viverra et, cursus. Aliquet pretium cursus adipiscing gravida et consequat lobortis arcu velit. Nibh pharetra fermentum duis accumsan lectus non. Massa cursus molestie lorem scelerisque pellentesque. Nisi, enim, arcu purus gravida adipiscing euismod montes, duis egestas. Vehicula eu etiam quam tristique tincidunt suspendisse ut consequat.</p>
+                    <p class="mb-0">Ornare senectus fusce dignissim ut. Integer consequat in eu tortor, faucibus et lacinia posuere. Turpis sit viverra lorem suspendisse lacus aliquam auctor vulputate. Quis egestas aliquam nunc purus lacus, elit leo elit facilisi. Dignissim amet adipiscing massa integer.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="q3-heading">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q3" aria-expanded="false" aria-controls="q3">
+                    Can I schedule future transfers?
+                  </button>
+                </h2>
+                <div id="q3" class="accordion-collapse collapse" aria-labelledby="q3-heading" data-bs-parent="#faq">
+                  <div class="accordion-body fs-sm">
+                    <p>Nunc duis id aenean gravida tincidunt eu, tempor ullamcorper. Viverra aliquam arcu, viverra et, cursus. Aliquet pretium cursus adipiscing gravida et consequat lobortis arcu velit. Nibh pharetra fermentum duis accumsan lectus non. Massa cursus molestie lorem scelerisque pellentesque. Nisi, enim, arcu purus gravida adipiscing euismod montes, duis egestas. Vehicula eu etiam quam tristique tincidunt suspendisse ut consequat.</p>
+                    <p class="mb-0">Ornare senectus fusce dignissim ut. Integer consequat in eu tortor, faucibus et lacinia posuere. Turpis sit viverra lorem suspendisse lacus aliquam auctor vulputate. Quis egestas aliquam nunc purus lacus, elit leo elit facilisi. Dignissim amet adipiscing massa integer.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="q4-heading">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q4" aria-expanded="false" aria-controls="q4">
+                    When can I use Banking App services?
+                  </button>
+                </h2>
+                <div id="q4" class="accordion-collapse collapse" aria-labelledby="q4-heading" data-bs-parent="#faq">
+                  <div class="accordion-body fs-sm">
+                    <p>Nunc duis id aenean gravida tincidunt eu, tempor ullamcorper. Viverra aliquam arcu, viverra et, cursus. Aliquet pretium cursus adipiscing gravida et consequat lobortis arcu velit. Nibh pharetra fermentum duis accumsan lectus non. Massa cursus molestie lorem scelerisque pellentesque. Nisi, enim, arcu purus gravida adipiscing euismod montes, duis egestas. Vehicula eu etiam quam tristique tincidunt suspendisse ut consequat.</p>
+                    <p class="mb-0">Ornare senectus fusce dignissim ut. Integer consequat in eu tortor, faucibus et lacinia posuere. Turpis sit viverra lorem suspendisse lacus aliquam auctor vulputate. Quis egestas aliquam nunc purus lacus, elit leo elit facilisi. Dignissim amet adipiscing massa integer.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="q5-heading">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q5" aria-expanded="false" aria-controls="q5">
+                    Can I create my own password that is easy for me to remember?
+                  </button>
+                </h2>
+                <div id="q5" class="accordion-collapse collapse" aria-labelledby="q5-heading" data-bs-parent="#faq">
+                  <div class="accordion-body fs-sm">
+                    <p>Nunc duis id aenean gravida tincidunt eu, tempor ullamcorper. Viverra aliquam arcu, viverra et, cursus. Aliquet pretium cursus adipiscing gravida et consequat lobortis arcu velit. Nibh pharetra fermentum duis accumsan lectus non. Massa cursus molestie lorem scelerisque pellentesque. Nisi, enim, arcu purus gravida adipiscing euismod montes, duis egestas. Vehicula eu etiam quam tristique tincidunt suspendisse ut consequat.</p>
+                    <p class="mb-0">Ornare senectus fusce dignissim ut. Integer consequat in eu tortor, faucibus et lacinia posuere. Turpis sit viverra lorem suspendisse lacus aliquam auctor vulputate. Quis egestas aliquam nunc purus lacus, elit leo elit facilisi. Dignissim amet adipiscing massa integer.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="q6-heading">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q6" aria-expanded="false" aria-controls="q6">
+                    What happens if I forget or lose my password?
+                  </button>
+                </h2>
+                <div id="q6" class="accordion-collapse collapse" aria-labelledby="q6-heading" data-bs-parent="#faq">
+                  <div class="accordion-body fs-sm">
+                    <p>Nunc duis id aenean gravida tincidunt eu, tempor ullamcorper. Viverra aliquam arcu, viverra et, cursus. Aliquet pretium cursus adipiscing gravida et consequat lobortis arcu velit. Nibh pharetra fermentum duis accumsan lectus non. Massa cursus molestie lorem scelerisque pellentesque. Nisi, enim, arcu purus gravida adipiscing euismod montes, duis egestas. Vehicula eu etiam quam tristique tincidunt suspendisse ut consequat.</p>
+                    <p class="mb-0">Ornare senectus fusce dignissim ut. Integer consequat in eu tortor, faucibus et lacinia posuere. Turpis sit viverra lorem suspendisse lacus aliquam auctor vulputate. Quis egestas aliquam nunc purus lacus, elit leo elit facilisi. Dignissim amet adipiscing massa integer.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      -->
+
+
+      <!-- Subscription CTA -->
+      <section class="container">
+        <div class="bg-secondary rounded-3 py-5 px-3 px-sm-4 px-lg-5 px-xl-0">
+          <div class="row align-items-center py-lg-4">
+            <div class="col-xl-5 col-md-6 offset-xl-1 mb-4 mb-md-0">
+              <div class="d-flex align-items-center">
+                <img src="{% static 'assets/img/landing/app-showcase/notification-icon.svg' %}" width="78" alt="Bell icon">
+                <div class="ps-3 ms-sm-3">
+                  <h2 class="h4 mb-0">Subscribe to our newsletter to stay informed about latest updates</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-5 col-md-6">
+              <div class="ps-lg-5 ms-xl-2">
+                <form class="input-group input-group-lg needs-validation" novalidate>
+                  <input type="email" id="subscr-email" class="form-control rounded-start ps-5" placeholder="Your email" required>
+                  <i class="bx bx-envelope fs-xl text-muted position-absolute top-50 start-0 translate-middle-y ms-3 zindex-5"></i>
+                  <div class="invalid-tooltip position-absolute top-100 start-0">Please provide a valid email address.</div>
+                  <button type="submit" class="btn btn-primary px-sm-4">Subscribe</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal modal-success fade" id="modal_success" tabindex="-1" role="dialog" aria-labelledby="modal_success" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title text-white" id="modal_title_6">Success!</h5>
+              </div>
+              <div class="modal-body">
+                  <div class="py-3 text-center">
+                      <i class="fas fa-tick fa-4x"></i>
+                      <h4 class="heading mt-4 text-white">We will be in contact shortly!</h4>
+                      <p class="text-white">
+                          Thank you for expressing interest in Verde. We will be in touch to discuss your needs!
+                      </p>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="footer pt-5 pb-4 pb-lg-5">
+      <div class="container text-center pt-lg-3">
+        <div class="navbar-brand justify-content-center text-dark mb-2 mb-lg-4">
+          <img src="{% static 'assets/img/verde.svg' %}" class="me-2" width="60" alt="Verde">
+          <span class="fs-4">Verde</span>
+        </div>
+        <ul class="nav justify-content-center pt-3 pb-4 pb-lg-5">
+          <li class="nav-item"><a href="https://www.braintree.co.za/Files/Files/Business%20Documents/2021-2022%20BEE%20Verification%20Certifciate.pdf" class="nav-link">BEE Certification</a></li>
+          <li class="nav-item"><a href="https://www.braintree.co.za/Files/Images/PAIA-manual-Braintree.pdf" class="nav-link">PAIA</a></li>
+          <li class="nav-item"><a href="https://www.braintree.co.za/take-down-notice" class="nav-link">Take Down Notice</a></li>
+          <li class="nav-item"><a href="https://www.braintree.co.za/terms-and-conditions" class="nav-link">Terms & Conditions</a></li>
+          <li class="nav-item"><a href="https://www.braintree.co.za/code-of-conduct" class="nav-link">Code of Conduct</a></li>
+          <li class="nav-item"><a href="https://www.braintree.co.za/privacy-policy" class="nav-link">Privacy Policy</a></li>
+          <li class="nav-item"><a href="https://www.braintree.co.za/acceptable-use" class="nav-link">Acceptable Use</a></li>
+          <li class="nav-item"><a href="https://powerapps.microsoft.com/en-gb/support/" class="nav-link">Dev Support</a></li>
+        </ul>
+        <div class="d-flex flex-column flex-sm-row justify-content-center">
+          <a href="#" class="btn btn-dark btn-lg px-3 py-2 me-sm-4 mb-3">
+            <img src="{% static 'assets/img/market/appstore-light.svg' %}" class="light-mode-img" width="124" alt="App Store">
+            <img src="{% static 'assets/img/market/appstore-dark.svg' %}" class="dark-mode-img" width="124" alt="App Store">
+          </a>
+          <a href="#" class="btn btn-dark btn-lg px-3 py-2 mb-3">
+            <img src="{% static 'assets/img/market/googleplay-light.svg' %}" class="light-mode-img" width="139" alt="Google Play">
+            <img src="{% static 'assets/img/market/googleplay-dark.svg' %}" class="dark-mode-img" width="139" alt="Google Play">
+          </a>
+        </div>
+        <div class="d-flex justify-content-center pt-4 mt-lg-3">
+          <a href="#" class="btn btn-icon btn-secondary btn-facebook mx-2">
+            <i class="bx bxl-facebook"></i>
+          </a>
+          <a href="#" class="btn btn-icon btn-secondary btn-instagram mx-2">
+            <i class="bx bxl-instagram"></i>
+          </a>
+          <a href="#" class="btn btn-icon btn-secondary btn-twitter mx-2">
+            <i class="bx bxl-twitter"></i>
+          </a>
+          <a href="#" class="btn btn-icon btn-secondary btn-youtube mx-2">
+            <i class="bx bxl-youtube"></i>
+          </a>
+        </div>
+        <p class="fs-sm text-center pt-5 mt-lg-4 mb-0">
+          <span class="opacity-80">&copy; All rights reserved. Made by </span>
+          <a class="nav-link d-inline-block p-0" href="https://za.linkedin.com/in/dimitri-k-8b70b18b" target="_blank" rel="noopener">Dimitri Kalamoudacos</a>
+        </p>
+      </div>
+    </footer>
+
+
+    <!-- Back to top button -->
+    <a href="#top" class="btn-scroll-top" data-scroll>
+      <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+      <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+    </a>
+
+
+    <!-- Vendor Scripts -->
+    <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/jarallax/dist/jarallax.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/jarallax/dist/jarallax-element.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/lightgallery.js/dist/js/lightgallery.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/lg-video.js/dist/lg-video.min.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- Main Theme Script -->
+    <script src="{% static 'assets/js/theme.min.js' %}"></script>
+    <script>
+      $('#contact-form').on('submit', function(event){
+        event.preventDefault();
+        document.getElementById('sub').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+        $.ajax({
+            url : '{%url "website:landing"%}', //>check this
+            type : 'POST',
+            data : { name : $('#id_name').val(), email : $('#id_email').val(), service: $('#id_service').val(), business_name: $('#id_business_name').val(), size: $('#id_size').val(),
+              nature: $('#id_message').val()},
+
+            success : function(json){
+                console.log(json);
+                document.getElementById('sub').innerHTML = 'Submit';
+                $("#modal_success").modal('show');
+            }
+        });
+    });
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });</script>  
+</body>
+</html>

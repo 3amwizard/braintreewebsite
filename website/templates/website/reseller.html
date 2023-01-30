@@ -1,0 +1,1602 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Braintree |</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Verde - make every workday a good one.">
+    <meta name="keywords" content="verde, people management, fleet management, power apps, MS teams, leave management, employee lifecycle, vaccine management, covid management, covid-19, employee covid management">
+    <meta name="author" content="Dimitri Kalamoudacos">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon and Touch Icons -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'asets/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'assets/favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'assets/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.ico' %}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="{%static 'assets/favicon/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Vendor Styles -->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/lightgallery/css/lightgallery-bundle.min.css' %}"/>
+
+    <!-- Main Theme Styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/css/theme.min.css' %}">
+
+    <!-- Page loading styles -->
+    <style>
+      .modal-success .modal-content{
+        background-color: MediumSeaGreen;
+        color: #fff;
+      }
+
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      .dark-mode .page-loading {
+        background-color: #131022;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #9397ad;
+      }
+      .dark-mode .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        border: .15em solid #b4b7c9;
+        border-right-color: transparent;
+        border-radius: 50%;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      .dark-mode .page-spinner {
+        border-color: rgba(255,255,255,.4);
+        border-right-color: transparent;
+      }
+      @-webkit-keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+
+    <!-- Theme mode -->
+    <script>
+      let mode = window.localStorage.getItem('mode'),
+          root = document.getElementsByTagName('html')[0];
+      if (mode !== undefined && mode === 'dark') {
+        root.classList.add('dark-mode');
+      } else {
+        root.classList.remove('dark-mode');
+      }
+    </script>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () {
+            preloader.remove();
+          }, 1000);
+        };
+      })();
+    </script>
+  </head>
+
+
+
+  <!-- Body -->
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper for sticky footer -->
+    <!-- Wraps everything except footer to push footer to the bottom of the page if there is little content -->
+    <main class="page-wrapper">
+
+
+      <!-- Navbar -->
+      <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page -->
+      <header class="header navbar navbar-expand-lg navbar-light bg-light navbar-sticky">
+        <div class="container px-3">
+          <a href="{%url 'website:home'%}" class="navbar-brand pe-3">
+            <img src="{%static 'assets/img/bt.svg' %}" width="47" alt="braintree">
+            braintree
+          </a>
+          <div id="navbarNav" class="offcanvas offcanvas-end">
+            <div class="offcanvas-header border-bottom">
+              <h5 class="offcanvas-title">Menu</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Solutions</a>
+                  <div class="dropdown-menu p-0">
+                    <div class="d-lg-flex">
+                      <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/2.svg' %}); margin: -1px;"></div>
+                      <div class="mega-dropdown-column">
+                        <h6 class="px-3 mb-2">BizApps Platform</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">Business Central</a></li>
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">Customer Engage</a></li>
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">Finance & Operations</a></li>
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">DynamicWeb</a></li>
+                        </ul>
+                        <h6 class="px-3 mb-2">Azure Platform</h6>
+                        <ul class="list-unstyled">
+                          <li><a href="{%url 'website:azure'%}" icons class="dropdown-item py-1">Cloud Services</a></li>
+                        </ul>
+                      </div>
+                      <div class="mega-dropdown-column">
+                        <h6 class="px-3 mb-2">Microsoft 365</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="{%url 'website:ms'%}" class="dropdown-item">Apps & Services</a></li> <!--licences office, devices for surface -->
+                        </ul>
+                        <h6 class="px-3 mb-2">Power Platform</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="{%static 'services.html' %}" class="dropdown-item py-1">Power BI</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                
+                <div class="offcanvas-body">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Industry Solutions</a>
+                      <div class="dropdown-menu p-0">
+                        <div class="d-lg-flex">
+                          <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/6.svg' %}); margin: -1px;"></div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2 fs-xl">Industries</h6> <!--change on all-->
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Manufacturing</a></li>
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Financial Services</a></li>
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Retail</a></li>
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Supply Chain</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                
+                <div class="offcanvas-body">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                      <a href="{%url 'website:shop'%}" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Shop</a>
+                      <div class="dropdown-menu p-0">
+                        <div class="d-lg-flex">
+                          <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/3.svg' %}); margin: -1px;"></div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2">Home Office</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:product'%}" class="dropdown-item">Microsoft 365</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Windows 10 Pro</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Windows 10 Home</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">McAfee</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Qwerti IT Support</a></li>
+    
+    
+                            </ul>
+                            <h6 class="px-3 mb-2">Gaming</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Game Pass</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Series S</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Wirelss Remote</a></li>
+                              
+                            </ul>
+                          </div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2">Online Gaming</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Play Station Plus</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">PUBG Mobile</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Game Pass</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Live</a></li>
+
+                            </ul>
+                            <h6 class="px-3 mb-2">Accessories</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item py-1">Mice</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item py-1">Keyboards</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item py-1">Headsets</a></li>
+    
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    </ul>
+
+                    
+
+                    <div class="offcanvas-body">
+                      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                          <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Partners</a>
+                          <div class="dropdown-menu p-0">
+                            <div class="d-lg-flex">
+                              <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/5.svg' %}); margin: -1px;"></div>
+                              <div class="mega-dropdown-column">
+                                <h6 class="px-3 mb-2">Braintree Partners</h6>
+                                <ul class="list-unstyled mb-3">
+                                  <li><a href="{%url 'website:reseller'%}" class="dropdown-item">Learn More</a></li>
+                                  <li><a href="{%url 'website:signup'%}" class="dropdown-item">Sign Up</a></li>
+                                  <li><a href="{%url 'website:reseller'%}" class="dropdown-item">Login</a></li>
+                                  
+                                </ul>
+        
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+            <div class="offcanvas-footer border-top">
+              <a href="{%url 'website:gaming'%}" class="btn btn-primary w-100">
+                <i class="bx bx-game fs-4 lh-1 me-1"></i>
+                &nbsp;Gaming
+              </a>
+            </div>      
+          </div>
+          <div class="form-check form-switch mode-switch pe-lg-1 ms-auto me-4" data-bs-toggle="mode">
+            <input type="checkbox" class="form-check-input" id="theme-mode">
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Light</label>
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Dark</label>
+          </div>
+          <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a href="{%url 'website:gaming'%}" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+            <i class="bx bx-game fs-5 lh-1 me-1"></i>
+            &nbsp;Gaming
+          </a>
+        </div>
+      </header>
+
+
+      <!-- Hero -->
+      <section class="position-relative pt-5">
+
+        <!-- Background -->
+        <div class="position-absolute top-0 start-0 w-100 bg-position-bottom-center bg-size-cover bg-repeat-0" style="background-image: url({%static 'assets/img/about/hero-bg.svg' %});">
+          <div class="d-lg-none" style="height: 960px;"></div>
+          <div class="d-none d-lg-block" style="height: 768px;"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="container position-relative zindex-5 pt-5">
+          <div class="row">
+            <div class="col-lg-6">
+              
+              <!-- Breadcrumb -->
+              <nav class="pt-md-2 pt-lg-3 pb-4 pb-md-5 mb-xl-4" aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                  <li class="breadcrumb-item">
+                    <a href="{%url 'website:home'%}"><i class="bx bx-home-alt fs-lg me-1"></i>Home</a>
+                  </li>
+                  <li class="breadcrumb-item active" aria-current="page">Partner</li>
+                </ol>
+              </nav>
+
+              <!-- Text -->
+              <h1 class="pb-2 pb-md-3 text-primary">Braintree</h1> <h1>Partner Program</h1>
+              <p class="fs-xl pb-4 mb-1 mb-md-2 mb-lg-3" style="max-width: 526px;">We are a dedicated team of Microsoft enthusiasts that happen to be great at building and implementing software solutions for businesses of all sizes.</p>
+              <p class="fs-xl pb-4 mb-1 mb-md-2 mb-lg-3" style="max-width: 526px;">And we are looking for people like you to join us.</p>
+              <div class="d-flex flex-column flex-sm-row justify-content-left pt-3 pt-sm-4">
+                <a href="#modalDefault" data-bs-toggle="modal" class="btn btn-primary shadow-primary btn-lg">Become A Braintree Partner</a>
+              </div>
+              <div class="row row-cols-3 pt-4 pt-md-5 mt-2 mt-xl-4">
+                <div class="col">
+                  <h3 class="h2 mb-2">100<</h3>
+                  <p class="mb-0"><strong>Microsoft </strong>Experts</p>
+                </div>
+                <div class="col">
+                  <h3 class="h2 mb-2">Elite</h3>
+                  <p class="mb-0"><strong>Microsft </strong>Partner</p>
+                </div>
+                <div class="col">
+                  <h3 class="h2 mb-2">24/7</h3>
+                  <p class="mb-0"><strong>Support</strong> 365</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Images -->
+            <div class="col-lg-6 mt-xl-3 pt-5 pt-lg-4">
+              <div class="row row-cols-2 gx-3 gx-lg-4">
+                <div class="col pt-lg-5 mt-lg-1">
+                  <img src="{%static 'assets/img/about/hero/01.jpg' %}" class="d-block rounded-3 mb-3 mb-lg-4" alt="Image">
+                  <img src="{%static 'assets/img/about/hero/02.jpg' %}" class="d-block rounded-3" alt="Image">
+                </div>
+                <div class="col">
+                  <img src="{%static 'assets/img/about/hero/03.jpg' %}" class="d-block rounded-3 mb-3 mb-lg-4" alt="Image">
+                  <img src="{%static 'assets/img/about/hero/04.jpg' %}" class="d-block rounded-3" alt="Image">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+      <!-- Benefits (features) -->
+      <section class="container mt-3 mb-5 pt-lg-5" id="benefits">
+        <div class="swiper pt-3" data-swiper-options='{
+          "slidesPerView": 1,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "clickable": true
+          },
+          "breakpoints": {
+            "500": {
+              "slidesPerView": 2
+            },
+            "991": {
+              "slidesPerView": 3
+            }
+          }
+        }'>
+          <div class="swiper-wrapper pt-4">
+
+            <!-- Item -->
+            <div class="swiper-slide border-end-lg px-2">
+              <div class="text-center">
+                <img src="{%static 'assets/img/landing/digital-agency/icons/idea.svg' %}" width="48" alt="Bulb icon" class="d-block mb-4 mx-auto">
+                <h4 class="mb-2 pb-1">Creative Solutions</h4>
+                <p class="mx-auto" style="max-width: 336px;">Being a Braintree partner means having access to our added value products such as LightSpeed.</p>
+              </div>
+            </div>
+
+            <!-- Item -->
+            <!--
+
+            <div class="swiper-slide">
+              <h2 class="display-2 from-start mb-lg-4">A Technology Partner You Can Trust</h2>
+              <div class="from-end">
+                <p class="fs-xl text-light opacity-70 pb-2 mb-lg-5"></p> < Leave empty for now-->
+                <!--
+              </div>
+              <div class="scale-up delay-1">
+                <a href="{%url 'website:case'%}" class="btn btn-primary shadow-primary btn-lg">View case studies</a>
+              </div>
+            </div>
+          -->
+            <!-- Item -->
+            <div class="swiper-slide border-end-lg px-2">
+              <div class="text-center">
+                <img src="{%static 'assets/img/landing/digital-agency/icons/award.svg' %}" width="48" alt="Award icon" class="d-block mb-4 mx-auto">
+                <h4 class="mb-2 pb-1">Award Winning</h4>
+                <p class="mx-auto" style="max-width: 336px;">Braintree partners get access to leading the continent within MS products & software soloutions.</p>
+              </div>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide px-2">
+              <div class="text-center">
+                <img src="{%static 'assets/img/landing/digital-agency/icons/team.svg' %}" width="48" alt="Team icon" class="d-block mb-4 mx-auto">
+                <h4 class="mb-2 pb-1">Team of Professionals</h4>
+                <p class="mx-auto" style="max-width: 336px;">Braintree has a diverse and capable team that we are excited for you to meet and work with.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination (bullets) -->
+          <div class="swiper-pagination position-relative pt-2 pt-sm-3 mt-4"></div>
+        </div>
+      </section>
+
+
+<!-- Highlights (Video showreel) -->
+<section class="bg-light py-5">
+  <div class="container py-2 py-md-4 py-lg-5">
+    <h3 class="h1 text-center mb-lg-4">Why Braintree?</h3>
+    <p class="fs-lg text-muted text-center mb-4 mb-lg-5">Click Play To Find Out</p>
+    <div class="position-relative overflow-hidden rounded-3 mb-4 mb-lg-5">
+      <span class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-35"></span>
+      <img src="{%static 'assets/img/landing/digital-agency/cover.jpg' %}" alt="Video cover">
+      <div class="position-absolute top-0 start-0 w-100 h-100 zindex-5 d-flex align-items-center justify-content-center">
+        <a href="https://www.youtube.com/watch?v=zPo5ZaH6sW8" class="btn btn-video btn-icon bg-white btn-xl stretched-link" data-bs-toggle="video">
+          <i class="bx bx-play"></i>
+        </a>
+      </div>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 pt-2 pt-md-3 pt-lg-2">
+      <div class="col">
+        <div class="d-flex align-items-center">
+          <div class="display-4 text-primary">20+</div>
+          <p class="ps-3 mb-0">Years of Experience</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="d-flex align-items-center">
+          <div class="display-4 text-primary">200+</div>
+          <p class="ps-3 mb-0">Successful Implementations</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="d-flex align-items-center">
+          <div class="display-4 text-primary">10+</div>
+          <p class="ps-3 mb-0">Exclusive Partner Products</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Brands (Carousel) -->
+<section class="container mt-2 pt-3 pt-lg-5 pb-5">
+  <h2 class="text-center pb-md-2">Enjoy The Benefits of A Decorated MS Partner</h2>
+  <div class="swiper mx-n2" data-swiper-options='{
+    "slidesPerView": 2,
+    "pagination": {
+      "el": ".swiper-pagination",
+      "clickable": true
+    },
+    "breakpoints": {
+      "500": {
+        "slidesPerView": 3,
+        "spaceBetween": 8
+      },
+      "650": {
+        "slidesPerView": 4,
+        "spaceBetween": 8
+      },
+      "900": {
+        "slidesPerView": 5,
+        "spaceBetween": 8
+      },
+      "1100": {
+        "slidesPerView": 6,
+        "spaceBetween": 8
+      }
+    }
+  }'>
+    <div class="swiper-wrapper">
+
+      <!-- Item -->
+      <div class="swiper-slide py-3">
+        <a href="#" class="card card-body card-hover px-2 mx-2">
+          <img src="{%static 'assets/img/brands/sabrands/gifs/1.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+        </a>
+      </div>
+
+      <!-- Item -->
+      <div class="swiper-slide py-3">
+        <a href="#" class="card card-body card-hover px-2 mx-2">
+          <img src="{%static 'assets/img/brands/sabrands/gifs/2.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+        </a>
+      </div>
+
+      <!-- Item -->
+      <div class="swiper-slide py-3">
+        <a href="#" class="card card-body card-hover px-2 mx-2">
+          <img src="{%static 'assets/img/brands/sabrands/gifs/3.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+        </a>
+      </div>
+
+      <!-- Item -->
+      <div class="swiper-slide py-3">
+        <a href="#" class="card card-body card-hover px-2 mx-2">
+          <img src="{%static 'assets/img/brands/sabrands/gifs/4.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+        </a>
+      </div>
+
+      <!-- Item -->
+      <div class="swiper-slide py-3">
+        <a href="#" class="card card-body card-hover px-2 mx-2">
+          <img src="{%static 'assets/img/brands/sabrands/gifs/5.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+        </a>
+      </div>
+
+      <!-- Item -->
+      <div class="swiper-slide py-3">
+        <a href="#" class="card card-body card-hover px-2 mx-2">
+          <img src="{%static 'assets/img/brands/sabrands/gifs/1.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+        </a>
+      </div>
+    </div>
+
+    <!-- Pagination (bullets) -->
+    <div class="swiper-pagination position-relative pt-2 mt-4"></div>
+  </div>
+</section>
+        <p>
+          &nbsp;
+        </p>
+        <div class="d-flex flex-column flex-sm-row justify-content-center pt-3 pt-sm-4">
+          <a href="#modalDefault" class="btn btn-primary shadow-primary btn-lg">Apply Now</a>
+        </div>
+      </section>
+
+      <p>
+        &nbsp;
+      </p>
+
+            <!-- Industries -->
+      <section class="container pt-2 pt-lg-0 pb-5 mb-md-4 mb-lg-5">
+        <h2 class="h1 text-center pb-3 pb-lg-4">Industries We Serve</h2>
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs flex-nowrap justify-content-lg-center overflow-auto pb-2 mb-3 mb-lg-4" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap active" id="education-tab" data-bs-toggle="tab" data-bs-target="#education" type="button" role="tab" aria-controls="education" aria-selected="true">
+              <i class="bx bxs-graduation fs-xl opacity-60 me-2"></i>
+              Education
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap" id="ecommerce-tab" data-bs-toggle="tab" data-bs-target="#ecommerce" type="button" role="tab" aria-controls="ecommerce" aria-selected="false">
+              <i class="bx bx-cart-alt fs-lg opacity-60 me-2"></i>
+              E-Commerce
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap" id="sports-tab" data-bs-toggle="tab" data-bs-target="#sports" type="button" role="tab" aria-controls="sports" aria-selected="false">
+              <i class="bx bx-run fs-xl opacity-60 me-2"></i>
+              Sports
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap" id="construction-tab" data-bs-toggle="tab" data-bs-target="#construction" type="button" role="tab" aria-controls="construction" aria-selected="false">
+              <i class="bx bx-paint-roll fs-lg opacity-60 me-2"></i>
+              Construstion
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap" id="medicine-tab" data-bs-toggle="tab" data-bs-target="#medicine" type="button" role="tab" aria-controls="medicine" aria-selected="false">
+              <i class="bx bx-plus-medical fs-bse opacity-60 me-2"></i>
+              Medicine
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap" id="real-estate-tab" data-bs-toggle="tab" data-bs-target="#real-estate" type="button" role="tab" aria-controls="real-estate" aria-selected="false">
+              <i class="bx bx-buildings fs-lg opacity-60 me-2"></i>
+              Real Estate
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-nowrap" id="wellness-tab" data-bs-toggle="tab" data-bs-target="#wellness" type="button" role="tab" aria-controls="wellness" aria-selected="false">
+              <i class="bx bx-spa fs-lg opacity-60 me-2"></i>
+              Wellness
+            </button>
+          </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content bg-secondary rounded-3 py-4">
+
+          <!-- Education -->
+          <div class="tab-pane fade show active" id="education" role="tabpanel" aria-labelledby="education-tab">
+            <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 px-sm-4 px-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">Education</h3>
+                <p>Vestibulum nunc lectus auctor quis. Natoque lectus tortor lacus, eu. Nunc feugiat nisl maecenas nulla hac morbi. Vitae, donec facilisis sed nunc netus. Venenatis posuere faucibus enim est. Vel dignissim morbi blandit morbi tellus. Arcu ullamcorper quis enim.</p>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-2 mb-3 mt-md-3">
+                <img src="{%static 'assets/img/services/industries/education.jpg' %}" class="d-block rounded-3 my-lg-2 mx-auto me-md-0" width="564" alt="Image">
+              </div>
+            </div>
+          </div>
+
+          <!-- E-Commerce -->
+          <div class="tab-pane fade" id="ecommerce" role="tabpanel" aria-labelledby="ecommerce-tab">
+            <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 px-sm-4 px-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">E-Commerce</h3>
+                <p>Curabitur auctor quam ut iaculis suscipit. Morbi ullamcorper tellus eu purus dictum convallis. Duis posuere dui sit amet pellentesque malesuada. Morbi ultrices tortor ut diam molestie, vel pharetra lectus lacinia. Lorem ipsum dolor sit amet.</p>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-2 mb-3 mt-md-3">
+                <img src="{%static 'assets/img/services/industries/ecommerce.jpg' %}" class="d-block rounded-3 my-lg-2 mx-auto me-md-0" width="564" alt="Image">
+              </div>
+            </div>
+          </div>
+
+          <!-- Sports -->
+          <div class="tab-pane fade" id="sports" role="tabpanel" aria-labelledby="sports-tab">
+            <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 px-sm-4 px-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">Sports</h3>
+                <p>Etiam vehicula commodo nunc, ut tincidunt risus aliquam sit amet. Vivamus ut velit ut odio malesuada tincidunt ut non eros. Curabitur vel quam varius, ullamcorper mi quis, ultrices eros. Nam eget mi ut diam elementum facilisis vehicula eget augue.</p>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-2 mb-3 mt-md-3">
+                <img src="{%static 'assets/img/services/industries/sports.jpg' %}" class="d-block rounded-3 my-lg-2 mx-auto me-md-0" width="564" alt="Image">
+              </div>
+            </div>
+          </div>
+
+          <!-- Construction -->
+          <div class="tab-pane fade" id="construction" role="tabpanel" aria-labelledby="construction-tab">
+            <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 px-sm-4 px-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">Construction</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus, nunc in iaculis vestibulum, nunc ex convallis est, ut viverra velit sapien ac erat. Vivamus aliquet mi tellus, vel viverra ex blandit sed. Sed blandit lobortis risus. Aliquam blandit cursus ex sed iaculis.</p>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-2 mb-3 mt-md-3">
+                <img src="{%static 'assets/img/services/industries/construction.jpg' %}" class="d-block rounded-3 my-lg-2 mx-auto me-md-0" width="564" alt="Image">
+              </div>
+            </div>
+          </div>
+
+          <!-- Medicine -->
+          <div class="tab-pane fade" id="medicine" role="tabpanel" aria-labelledby="medicine-tab">
+            <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 px-sm-4 px-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">Medicine</h3>
+                <p>In vel nulla ac enim pellentesque tristique vel non dui. Integer vulputate ex leo, in accumsan purus consectetur quis. Cras scelerisque orci vel dapibus volutpat. In et consectetur enim. Maecenas lobortis viverra tortor, quis fermentum sem volutpat sit amet.</p>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-2 mb-3 mt-md-3">
+                <img src="{%static 'assets/img/services/industries/medicine.jpg' %}" class="d-block rounded-3 my-lg-2 mx-auto me-md-0" width="564" alt="Image">
+              </div>
+            </div>
+          </div>
+
+          <!-- Real Estate -->
+          <div class="tab-pane fade" id="real-estate" role="tabpanel" aria-labelledby="real-estate-tab">
+            <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 px-sm-4 px-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">Real Estate</h3>
+                <p>Donec consequat nibh at urna tincidunt tempor. Integer quis lobortis felis. Nulla id quam vestibulum, aliquam mauris vitae, auctor ex. Aliquam augue nulla, faucibus sed lacus ac, placerat elementum nisi. Curabitur enim nunc, dictum et accumsan.</p>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-2 mb-3 mt-md-3">
+                <img src="{%static 'assets/img/services/industries/real-estate.jpg' %}" class="d-block rounded-3 my-lg-2 mx-auto me-md-0" width="564" alt="Image">
+              </div>
+            </div>
+          </div>
+
+          <!-- Wellness -->
+          <div class="tab-pane fade" id="wellness" role="tabpanel" aria-labelledby="wellness-tab">
+            <div class="row align-items-center pt-3 pt-sm-4 pt-md-0 px-3 px-sm-4 px-lg-0">
+              <div class="col-lg-4 col-md-5 offset-lg-1 text-center text-md-start">
+                <h3 class="mb-lg-4">Wellness</h3>
+                <p>Morbi ullamcorper tellus eu purus dictum convallis. Duis posuere dui sit amet pellentesque malesuada. Morbi ultrices tortor ut diam molestie, vel pharetra lectus lacinia. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean varius lectus lectus.</p>
+              </div>
+              <div class="col-lg-6 col-md-7 mt-2 mb-3 mt-md-3">
+                <img src="{%static 'assets/img/services/industries/wellness.jpg' %}" class="d-block rounded-3 my-lg-2 mx-auto me-md-0" width="564" alt="Image">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+      <!-- How it works (Steps) -->
+      <section class="container pt-4 pt-lg-0 pb-4 pb-lg-5">
+        <h2 class="h1 text-center pb-3 pb-md-0 mb-md-5">How Does It Work?</h2>
+        <div class="steps">
+          <div class="step pt-0 pt-md-3 pb-5">
+            <div class="step-number">
+              <div class="step-number-inner">1</div>
+            </div>
+            <div class="step-body d-flex align-items-center ps-xl-5">
+              <div class="rellax d-none d-lg-block flex-shrink-0 mx-4 mx-xl-5" data-rellax-percentage="0.5" data-rellax-speed="-0.3" data-disable-parallax-down="lg">
+                <img src="{%static 'assets/img/landing/online-courses/steps/01-dark.svg' %}" class="d-dark-mode-none" width="306" alt="Illustration">
+                <img src="{%static 'assets/img/landing/online-courses/steps/01-light.svg' %}" class="d-none d-dark-mode-block" width="306" alt="Illustration">
+              </div>
+              <div class="rellax ps-md-4 ps-xl-5" data-rellax-percentage="0.5" data-rellax-speed="0.4" data-disable-parallax-down="lg">
+                <h3 class="h4">Apply to become a partner and submit the required documents</h3>
+                <p class="mb-0">Nulla faucibus mauris pellentesque blandit faucibus non. Sit ut et at suspendisse gravida hendrerit scelerisque tempus placerat.</p>
+              </div>
+            </div>
+          </div>
+          <div class="step pt-0 pt-md-4 pb-5">
+            <div class="step-number">
+              <div class="step-number-inner">2</div>
+            </div>
+            <div class="step-body d-flex align-items-center ps-xl-5">
+              <div class="rellax d-none d-lg-block flex-shrink-0 mx-4 mx-xl-5" data-rellax-percentage="0.5" data-rellax-speed="-0.5" data-disable-parallax-down="lg">
+                <img src="{%static 'assets/img/landing/online-courses/steps/02-dark.svg' %}" class="d-dark-mode-none" width="306" alt="Illustration">
+                <img src="{%static 'assets/img/landing/online-courses/steps/02-light.svg' %}" class="d-none d-dark-mode-block" width="306" alt="Illustration">
+              </div>
+              <div class="rellax ps-md-4 ps-xl-5" data-rellax-percentage="0.5" data-rellax-speed="0.5" data-disable-parallax-down="lg">
+                <h3 class="h4">Enter the interview phase and recieve the partnership agreement</h3>
+                <p class="mb-0">Tristique sed pharetra feugiat tempor sagittis. Ultricies eu bibendum adipiscing lacinia. Quisque praesent aliquam tempus phasellus ut integer ac nunc dapibus.</p>
+              </div>
+            </div>
+          </div>
+          <div class="step pt-0 pt-md-4 pb-5">
+            <div class="step-number">
+              <div class="step-number-inner">3</div>
+            </div>
+            <div class="step-body d-flex align-items-center ps-xl-5">
+              <div class="rellax d-none d-lg-block flex-shrink-0 mx-4 mx-xl-5" data-rellax-percentage="0.5" data-rellax-speed="-0.3" data-disable-parallax-down="lg">
+                <img src="{%static 'assets/img/landing/online-courses/steps/03-dark.svg' %}" class="d-dark-mode-none" width="306" alt="Illustration">
+                <img src="{%static 'assets/img/landing/online-courses/steps/03-light.svg' %}" class="d-none d-dark-mode-block" width="306" alt="Illustration">
+              </div>
+              <div class="rellax ps-md-4 ps-xl-5" data-rellax-percentage="0.5" data-rellax-speed="0.4" data-disable-parallax-down="lg">
+                <h3 class="h4">Submit the partner agreement and await final approval</h3>
+                <p class="mb-0">Duis euismod enim, facilisis risus tellus pharetra lectus diam neque. Nec ultrices mi faucibus est. Magna ullamcorper potenti elementum ultricies auctor nec volutpat augue.</p>
+              </div>
+            </div>
+          </div>
+          <div class="step pt-0 pt-md-4 pb-5">
+            <div class="step-number">
+              <div class="step-number-inner">4</div>
+            </div>
+            <div class="step-body d-flex align-items-center ps-xl-5">
+              <div class="rellax d-none d-lg-block flex-shrink-0 mx-4 mx-xl-5" data-rellax-percentage="0.5" data-rellax-speed="-0.5" data-disable-parallax-down="lg">
+                <img src="{%static 'assets/img/landing/online-courses/steps/04-dark.svg' %}" class="d-dark-mode-none" width="306" alt="Illustration">
+                <img src="{%static 'assets/img/landing/online-courses/steps/04-light.svg' %}" class="d-none d-dark-mode-block" width="306" alt="Illustration">
+              </div>
+              <div class="rellax ps-md-4 ps-xl-5" data-rellax-percentage="0.5" data-rellax-speed="0.6" data-disable-parallax-down="lg">
+                <h3 class="h4">Become an approved Braintree partner</h3>
+                <p class="mb-0">Sed fermentum ut nibh duis. Dolor pretium arcu, tincidunt ultrices tristique arcu cursus massa gravida tortor nulla, mollis id pretium.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Partner Support (Icon boxes) -->
+      <section class="container pt-1 pt-xl-3 pb-5">
+        <h2 class="h1 text-center pb-3 pb-md-0 mb-md-5">Partner Support</h2>
+        <div class="swiper swiper-nav-onhover mt-n3 mx-n2" data-swiper-options='{
+          "slidesPerView": 1,
+          "spaceBetween": 8,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "clickable": true
+          },
+          "breakpoints": {
+            "600": {
+              "slidesPerView": 2
+            },
+            "1000": {
+              "slidesPerView": 3
+            }
+          }
+        }'>
+          <div class="swiper-wrapper">
+
+            <!-- Item -->
+            <div class="swiper-slide h-auto py-3">
+              <div class="card card-hover h-100 mx-2">
+                <div class="card-body">
+                  <div class="d-table position-relative p-3 mb-4">
+                    <img src="{%static 'assets/img/landing/online-courses/icons/01.svg' %}" class="position-relative zindex-2" width="32" alt="Icon">
+                    <span class="bg-primary position-absolute top-0 start-0 w-100 h-100 rounded-circle opacity-8"></span>
+                  </div>
+                  <h3 class="h5 pb-1 mb-2">On Demand Training Content</h3>
+                  <p class="mb-0">Leo condimentum dignissim venenatis sit dignissim vel. Adipiscing tristique dictum vitae elementum neque.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide h-auto py-3">
+              <div class="card card-hover h-100 mx-2">
+                <div class="card-body">
+                  <div class="d-table position-relative p-3 mb-4">
+                    <img src="{%static 'assets/img/landing/online-courses/icons/02.svg' %}" class="position-relative zindex-2" width="32" alt="Icon">
+                    <span class="bg-primary position-absolute top-0 start-0 w-100 h-100 rounded-circle opacity-8"></span>
+                  </div>
+                  <h3 class="h5 pb-1 mb-2">Relationship Manager</h3>
+                  <p class="mb-0">Ac dapibus lacus, malesuada ridiculus donec condimentum nunc vestibulum. Mi feugiat tellus faucibus fermentum mattis ultrices.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide h-auto py-3">
+              <div class="card card-hover h-100 mx-2">
+                <div class="card-body">
+                  <div class="d-table position-relative p-3 mb-4">
+                    <img src="{%static 'assets/img/landing/online-courses/icons/03.svg' %}" class="position-relative zindex-2" width="32" alt="Icon">
+                    <span class="bg-primary position-absolute top-0 start-0 w-100 h-100 rounded-circle opacity-8"></span>
+                  </div>
+                  <h3 class="h5 pb-1 mb-2">The Key To Growth</h3>
+                  <p class="mb-0">Donec interdum risus convallis tristique quis elit. Sapien turpis enim, viverra cursus facilisis dignissim condimentum.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination (bullets) -->
+          <div class="swiper-pagination position-relative pt-2 pt-sm-3 mt-4"></div>
+        </div>
+      </section>
+
+
+      <!-- Testimonials -->
+      <section class="container pt-md-2 pb-5">
+        <div class="row">
+          <div class="col-md-5">
+            <div class="card h-100 border-0 overflow-hidden px-md-4">
+              <span class="bg-gradient-primary position-absolute top-0 start-0 w-100 h-100 opacity-10 d-none d-md-block"></span>
+              <div class="card-body d-flex flex-column align-items-center justify-content-center position-relative zindex-2 p-0 pb-2 p-lg-4">
+                <h2 class="h1 text-center text-md-start p-lg-4">What Our Partners Say</h2>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="card border-0 shadow-sm p-4 p-xxl-5">
+              <div class="d-flex justify-content-between pb-4 mb-2">
+                <span class="btn btn-icon btn-primary btn-lg shadow-primary pe-none">
+                  <i class="bx bxs-quote-left"></i>
+                </span>
+                <div class="d-flex">
+                  <button type="button" id="testimonials-prev" class="btn btn-prev btn-icon btn-sm me-2">
+                    <i class="bx bx-chevron-left"></i>
+                  </button>
+                  <button type="button" id="testimonials-next" class="btn btn-next btn-icon btn-sm ms-2">
+                    <i class="bx bx-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Slider -->
+              <div class="swiper mx-0 mb-md-n2 mb-xxl-n3" data-swiper-options='{
+                "spaceBetween": 24,
+                "loop": true,
+                "pagination": {
+                  "el": ".swiper-pagination",
+                  "clickable": true
+                },
+                "navigation": {
+                  "prevEl": "#testimonials-prev",
+                  "nextEl": "#testimonials-next"
+                }
+              }'>
+                <div class="swiper-wrapper">
+
+                  <!-- Item -->
+                  <div class="swiper-slide h-auto">
+                    <figure class="card h-100 position-relative border-0 bg-transparent">
+                      <blockquote class="card-body p-0 mb-0">
+                        <p class="fs-lg mb-0">Vestibulum nunc lectus auctor quis. Natoque lectus tortor lacus, eu. Nunc feugiat nisl maecenas nulla hac morbi. Vitae, donec facilisis sed nunc netus. Venenatis posuere faucibus enim est. Vel dignissim morbi blandit morbi tellus. Arcu ullamcorper quis enim.</p>
+                      </blockquote>
+                      <figcaption class="card-footer border-0 d-flex align-items-center w-100 pb-2">
+                        <img src="{%static 'assets/img/avatar/13.jpg' %}" width="60" class="rounded-circle" alt="Ralph Edwards">
+                        <div class="ps-3">
+                          <h6 class="fw-semibold lh-base mb-0">Ralph Edwards</h6>
+                          <span class="fs-sm text-muted">Head of Marketing at Lorem Ltd. </span>
+                        </div>
+                      </figcaption>
+                    </figure>
+                  </div>
+
+                  <!-- Item -->
+                  <div class="swiper-slide h-auto">
+                    <figure class="card h-100 position-relative border-0 bg-transparent">
+                      <blockquote class="card-body p-0 mb-0">
+                        <p class="fs-lg mb-0">Mi semper risus ultricies orci pulvinar in at enim orci. Quis facilisis nunc pellentesque in ullamcorper sit. Lorem blandit arcu sapien, senectus libero, amet dapibus cursus quam. Eget pellentesque eu purus volutpat adipiscing malesuada. Purus nisi, tortor vel lacus.</p>
+                      </blockquote>
+                      <figcaption class="card-footer border-0 d-flex align-items-center w-100 pb-2">
+                        <img src="{%static 'assets/img/avatar/14.jpg' %}" width="60" class="rounded-circle" alt="Annette Black">
+                        <div class="ps-3">
+                          <h6 class="fw-semibold lh-base mb-0">Annette Black</h6>
+                          <span class="fs-sm text-muted">Strategic Advisor at Company LLC</span>
+                        </div>
+                      </figcaption>
+                    </figure>
+                  </div>
+
+                  <!-- Item -->
+                  <div class="swiper-slide h-auto">
+                    <figure class="card h-100 position-relative border-0 bg-transparent">
+                      <blockquote class="card-body p-0 mb-0">
+                        <p class="fs-lg mb-0">Ac at sed sit senectus massa. Massa ante amet ultrices magna porta tempor. Aliquet diam in et magna ultricies mi at. Lectus enim, vel enim egestas nam pellentesque et leo. Elit mi faucibus laoreet aliquam pellentesque sed aliquet integer massa. Orci leo tortor ornare.</p>
+                      </blockquote>
+                      <figcaption class="card-footer border-0 d-flex align-items-center w-100 pb-2">
+                        <img src="{%static 'assets/img/avatar/11.jpg' %}" width="60" class="rounded-circle" alt="Darrell Steward">
+                        <div class="ps-3">
+                          <h6 class="fw-semibold lh-base mb-0">Darrell Steward</h6>
+                          <span class="fs-sm text-muted">Project Manager at Ipsum Ltd.</span>
+                        </div>
+                      </figcaption>
+                    </figure>
+                  </div>
+                </div>
+
+                <!-- Pagination (bullets) -->
+                <div class="swiper-pagination position-relative mt-5"></div>
+              </div>        
+            </div>
+          </div>
+        </div>
+      </section>
+<!-- Contact form -->
+<section class="position-relative py-1">
+  <div class="container position-relative zindex-5 py-2 py-md-4 py-lg-5">
+    <div class="row justify-content-center text-center pt-xl-2 pb-4 mb-1 mb-lg-3">
+      <div class="col-xl-6 col-lg-7 col-md-8 col-sm-11">
+        <h2 class="mb-4">Braintree Partner Application Form</h2>
+        <p class="text-muted mb-0">Fill in the details below to start phase 1 of the application process.</p>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10">
+        <form class="row needs-validation" id="b2b-contact-form" method="POST">
+          <div class="col-sm-6 mb-4">
+            <label for="fn" class="form-label">First name</label>
+            <input type="text" id="fn" class="form-control" required>
+            <div class="invalid-feedback">Please, enter your first name!</div>
+          </div>
+          <div class="col-sm-6 mb-4">
+            <label for="ln" class="form-label">Last name</label>
+            <input type="text" id="ln" class="form-control" required>
+            <div class="invalid-feedback">Please, enter your last name!</div>
+          </div>
+          <div class="col-sm-6 mb-4">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" id="email" class="form-control" required>
+            <div class="invalid-feedback">Please, provide a valid email address!</div>
+          </div>
+          <div class="col-sm-6 mb-4">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="text" id="phone" class="form-control" data-format='{"numericOnly": true, "delimiters": ["+1 ", " ", " "], "blocks": [0, 3, 3, 2]}' placeholder="+27 ___ ___ __">
+          </div>
+          <div class="col-sm-6 mb-4">
+            <label for="city" class="form-label">City</label>
+            <select id="city" class="form-select" required>
+              <option value="" disabled selected>Choose city</option>
+              <option value="Boston">Durban</option>
+              <option value="Chicago">Johanessburg</option>
+              <option value="Los Angeles">Cape Town</option>
+              <option value="Miami">Bloemfontien</option>
+              <option value="New York">Nelspruit</option>
+              <option value="Philadelphia">Limpopo</option>
+            </select>
+            <div class="invalid-feedback">Please, choose your city!</div>
+          </div>
+          <div class="col-sm-6 mb-4">
+            <label for="company" class="form-label">Your company</label>
+            <input type="text" id="company" class="form-control">
+          </div>
+          <div class="col-sm-6 mb-4">
+            <label for="position" class="form-label">Your position</label>
+            <select id="position" class="form-select">
+              <option value="Owner">Owner</option>
+              <option value="CEO">CEO</option>
+              <option value="Manager">Manager</option>
+              <option value="Accountant">Accountant</option>
+              <option value="Accountant">Accountant</option>
+            </select>
+          </div>
+          <div class="col-sm-6 mb-4">
+            <label for="people" class="form-label">People in company</label>
+            <select id="people" class="form-select">
+              <option value="0-10">0-10</option>
+              <option value="10-25">10-25</option>
+              <option value="25-50">25-50</option>
+              <option value="50-100">50-100</option>
+            </select>
+          </div>
+          <div class="col-12 mb-4">
+            <label for="message" class="form-label">Message</label>
+            <textarea id="message" class="form-control" rows="4" required></textarea>
+            <div class="invalid-feedback">Please, enter your message!</div>
+          </div>
+          <div class="col-12 text-center pt-2 pt-md-3 pt-lg-4">
+            <button type="submit" class="btn btn-primary shadow-primary btn-lg">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- BG shape -->
+  <div class="position-absolute end-0 bottom-0 text-primary">
+    <svg width="469" height="343" viewBox="0 0 469 343" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.08" fill-rule="evenodd" clip-rule="evenodd" d="M273.631 680.872C442.436 768.853 639.315 708.216 717.593 558.212C795.871 408.208 732.941 212.157 564.137 124.176C395.333 36.195 198.453 96.8326 120.175 246.836C41.8972 396.84 104.827 592.891 273.631 680.872ZM236.335 752.344C440.804 858.914 688.289 788.686 789.109 595.486C889.928 402.286 805.903 159.274 601.433 52.7043C396.964 -53.8654 149.479 16.3623 48.6595 209.562C-52.1598 402.762 31.8652 645.774 236.335 752.344Z" fill="currentColor"/><path opacity="0.08" fill-rule="evenodd" clip-rule="evenodd" d="M298.401 633.404C434.98 704.59 598.31 656.971 664.332 530.451C730.355 403.932 675.946 242.827 539.367 171.642C402.787 100.457 239.458 148.076 173.435 274.595C107.413 401.114 161.822 562.219 298.401 633.404ZM288.455 652.464C434.545 728.606 611.369 678.429 683.403 540.391C755.437 402.353 695.402 228.725 549.312 152.583C403.222 76.4404 226.398 126.617 154.365 264.655C82.331 402.693 142.365 576.321 288.455 652.464Z" fill="currentColor"/></svg>
+  </div>
+</section>
+</main>
+
+      <!-- Brands (Carousel) -->
+      <section class="container mt-2 pt-3 pt-lg-5 pb-5">
+        <h2 class="text-center pb-md-2">Trusted by Leading Brands &amp; Companies</h2>
+        <div class="swiper mx-n2" data-swiper-options='{
+          "slidesPerView": 2,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "clickable": true
+          },
+          "breakpoints": {
+            "500": {
+              "slidesPerView": 3,
+              "spaceBetween": 8
+            },
+            "650": {
+              "slidesPerView": 4,
+              "spaceBetween": 8
+            },
+            "900": {
+              "slidesPerView": 5,
+              "spaceBetween": 8
+            },
+            "1100": {
+              "slidesPerView": 6,
+              "spaceBetween": 8
+            }
+          }
+        }'>
+          <div class="swiper-wrapper">
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img src="{%static 'assets/img/brands/sabrands/gifs/1.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img src="{%static 'assets/img/brands/sabrands/gifs/2.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img src="{%static 'assets/img/brands/sabrands/gifs/3.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img src="{%static 'assets/img/brands/sabrands/gifs/4.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img src="{%static 'assets/img/brands/sabrands/gifs/5.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+              </a>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide py-3">
+              <a href="#" class="card card-body card-hover px-2 mx-2">
+                <img src="{%static 'assets/img/brands/sabrands/gifs/1.gif' %}" class="d-block mx-auto my-2" width="250" alt="Brand">
+              </a>
+            </div>
+          </div>
+
+          <!-- Pagination (bullets) -->
+          <div class="swiper-pagination position-relative pt-2 mt-4"></div>
+        </div>
+      </section>
+
+
+      <!-- FAQ (Accordion) -->
+      <section class="container pt-1 pt-lg-3">
+        <div class="position-relative bg-primary rounded-3 overflow-hidden px-3 px-sm-4 px-md-0 py-5">
+
+          <!-- Parallax patterns -->
+          <div class="rellax position-absolute top-0 start-0 w-100 h-100 d-none d-lg-block" data-rellax-percentage="0.5" data-rellax-speed="1.75">
+            <img src="{%static 'assets/img/landing/online-courses/pattern-1.svg' %}" class="position-absolute top-0 start-100 translate-middle ms-n4" alt="Pattern">
+            <img src="{%static 'assets/img/landing/online-courses/pattern-2.svg' %}" class="position-absolute top-50 start-0 mt-n5 ms-n5" alt="Pattern">
+            <img src="{%static 'assets/img/landing/online-courses/pattern-3.svg' %}" class="position-absolute top-100 start-100 translate-middle ms-n5 mt-n5" alt="Pattern">
+          </div>
+
+          <div class="row justify-content-center position-relative zindex-2 py-lg-4">
+            <div class="col-xl-8 col-lg-9 col-md-10 py-2">
+              <h2 class="h1 text-light text-center mt-n2 mt-lg-0 mb-4 mb-lg-5">Frequently Asked Questions</h2>
+              <div class="accordion" id="faq">
+
+                <!-- Item -->
+                <div class="accordion-item border-0 rounded-3 shadow-sm mb-3">
+                  <h3 class="accordion-header">
+                    <button class="accordion-button shadow-none rounded-3" type="button" data-bs-toggle="collapse" data-bs-target="#q-1" aria-expanded="true" aria-controls="q-1">What if I don't have any professional background?</button>
+                  </h3>
+                  <div class="accordion-collapse collapse show" id="q-1" data-bs-parent="#faq">
+                    <div class="accordion-body fs-sm pt-0">
+                      <p>Nunc duis id aenean gravida tincidunt eu, tempor ullamcorper. Viverra aliquam arcu, viverra et, cursus. Aliquet pretium cursus adipiscing gravida et consequat lobortis arcu velit. Nibh pharetra fermentum duis accumsan lectus non. Massa cursus molestie lorem scelerisque pellentesque. Nisi, enim, arcu purus gravida adipiscing euismod montes, duis egestas. Vehicula eu etiam quam tristique tincidunt suspendisse ut consequat.</p>
+                      <p>Ornare senectus fusce dignissim ut. Integer consequat in eu tortor, faucibus et lacinia posuere. Turpis sit viverra lorem suspendisse lacus aliquam auctor vulputate. Quis egestas aliquam nunc purus lacus, elit leo elit facilisi. Dignissim amet adipiscing massa integer.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item -->
+                <div class="accordion-item border-0 rounded-3 shadow-sm mb-3">
+                  <h3 class="accordion-header">
+                    <button class="accordion-button shadow-none rounded-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q-2" aria-expanded="false" aria-controls="q-2">How is this different from other courses on the market?</button>
+                  </h3>
+                  <div class="accordion-collapse collapse" id="q-2" data-bs-parent="#faq">
+                    <div class="accordion-body fs-sm pt-0">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in facilisis nibh. Vestibulum ac porttitor sapien. Curabitur laoreet malesuada gravida. Phasellus vehicula vestibulum consequat. Curabitur feugiat eget sem vitae laoreet. Fusce porttitor finibus tellus, quis condimentum nibh. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vivamus vehicula malesuada magna at viverra. Fusce non est eget libero convallis fringilla suspendisse.</p>
+                      <p>Nunc dolor velit, interdum finibus bibendum vel, mattis a magna. Mauris mollis sapien ac mi aliquet varius. Proin nec est nibh. Dignissim amet adipiscing massa integer.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item -->
+                <div class="accordion-item border-0 rounded-3 shadow-sm mb-3">
+                  <h3 class="accordion-header">
+                    <button class="accordion-button shadow-none rounded-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q-3" aria-expanded="false" aria-controls="q-3">How much time does it take to do my homework per week? What if I don't like it?</button>
+                  </h3>
+                  <div class="accordion-collapse collapse" id="q-3" data-bs-parent="#faq">
+                    <div class="accordion-body fs-sm pt-0">
+                      <p>Suspendisse viverra volutpat eros. Curabitur in scelerisque lacus, quis fringilla sem. Nunc rutrum vel magna et ullamcorper. Sed consectetur augue vitae ligula consectetur, eu dapibus justo molestie. Phasellus sit amet metus magna. Sed tincidunt tempus felis vitae commodo. Etiam lobortis justo in elit pretium, sit amet aliquet tellus euismod. Curabitur in purus sed turpis aliquet pretium. Nunc ut magna tempus, iaculis sem id, vulputate ipsum. Etiam fermentum malesuada quam, in tempus purus pulvinar at. Vestibulum auctor congue pharetra. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla facilisi. Nunc dolor velit, interdum finibus bibendum vel, mattis a magna. Mauris mollis sapien ac mi aliquet varius. Proin nec est nibh. In hac habitasse platea dictumst. Nullam porta risus vitae lectus pellentesque interdum. Proin ac leo fermentum, volutpat odio ut, lacinia erat. Suspendisse potenti. Praesent vitae faucibus lectus. Sed tincidunt at ex id maximus. Morbi tristique ullamcorper velit, non cursus libero eleifend quis. Aliquam aliquam odio dui.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item -->
+                <div class="accordion-item border-0 rounded-3 shadow-sm mb-3">
+                  <h3 class="accordion-header">
+                    <button class="accordion-button shadow-none rounded-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q-4" aria-expanded="false" aria-controls="q-4">Is there any kind of certificate of completion?</button>
+                  </h3>
+                  <div class="accordion-collapse collapse" id="q-4" data-bs-parent="#faq">
+                    <div class="accordion-body fs-sm pt-0">
+                      <p>Nunc duis id aenean gravida tincidunt eu, tempor ullamcorper. Viverra aliquam arcu, viverra et, cursus. Aliquet pretium cursus adipiscing gravida et consequat lobortis arcu velit. Nibh pharetra fermentum duis accumsan lectus non. Massa cursus molestie lorem scelerisque pellentesque. Nisi, enim, arcu purus gravida adipiscing euismod montes, duis egestas. Vehicula eu etiam quam tristique tincidunt suspendisse ut consequat.</p>
+                      <p>Ornare senectus fusce dignissim ut. Integer consequat in eu tortor, faucibus et lacinia posuere. Turpis sit viverra lorem suspendisse lacus aliquam auctor vulputate. Quis egestas aliquam nunc purus lacus, elit leo elit facilisi. Dignissim amet adipiscing massa integer.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item -->
+                <div class="accordion-item border-0 rounded-3 shadow-sm mb-3">
+                  <h3 class="accordion-header">
+                    <button class="accordion-button shadow-none rounded-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q-5" aria-expanded="false" aria-controls="q-5">YouTube is full of free tutorials, videos and courses. Why should I take any courses here?</button>
+                  </h3>
+                  <div class="accordion-collapse collapse" id="q-5" data-bs-parent="#faq">
+                    <div class="accordion-body fs-sm pt-0">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in facilisis nibh. Vestibulum ac porttitor sapien. Curabitur laoreet malesuada gravida. Phasellus vehicula vestibulum consequat. Curabitur feugiat eget sem vitae laoreet. Fusce porttitor finibus tellus, quis condimentum nibh. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vivamus vehicula malesuada magna at viverra. Fusce non est eget libero convallis fringilla suspendisse.</p>
+                      <p>Nunc dolor velit, interdum finibus bibendum vel, mattis a magna. Mauris mollis sapien ac mi aliquet varius. Proin nec est nibh. Dignissim amet adipiscing massa integer.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item -->
+                <div class="accordion-item border-0 rounded-3 shadow-sm">
+                  <h3 class="accordion-header">
+                    <button class="accordion-button shadow-none rounded-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q-6" aria-expanded="false" aria-controls="q-6">What happens if I forget or lose my password?</button>
+                  </h3>
+                  <div class="accordion-collapse collapse" id="q-6" data-bs-parent="#faq">
+                    <div class="accordion-body fs-sm pt-0">
+                      <p>Suspendisse viverra volutpat eros. Curabitur in scelerisque lacus, quis fringilla sem. Nunc rutrum vel magna et ullamcorper. Sed consectetur augue vitae ligula consectetur, eu dapibus justo molestie. Phasellus sit amet metus magna. Sed tincidunt tempus felis vitae commodo. Etiam lobortis justo in elit pretium, sit amet aliquet tellus euismod. Curabitur in purus sed turpis aliquet pretium. Nunc ut magna tempus, iaculis sem id, vulputate ipsum. Etiam fermentum malesuada quam, in tempus purus pulvinar at. Vestibulum auctor congue pharetra. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla facilisi. Nunc dolor velit, interdum finibus bibendum vel, mattis a magna. Mauris mollis sapien ac mi aliquet varius. Proin nec est nibh. In hac habitasse platea dictumst. Nullam porta risus vitae lectus pellentesque interdum. Proin ac leo fermentum, volutpat odio ut, lacinia erat. Suspendisse potenti. Praesent vitae faucibus lectus. Sed tincidunt at ex id maximus. Morbi tristique ullamcorper velit, non cursus libero eleifend quis. Aliquam aliquam odio dui.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+<p>
+  &nbsp;
+</p>
+
+
+
+   <!-- Footer -->
+   <footer class="footer dark-mode bg-dark pt-5 pb-4 pb-lg-5">
+    <div class="container pt-lg-4">
+      <div class="row pb-5">
+        <div class="col-lg-4 col-md-6">
+          <div class="navbar-brand text-dark p-0 me-0 mb-3 mb-lg-4">
+            <img src="{%static 'assets/img/bt.svg' %}" width="47" alt="Silicon">
+            braintree
+          </div>
+          <p class="fs-sm text-light opacity-70 pb-lg-3 mb-4">A Gold Certified Partner 
+            trusted by thousands of customers for their homes 
+            and businesses. We make a difference to our 
+            customers by unlocking the potential of
+            the cloud, software, and hardware so that
+            they can digitally transform and provide them
+            with support centres to keep them productive,
+            and having fun.</p>
+          <form class="needs-validation" novalidate>
+            <label for="subscr-email" class="form-label">Subscribe to our newsletter</label>
+            <div class="input-group">
+              <input type="email" id="subscr-email" class="form-control rounded-start ps-5" placeholder="Your email" required>
+              <i class="bx bx-envelope fs-lg text-muted position-absolute top-50 start-0 translate-middle-y ms-3 zindex-5"></i>
+              <div class="invalid-tooltip position-absolute top-100 start-0">Please provide a valid email address.</div>
+              <button type="submit" class="btn btn-primary">Subscribe</button>
+            </div>
+          </form>
+        </div>
+        <div class="col-xl-6 col-lg-7 col-md-5 offset-xl-2 offset-md-1 pt-4 pt-md-1 pt-lg-0">
+          <div id="footer-links" class="row">
+            <div class="col-lg-4">
+              <h6 class="mb-2">
+                <a href="#useful-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Useful Links</a>
+              </h6>
+              <div id="useful-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+                <ul class="nav flex-column pb-lg-1 mb-lg-3">
+                  <li class="nav-item"><a href="{%url 'website:home'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Home</a></li>
+                  <li class="nav-item"><a href="{%url 'website:shop'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Shop</a></li>
+                  <li class="nav-item"><a href="{%url 'website:reseller'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Partners</a></li>
+                  <li class="nav-item"><a href="{%url 'website:case'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">News &amp; Insights</a></li>
+                  <li class="nav-item"><a href="{%url 'website:contact'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Contact Us</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-3">
+              <h6 class="mb-2">
+                <a href="#social-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Socials</a>
+              </h6>
+              <div id="social-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+                <ul class="nav flex-column mb-2 mb-lg-0">
+                  <li class="nav-item"><a href="https://www.facebook.com/BraintreeZA1" class="nav-link d-inline-block px-0 pt-1 pb-2">Facebook</a></li>
+                  <li class="nav-item"><a href="https://www.linkedin.com/company/braintreebyvox/" class="nav-link d-inline-block px-0 pt-1 pb-2">LinkedIn</a></li>
+                  <li class="nav-item"><a href="https://twitter.com/braintree_za" class="nav-link d-inline-block px-0 pt-1 pb-2">Twitter</a></li>
+                  <li class="nav-item"><a href="https://www.instagram.com/braintree_by_vox/" class="nav-link d-inline-block px-0 pt-1 pb-2">Instagram</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-3">
+              <h6 class="mb-2">
+                <a href="#social-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Socials</a>
+              </h6>
+              <div id="social-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+                <ul class="nav flex-column mb-2 mb-lg-0">
+              <h6 class="mb-2">Resources</h6>
+              <li class="nav-item"><a href="https://www.braintree.co.za/Files/Files/Business%20Documents/2021-2022%20BEE%20Verification%20Certifciate.pdf" class="nav-link">BEE Certification</a></li>
+              <li class="nav-item"><a href="https://www.braintree.co.za/Files/Images/PAIA-manual-Braintree.pdf" class="nav-link">PAIA</a></li>
+              <li class="nav-item"><a href="https://www.braintree.co.za/take-down-notice" class="nav-link">Take Down Notice</a></li>
+              <li class="nav-item"><a href="https://www.braintree.co.za/terms-and-conditions" class="nav-link">Terms & Conditions</a></li>
+              <li class="nav-item"><a href="https://www.braintree.co.za/code-of-conduct" class="nav-link">Code of Conduct</a></li>
+              <li class="nav-item"><a href="https://www.braintree.co.za/privacy-policy" class="nav-link">Privacy Policy</a></li>
+              <li class="nav-item"><a href="https://www.braintree.co.za/acceptable-use" class="nav-link">Acceptable Use</a></li>
+              <li class="nav-item"><a href="https://powerapps.microsoft.com/en-gb/support/" class="nav-link">Dev Support</a></li>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="fs-xs text-center text-md-start pb-2 pb-lg-0 mb-0">
+        <span class="text-light opacity-50">&copy; All rights reserved. Made by </span>
+        <a class="nav-link d-inline-block p-0" href="https://za.linkedin.com/in/dimitri-k-8b70b18b" target="_blank" rel="noopener">Dimitri Kalamoudacos</a>
+      </p>
+    </div>
+  </footer>
+
+  
+
+  <!-- Back to top button -->
+  <a href="#top" class="btn-scroll-top" data-scroll>
+    <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+    <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+  </a>
+
+  <!-- JS Implementing Plugins -->
+{%block plug%}
+{%endblock%}
+
+<!-- JS Space -->
+{%block space%}
+{%endblock%}
+
+{%block js%}
+<script>
+  $(window).on('load', function () {
+    // initialization of HSMegaMenu component
+    $('.js-mega-menu').HSMegaMenu({
+      event: 'hover',
+      pageContainer: $('.container'),
+      breakpoint: 991,
+      hideTimeOut: 0
+    });
+  });
+
+  $(document).on('ready', function () {
+    // initialization of header
+    $.HSCore.components.HSHeader.init($('#header'));
+
+    // initialization of unfold component
+    $.HSCore.components.HSUnfold.init($('[data-unfold-target]'), {
+      afterOpen: function () {
+        if (!$('body').hasClass('IE11')) {
+          $(this).find('input[type="search"]').focus();
+        }
+      }
+    });
+
+    // initialization of form validation
+    $.HSCore.components.HSValidation.init('.js-validate', {
+      rules: {
+        confirmPassword: {
+          equalTo: '#password'
+        }
+      }
+    });
+
+    // initialization of forms
+    $.HSCore.helpers.HSFocusState.init();
+
+    // initialization of malihu scrollbar
+    $.HSCore.components.HSMalihuScrollBar.init($('.js-scrollbar'));
+
+    // initialization of autonomous popups
+    $.HSCore.components.HSModalWindow.init('[data-modal-target]', '.js-signup-modal', {
+      autonomous: true
+    });
+
+    // initialization of show animations
+    $.HSCore.components.HSShowAnimation.init('.js-animation-link');
+
+    // initialization of slick carousel
+    $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel');
+
+    // initialization of fancybox
+    $.HSCore.components.HSFancyBox.init('.js-fancybox');
+
+    // initialization of go to
+    $.HSCore.components.HSGoTo.init('.js-go-to');
+  });
+</script>
+  {%endblock%}
+
+  <!--Modal-->
+  {%block script%}
+  <script type="text/javascript">
+
+    $('#callback-form').on('submit', function(event){
+        event.preventDefault();
+        document.getElementById('callback-sub').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  
+        $.ajax({
+            url : '{%url "website:home"%}',
+            type : 'POST',
+            data : { callback_name : $('#id_callback_name').val(), callback_email : $('#id_callback_email').val(), callback_phone: $('#id_callback_phone').val()},
+  
+            success : function(json){
+                console.log(json);
+                document.getElementById('callback-sub').innerHTML = 'Request A Consultation';
+                $("#modal_5").modal();
+            }
+        });
+    });
+  
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+  
+    var csrftoken = getCookie('csrftoken');
+  
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    $('#learn-more-form').on('submit', function(event){
+    event.preventDefault();
+    document.getElementById('lm-sub').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+    $.ajax({
+        url : '{%url "website:home"%}',
+        type : 'POST',
+        data : { callback_name : $('#id_lm_name').val(), callback_email : $('#id_lm_email').val(), callback_phone: $('#id_lm_phone').val()},
+
+        success : function(json){
+            console.log(json);
+            document.getElementById('lm-sub').innerHTML = 'Submit';
+            Custombox.modal.close();
+            $("#modal_5").modal();
+        }
+    });
+});
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+var csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
+    </script>
+    {%endblock%}
+
+  <!-- Vendor Scripts -->
+  <script src="{%static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{%static 'assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js' %}"></script>
+  <script src="{%static 'assets/vendor/parallax-js/dist/parallax.min.js' %}"></script>
+  <script src="{%static 'assets/vendor/rellax/rellax.min.js' %}"></script>
+  <script src="{%static 'assets/vendor/jarallax/dist/jarallax.min.js' %}"></script>
+  <script src="{%static 'assets/vendor/jarallax/dist/jarallax-element.min.js' %}"></script>
+  <script src="{%static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{%static 'assets/vendor/lightgallery/lightgallery.min.js' %}"></script>
+  <script src="{%static 'assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js' %}"></script>
+  <script src="{%static 'assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js' %}"></script>
+  <script src="{%static 'assets/vendor/lightgallery/plugins/video/lg-video.min.js' %}"></script>
+  <script src="{%static 'assets/vendor/custombox/dist/custombox.min.js' %}"></script>
+  <script src="{%static 'assets/vendor/custombox/dist/custombox.legacy.min.js' %}"></script>
+  <script src="{%static 'assets/js/components/hs.fancybox.js' %}"></script>
+  <script src="{%static 'assets/js/components/hs.go-to.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <!-- Main Theme Script -->
+  <script src="{%static 'assets/js/theme.min.js' %}"></script>
+  <script>
+    $(window).on('load', function () {
+      // initialization of HSMegaMenu component
+      $('.js-mega-menu').HSMegaMenu({
+        event: 'hover',
+        pageContainer: $('.container'),
+        breakpoint: 767.98,
+        hideTimeOut: 0
+      });
+
+      // initialization of svg injector module
+      $.HSCore.components.HSSVGIngector.init('.js-svg-injector');
+
+      $.HSCore.components.HSScrollNav.init($('.js-scroll-nav'), {
+        duration: 700
+      });
+
+    });
+
+    $(document).on('ready', function () {
+      // initialization of header
+      $.HSCore.components.HSHeader.init($('#header'));
+
+      // initialization of text animation (typing)
+      var typed = new Typed(".u-text-animation.u-text-animation--typing", {
+        strings: ["grow", "thrive", "succeed"],
+        typeSpeed: 60,
+        loop: true,
+        backSpeed: 25,
+        backDelay: 1500
+      });
+
+      // initialization of fancybox
+      $.HSCore.components.HSFancyBox.init('.js-fancybox');
+
+      // initialization of go to
+      $.HSCore.components.HSGoTo.init('.js-go-to');
+
+    });
+
+  </script>
+
+<script type="text/javascript">
+
+  $('#landing-form').on('submit', function(event){
+      event.preventDefault();
+      document.getElementById('landing-sub').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+      $.ajax({
+          url : '{%url "website:home"%}',
+          type : 'POST',
+          data : { name : $('#id_name').val(), email : $('#id_email').val(), phone: $('#id_phone').val()},
+
+          success : function(json){
+              console.log(json);
+              document.getElementById('landing-sub').innerHTML = 'Submit';
+              $("#modal_6").modal('toggle');
+              $("#modal_5").modal();
+          }
+      });
+  });
+
+  function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+              if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
+  var csrftoken = getCookie('csrftoken');
+
+  function csrfSafeMethod(method) {
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+      }
+  });</script>  
+</body>
+</html>

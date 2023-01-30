@@ -1,0 +1,1367 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Braintree |</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Verde - make every workday a good one.">
+    <meta name="keywords" content="verde, people management, fleet management, power apps, MS teams, leave management, employee lifecycle, vaccine management, covid management, covid-19, employee covid management">
+    <meta name="author" content="Dimitri Kalamoudacos">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon and Touch Icons -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'asets/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'assets/favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'assets/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.ico' %}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="{%static 'assets/favicon/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Vendor Styles -->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/lightgallery/css/lightgallery-bundle.min.css' %}"/>
+
+    <!-- Main Theme Styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/css/theme.min.css' %}">
+
+    <!-- Page loading styles -->
+    <style>
+      .modal-success .modal-content{
+        background-color: MediumSeaGreen;
+        color: #fff;
+      }
+
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      .dark-mode .page-loading {
+        background-color: #131022;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #9397ad;
+      }
+      .dark-mode .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        border: .15em solid #b4b7c9;
+        border-right-color: transparent;
+        border-radius: 50%;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      .dark-mode .page-spinner {
+        border-color: rgba(255,255,255,.4);
+        border-right-color: transparent;
+      }
+      @-webkit-keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+
+    <!-- Theme mode -->
+    <script>
+      let mode = window.localStorage.getItem('mode'),
+          root = document.getElementsByTagName('html')[0];
+      if (mode !== undefined && mode === 'dark') {
+        root.classList.add('dark-mode');
+      } else {
+        root.classList.remove('dark-mode');
+      }
+    </script>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () {
+            preloader.remove();
+          }, 1000);
+        };
+      })();
+    </script>
+  </head>
+
+
+
+  <!-- Body -->
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper for sticky footer -->
+    <!-- Wraps everything except footer to push footer to the bottom of the page if there is little content -->
+    <main class="page-wrapper">
+
+
+      <!-- Navbar -->
+      <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page -->
+      <header class="header navbar navbar-expand-lg navbar-light bg-light navbar-sticky">
+        <div class="container px-3">
+          <a href="{%url 'website:home'%}" class="navbar-brand pe-3">
+            <img src="{%static 'assets/img/bt.svg' %}" width="47" alt="braintree">
+            braintree
+          </a>
+          <div id="navbarNav" class="offcanvas offcanvas-end">
+            <div class="offcanvas-header border-bottom">
+              <h5 class="offcanvas-title">Menu</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Solutions</a>
+                  <div class="dropdown-menu p-0">
+                    <div class="d-lg-flex">
+                      <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/2.svg' %}); margin: -1px;"></div>
+                      <div class="mega-dropdown-column">
+                        <h6 class="px-3 mb-2">BizApps Platform</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">Business Central</a></li>
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">Customer Engage</a></li>
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">Finance & Operations</a></li>
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">DynamicWeb</a></li>
+                        </ul>
+                        <h6 class="px-3 mb-2">Azure Platform</h6>
+                        <ul class="list-unstyled">
+                          <li><a href="{%url 'website:azure'%}" icons class="dropdown-item py-1">Cloud Services</a></li>
+                        </ul>
+                      </div>
+                      <div class="mega-dropdown-column">
+                        <h6 class="px-3 mb-2">Microsoft 365</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="{%url 'website:ms'%}" class="dropdown-item">Apps & Services</a></li> <!--licences office, devices for surface -->
+                        </ul>
+                        <h6 class="px-3 mb-2">Power Platform</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="{%static 'services.html' %}" class="dropdown-item py-1">Power BI</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                
+                <div class="offcanvas-body">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Industry Solutions</a>
+                      <div class="dropdown-menu p-0">
+                        <div class="d-lg-flex">
+                          <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/6.svg' %}); margin: -1px;"></div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2 fs-xl">Industries</h6> <!--change on all-->
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Manufacturing</a></li>
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Financial Services</a></li>
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Retail</a></li>
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Supply Chain</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                
+                <div class="offcanvas-body">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                      <a href="{%url 'website:shop'%}" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Shop</a>
+                      <div class="dropdown-menu p-0">
+                        <div class="d-lg-flex">
+                          <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/3.svg' %}); margin: -1px;"></div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2">Home Office</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:product'%}" class="dropdown-item">Microsoft 365</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Windows 10 Pro</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Windows 10 Home</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">McAfee</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Qwerti IT Support</a></li>
+    
+    
+                            </ul>
+                            <h6 class="px-3 mb-2">Gaming</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Game Pass</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Series S</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Wirelss Remote</a></li>
+                              
+                            </ul>
+                          </div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2">Online Gaming</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Play Station Plus</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">PUBG Mobile</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Game Pass</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Live</a></li>
+
+                            </ul>
+                            <h6 class="px-3 mb-2">Accessories</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item py-1">Mice</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item py-1">Keyboards</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item py-1">Headsets</a></li>
+    
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    </ul>
+
+                    
+
+                    <div class="offcanvas-body">
+                      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                          <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Partners</a>
+                          <div class="dropdown-menu p-0">
+                            <div class="d-lg-flex">
+                              <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/5.svg' %}); margin: -1px;"></div>
+                              <div class="mega-dropdown-column">
+                                <h6 class="px-3 mb-2">Braintree Partners</h6>
+                                <ul class="list-unstyled mb-3">
+                                  <li><a href="{%url 'website:reseller'%}" class="dropdown-item">Learn More</a></li>
+                                  <li><a href="{%url 'website:signup'%}" class="dropdown-item">Sign Up</a></li>
+                                  <li><a href="{%url 'website:reseller'%}" class="dropdown-item">Login</a></li>
+                                  
+                                </ul>
+        
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+            <div class="offcanvas-footer border-top">
+              <a href="{%url 'website:gaming'%}" class="btn btn-primary w-100">
+                <i class="bx bx-game fs-4 lh-1 me-1"></i>
+                &nbsp;Gaming
+              </a>
+            </div>      
+          </div>
+          <div class="form-check form-switch mode-switch pe-lg-1 ms-auto me-4" data-bs-toggle="mode">
+            <input type="checkbox" class="form-check-input" id="theme-mode">
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Light</label>
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Dark</label>
+          </div>
+          <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a href="{%url 'website:gaming'%}" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+            <i class="bx bx-game fs-5 lh-1 me-1"></i>
+            &nbsp;Gaming
+          </a>
+        </div>
+      </header>
+
+      <!-- Hero -->
+      <section class="jarallax dark-mode bg-dark pt-2 pt-lg-3 pb-lg-5" data-jarallax data-speed="0.35">
+        <span class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-70"></span>
+        <div class="jarallax-img" style="background-image: url({%static 'assets/img/portfolio/courses/msoffice.png' %});"></div>
+        <div class="container position-relative zindex-5 pb-5">
+
+          <!-- Breadcrumb -->
+          <nav class="py-4" aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item">
+                <a href="{%url 'website:home'%}"><i class="bx bx-home-alt fs-lg me-1"></i>Home</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="{%url 'website:product'%}">Product</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">Microsoft Office</li>
+            </ol>
+          </nav>
+
+          <!-- Badges -->
+          <div class="d-flex pt-3 pb-4 py-sm-4 pt-lg-5">
+            <span class="badge bg-success fs-sm me-2">Best Seller</span>
+            <a href="#" class="badge bg-white text-nav fs-sm text-decoration-none">Home Office</a>
+          </div>
+
+          <!-- Title -->
+          <h1>Microsoft 365</h1>
+          <p class="fs-lg text-light opacity-70">Enter the world of Microsoft with home office tools </p>
+
+          <!-- Stats -->
+          <div class="d-sm-flex py-3 py-md-4 py-xl-5">
+            <div class="d-flex border-sm-end pe-sm-3 me-sm-3 mb-2 mb-sm-0">
+              <div class="text-nowrap me-1">
+                <i class="bx bxs-star text-warning"></i>
+                <i class="bx bxs-star text-warning"></i>
+                <i class="bx bxs-star text-warning"></i>
+                <i class="bx bxs-star text-warning"></i>
+                <i class="bx bx-star text-muted opacity-75"></i>
+              </div>
+              <span class="text-light opacity-70">(1.2K reviews)</span>
+            </div>
+            <div class="d-flex">
+              <i class="bx bx-time fs-xl text-light opacity-70 me-1"></i>
+              <span class="text-light opacity-70">Available Anywhere</span>
+            </div>
+          </div>
+
+          <!-- Author -->
+          <div class="d-flex align-items-center mt-xl-5 pt-2 pt-md-4 pt-lg-5">
+            <img src="{%static 'assets/img/avatar/ms.svg' %}" class="rounded-circle" width="60" alt="Albert Flores">
+            <div class="ps-3">
+              <div class="text-light opacity-80 mb-1">Microsoft</div>
+              <h6>Braintree</h6>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Course description -->
+      <section class="container pt-5 mt-2 mt-lg-4 mt-xl-5">
+        <div class="row">
+
+          <!-- Sidebar (Course summary) -->
+          <aside class="col-lg-4 col-md-5 offset-xl-1 order-md-2 mb-5">
+            <div style="margin-top: -96px;"></div>
+            <div class="position-sticky top-0 pt-5">
+              <div class="pt-5 mt-md-3">
+                <div class="card shadow-sm p-sm-3">
+                  <div class="card-body">
+                    <h4 class="mb-4">This offering includes:</h4>
+                    <ul class="list-unstyled pb-3">
+                      <li class="d-flex align-items-center mb-2">
+                        <i class="bx bx-slideshow fs-xl text-muted me-2 pe-1"></i>
+                        Office
+                      </li>
+                      <li class="d-flex align-items-center mb-2">
+                        <i class="bx bx-file fs-xl text-muted me-2 pe-1"></i>
+                        Powerpoint
+                      </li>
+                      <li class="d-flex align-items-center mb-2">
+                        <i class="bx bx-download fs-xl text-muted me-2 pe-1"></i>
+                        Excel
+                      </li>
+                      <li class="d-flex align-items-center mb-2">
+                        <i class="bx bx-infinite fs-xl text-muted me-2 pe-1"></i>
+                        Publisher
+                      </li>
+                      <li class="d-flex align-items-center mb-2">
+                        <i class="bx bx-trophy fs-xl text-muted me-2 pe-1"></i>
+                        Teams
+                      </li>
+                    </ul>
+                    <div class="h2 d-flex align-items-center mb-4">R 849.99<del class="text-muted fs-xl fw-normal ms-2">R 999.99</del></div>
+                    <a href="#" class="btn btn-primary btn-lg shadow-primary">Buy Now</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Content -->
+          <div class="col-xl-7 col-lg-8 col-md-7 order-md-1 mb-5">
+            <h2 class="h1 pb-md-2 pb-lg-3">Product description</h2>
+            <p class="pb-4 mb-3">Microsoft Office 365 gives you access to powerful tools that help you work, learn, organise, connect, and create ideas with teammates, classmates, or family members across all your devices with powerful apps like Word, Excel, Outlook, Teams, and PowerPoint. Enjoy simplicity in sharing and accessing files wherever you are with the secure OneDrive cloud storage.</p>
+            <h3 class="mb-4">What's In The Box?</h3>
+            <ul class="list-unstyled mb-5">
+              <li class="d-flex align-items-center mb-2">
+                <i class="bx bx-check-circle text-primary fs-xl me-2"></i>
+                MS Word
+              </li>
+              <li class="d-flex align-items-center mb-2">
+                <i class="bx bx-check-circle text-primary fs-xl me-2"></i>
+                MS Powerpoint
+              </li>
+              <li class="d-flex align-items-center mb-2">
+                <i class="bx bx-check-circle text-primary fs-xl me-2"></i>
+                MS Excel
+              </li>
+              <li class="d-flex align-items-center mb-2">
+                <i class="bx bx-check-circle text-primary fs-xl me-2"></i>
+                Ms One Note
+              </li>
+              <li class="d-flex align-items-center mb-2">
+                <i class="bx bx-check-circle text-primary fs-xl me-2"></i>
+                MS One Drive
+              </li>
+              <li class="d-flex align-items-center mb-2">
+                <i class="bx bx-check-circle text-primary fs-xl me-2"></i>
+                MS Teams
+              </li>
+              <li class="d-flex align-items-center mb-2">
+                <i class="bx bx-check-circle text-primary fs-xl me-2"></i>
+                Skype
+              </li>
+            </ul>
+
+            <h2 class="h1 pt-md-2 pt-lg-4 pt-xl-5 pb-md-3 pb-lg-4 mb-md-4">How Do I Get My Product?</h2>
+            <div class="steps steps-sm">
+              <div class="step">
+                <div class="step-number">
+                  <div class="step-number-inner">1</div>
+                </div>
+                <div class="step-body">
+                  <h4 class="mb-2">Place your order</h4>
+                  <p class="mb-0">Select buy now and fill in the forms the follow</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-number">
+                  <div class="step-number-inner">2</div>
+                </div>
+                <div class="step-body">
+                  <h4 class="mb-2">Process Payament</h4>
+                  <p class="mb-0">Select your preffered payment method and follow the process required.</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-number">
+                  <div class="step-number-inner">3</div>
+                </div>
+                <div class="step-body">
+                  <h4 class="mb-2">Product Delivery</h4>
+                  <p class="mb-0">Once payment has been processed you will recieve a download link for your very own MS personal package with the relevant activation codes.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- FAQ -->
+      <section class="container pb-5 mb-md-3 mb-lg-4 mb-xl-5">
+        <div class="row pb-3">
+          <div class="col-md-5 mb-4 mb-md-0">
+            <div class="card bg-dark h-100 p-lg-5">
+              <div class="card-body p-lg-2">
+                <h2 class="h1 text-light">Still Have Any Questions?</h2>
+                <p class="fs-xl text-light opacity-70 mb-0">Check out the FAQs.</p>
+              </div>
+              <div class="card-footer border-0 w-100 pt-0 p-4 p-lg-2">
+                <div class="h2 d-flex align-items-center text-light mb-4">R 849.99<del class="fs-xl fw-normal opacity-70 ms-2">999.99</del></div>
+                <a href="#" class="btn btn-primary btn-lg shadow-primary">Join the Microsoft universe.</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="accordion" id="faq">
+
+              <!-- Item -->
+              <div class="accordion-item border-0 rounded-3 shadow-sm mb-3">
+                <h3 class="accordion-header">
+                  <button class="accordion-button shadow-none rounded-3" type="button" data-bs-toggle="collapse" data-bs-target="#q-1" aria-expanded="true" aria-controls="q-1">Why Microsoft?</button>
+                </h3>
+                <div class="accordion-collapse collapse show" id="q-1" data-bs-parent="#faq">
+                  <div class="accordion-body fs-sm pt-0">
+                    <p>As the leader in personal productivity software and business administrative solutions there is no better offering that can comfortably compete with the MS suite world wide.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item -->
+              <div class="accordion-item border-0 rounded-3 shadow-sm mb-3">
+                <h3 class="accordion-header">
+                  <button class="accordion-button shadow-none rounded-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q-2" aria-expanded="false" aria-controls="q-2">What if I have a Mac?</button>
+                </h3>
+                <div class="accordion-collapse collapse" id="q-2" data-bs-parent="#faq">
+                  <div class="accordion-body fs-sm pt-0">
+                    <p>Nunc duis id aenean gravida tincidunt eu, tempor ullamcorper. Viverra aliquam arcu, viverra et, cursus. Aliquet pretium cursus adipiscing gravida et consequat lobortis arcu velit. Nibh pharetra fermentum duis accumsan lectus non. Massa cursus molestie lorem scelerisque pellentesque.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item -->
+              <div class="accordion-item border-0 rounded-3 shadow-sm mb-3">
+                <h3 class="accordion-header">
+                  <button class="accordion-button shadow-none rounded-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q-3" aria-expanded="false" aria-controls="q-3">Do I need access to the internet?</button>
+                </h3>
+                <div class="accordion-collapse collapse" id="q-3" data-bs-parent="#faq">
+                  <div class="accordion-body fs-sm pt-0">
+                    <p>Nunc duis id aenean gravida tincidunt eu, tempor ullamcorper. Viverra aliquam arcu, viverra et, cursus. Aliquet pretium cursus adipiscing gravida et consequat lobortis arcu velit. Nibh pharetra fermentum duis accumsan lectus non. Massa cursus molestie lorem scelerisque pellentesque.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item -->
+              <div class="accordion-item border-0 rounded-3 shadow-sm mb-3">
+                <h3 class="accordion-header">
+                  <button class="accordion-button shadow-none rounded-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q-4" aria-expanded="false" aria-controls="q-4">How many devices can I use this on?</button>
+                </h3>
+                <div class="accordion-collapse collapse" id="q-4" data-bs-parent="#faq">
+                  <div class="accordion-body fs-sm pt-0">
+                    <p>Nunc duis id aenean gravida tincidunt eu, tempor ullamcorper. Viverra aliquam arcu, viverra et, cursus. Aliquet pretium cursus adipiscing gravida et consequat lobortis arcu velit. Nibh pharetra fermentum duis accumsan lectus non. Massa cursus molestie lorem scelerisque pellentesque.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item -->
+              <div class="accordion-item border-0 rounded-3 shadow-sm">
+                <h3 class="accordion-header">
+                  <button class="accordion-button shadow-none rounded-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q-5" aria-expanded="false" aria-controls="q-5">Does this give me access to outlook?</button>
+                </h3>
+                <div class="accordion-collapse collapse" id="q-5" data-bs-parent="#faq">
+                  <div class="accordion-body fs-sm pt-0">
+                    <p>Nunc duis id aenean gravida tincidunt eu, tempor ullamcorper. Viverra aliquam arcu, viverra et, cursus. Aliquet pretium cursus adipiscing gravida et consequat lobortis arcu velit. Nibh pharetra fermentum duis accumsan lectus non. Massa cursus molestie lorem scelerisque pellentesque.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="pt-2 pb-lg-4 pb-xl-5 mb-5">
+        <h2 class="h1 text-center pb-3 pb-md-4 pb-xl-5">Product Reviews</h2>
+        <div class="px-2 px-sm-0">
+          <div class="swiper" data-swiper-options='{
+            "slidesPerView": 1,
+            "centeredSlides": true,
+            "spaceBetween": 8,
+            "loop": true,
+            "pagination": {
+              "el": ".swiper-pagination",
+              "clickable": true
+            },
+            "breakpoints": {
+              "500": {
+                "slidesPerView": 2,
+                "spaceBetween": 24
+              },
+              "1000": {
+                "slidesPerView": 4,
+                "spaceBetween": 24
+              },
+              "1500": {
+                "slidesPerView": 6,
+                "spaceBetween": 24
+              }
+            }
+          }'>
+            <div class="swiper-wrapper">
+
+              <!-- Item -->
+              <div class="swiper-slide h-auto pt-4">
+                <figure class="d-flex flex-column h-100 px-2 px-sm-0 mb-0">
+                  <div class="card h-100 position-relative border-0 shadow-sm pt-4">
+                    <span class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4">
+                      <i class="bx bxs-quote-left"></i>
+                    </span>
+                    <blockquote class="card-body pb-3 mb-0">
+                      <p class="mb-0">Id mollis consectetur congue egestas egestas suspendisse blandit justo. Tellus augue commodo id quis tempus etiam pulvinar at maecenas.</p>
+                    </blockquote>
+                    <div class="card-footer border-0 text-nowrap pt-0">
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bx-star text-muted opacity-75"></i>
+                      <i class="bx bx-star text-muted opacity-75"></i>
+                    </div>
+                  </div>
+                  <figcaption class="d-flex align-items-center ps-4 pt-4">
+                    <img src="{%static 'assets/img/avatar/03.jpg' %}" width="48" class="rounded-circle" alt="Fannie Summers">
+                    <div class="ps-3">
+                      <h6 class="fs-sm fw-semibold mb-0">Fannie Summers</h6>
+                      <span class="fs-xs text-muted">Designer</span>
+                    </div>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <!-- Item -->
+              <div class="swiper-slide h-auto pt-4">
+                <figure class="d-flex flex-column h-100 px-2 px-sm-0 mb-0">
+                  <div class="card h-100 position-relative border-0 shadow-sm pt-4">
+                    <span class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4">
+                      <i class="bx bxs-quote-left"></i>
+                    </span>
+                    <blockquote class="card-body pb-3 mb-0">
+                      <p class="mb-0">Phasellus luctus nisi id orci condimentum, at cursus nisl vestibulum. Orci varius natoque penatibus et magnis dis parturient montes.</p>
+                    </blockquote>
+                    <div class="card-footer border-0 text-nowrap pt-0">
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                    </div>
+                  </div>
+                  <figcaption class="d-flex align-items-center ps-4 pt-4">
+                    <img src="{%static 'assets/img/avatar/02.jpg' %}" width="48" class="rounded-circle" alt="Robert Fox">
+                    <div class="ps-3">
+                      <h6 class="fs-sm fw-semibold mb-0">Robert Fox</h6>
+                      <span class="fs-xs text-muted">QA Engineer</span>
+                    </div>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <!-- Item -->
+              <div class="swiper-slide h-auto pt-4">
+                <figure class="d-flex flex-column h-100 px-2 px-sm-0 mb-0">
+                  <div class="card h-100 position-relative border-0 shadow-sm pt-4">
+                    <span class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4">
+                      <i class="bx bxs-quote-left"></i>
+                    </span>
+                    <blockquote class="card-body pb-3 mb-0">
+                      <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ipsum odio, bibendum ornare mi at, efficitur urna.</p>
+                    </blockquote>
+                    <div class="card-footer border-0 text-nowrap pt-0">
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bx-star text-muted opacity-75"></i>
+                    </div>
+                  </div>
+                  <figcaption class="d-flex align-items-center ps-4 pt-4">
+                    <img src="{%static 'assets/img/avatar/04.jpg' %}" width="48" class="rounded-circle" alt="Annette Black">
+                    <div class="ps-3">
+                      <h6 class="fs-sm fw-semibold mb-0">Annette Black</h6>
+                      <span class="fs-xs text-muted">Project Manager</span>
+                    </div>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <!-- Item -->
+              <div class="swiper-slide h-auto pt-4">
+                <figure class="d-flex flex-column h-100 px-2 px-sm-0 mb-0">
+                  <div class="card h-100 position-relative border-0 shadow-sm pt-4">
+                    <span class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4">
+                      <i class="bx bxs-quote-left"></i>
+                    </span>
+                    <blockquote class="card-body pb-3 mb-0">
+                      <p class="mb-0">Etiam augue ante, imperdiet et nunc sed, bibendum faucibus est. Suspendisse egestas facilisis erat eu eleifend.</p>
+                    </blockquote>
+                    <div class="card-footer border-0 text-nowrap pt-0">
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bx-star text-muted opacity-75"></i>
+                      <i class="bx bx-star text-muted opacity-75"></i>
+                    </div>
+                  </div>
+                  <figcaption class="d-flex align-items-center ps-4 pt-4">
+                    <img src="{%static 'assets/img/avatar/05.jpg' %}" width="48" class="rounded-circle" alt="Jerome Bell">
+                    <div class="ps-3">
+                      <h6 class="fs-sm fw-semibold mb-0">Jerome Bell</h6>
+                      <span class="fs-xs text-muted">Developer</span>
+                    </div>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <!-- Item -->
+              <div class="swiper-slide h-auto pt-4">
+                <figure class="d-flex flex-column h-100 px-2 px-sm-0 mb-0">
+                  <div class="card h-100 position-relative border-0 shadow-sm pt-4">
+                    <span class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4">
+                      <i class="bx bxs-quote-left"></i>
+                    </span>
+                    <blockquote class="card-body pb-3 mb-0">
+                      <p class="mb-0">Pellentesque finibus congue egestas egestas suspendisse blandit justo. Tellus augue commodo id quis tempus etiam pulvinar at maecenas.</p>
+                    </blockquote>
+                    <div class="card-footer border-0 text-nowrap pt-0">
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bx-star text-muted opacity-75"></i>
+                    </div>
+                  </div>
+                  <figcaption class="d-flex align-items-center ps-4 pt-4">
+                    <img src="{%static 'assets/img/avatar/01.jpg' %}" width="48" class="rounded-circle" alt="Albert Flores">
+                    <div class="ps-3">
+                      <h6 class="fs-sm fw-semibold mb-0">Albert Flores</h6>
+                      <span class="fs-xs text-muted">PR Director</span>
+                    </div>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <!-- Item -->
+              <div class="swiper-slide h-auto pt-4">
+                <figure class="d-flex flex-column h-100 px-2 px-sm-0 mb-0">
+                  <div class="card h-100 position-relative border-0 shadow-sm pt-4">
+                    <span class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4">
+                      <i class="bx bxs-quote-left"></i>
+                    </span>
+                    <blockquote class="card-body pb-3 mb-0">
+                      <p class="mb-0">Nulla volutpat consectetur congue egestas egestas uni suspendisse blandit parturient.</p>
+                    </blockquote>
+                    <div class="card-footer border-0 text-nowrap pt-0">
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                    </div>
+                  </div>
+                  <figcaption class="d-flex align-items-center ps-4 pt-4">
+                    <img src="{%static 'assets/img/avatar/06.jpg' %}" width="48" class="rounded-circle" alt="Jenny Wilson">
+                    <div class="ps-3">
+                      <h6 class="fs-sm fw-semibold mb-0">Jenny Wilson</h6>
+                      <span class="fs-xs text-muted">Marketing</span>
+                    </div>
+                  </figcaption>
+                </figure>
+              </div>
+
+              <!-- Item -->
+              <div class="swiper-slide h-auto pt-4">
+                <figure class="d-flex flex-column h-100 px-2 px-sm-0 mb-0">
+                  <div class="card h-100 position-relative border-0 shadow-sm pt-4">
+                    <span class="btn btn-icon btn-primary shadow-primary pe-none position-absolute top-0 start-0 translate-middle-y ms-4">
+                      <i class="bx bxs-quote-left"></i>
+                    </span>
+                    <blockquote class="card-body pb-3 mb-0">
+                      <p class="mb-0">Vivamus iaculis facilisis pretium. Pellentesque vitae mi odio. Donec imperdiet pellentesque ipsum quis pharetra. Nullam dolor sem.</p>
+                    </blockquote>
+                    <div class="card-footer border-0 text-nowrap pt-0">
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bxs-star text-warning"></i>
+                      <i class="bx bx-star text-muted opacity-75"></i>
+                    </div>
+                  </div>
+                  <figcaption class="d-flex align-items-center ps-4 pt-4">
+                    <img src="{%static 'assets/img/avatar/07.jpg' %}" width="48" class="rounded-circle" alt="Cameron Williamson">
+                    <div class="ps-3">
+                      <h6 class="fs-sm fw-semibold mb-0">Cameron Williamson</h6>
+                      <span class="fs-xs text-muted">Illustrator</span>
+                    </div>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <!-- Pagination (bullets) -->
+            <div class="swiper-pagination position-relative pt-1 pt-sm-3 mt-5"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Heading -->
+    <section class="container pb-5 mb-3 mb-md-4 mb-lg-5">
+      <h2 class="h1 text-center">Related Products</h2>
+      <p class="text-center pb-1 pb-sm-0 mb-4 mb-sm-5">Don't stop now, we have so much more for you!</p>
+
+      <!-- Courses slider -->
+     <div class="swiper swiper-nav-onhover mx-n2" data-swiper-options='{
+      "slidesPerView": 1,
+      "spaceBetween": 8,
+      "pagination": {
+        "el": ".swiper-pagination",
+        "clickable": true
+      },
+      "navigation": {
+        "prevEl": "#popular-prev",
+        "nextEl": "#popular-next"
+      },
+      "breakpoints": {
+        "560": {
+          "slidesPerView": 2
+        },
+        "768": {
+          "slidesPerView": 1
+        },
+        "850": {
+          "slidesPerView": 2
+        },
+        "1200": {
+          "slidesPerView": 3
+        }
+      }
+    }'>
+      <div class="swiper-wrapper">
+
+        <!-- Item -->
+        <div class="swiper-slide h-auto pb-3">
+          <article class="card h-100 border-0 shadow-sm mx-2">
+            <div class="position-relative">
+              <a href="{%url 'website:product'%}" class="d-block position-absolute w-100 h-100 top-0 start-0"></a>
+              <span class="badge bg-success position-absolute top-0 start-0 zindex-2 mt-3 ms-3">Best Seller</span>
+              <a href="#" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-2 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Save to Favorites">
+                <i class="bx bx-bookmark"></i>
+              </a>
+              <img src="{%static 'assets/img/portfolio/courses/msoffice.png' %}" class="card-img-top" alt="Image">
+            </div>
+            <center>
+            <div class="card-body pb-3">
+              <h3 class="h5 mb-2">
+                <a href="{%url 'website:product'%}">Microsoft 365 Personal</a>
+              </h3>
+              
+                <p class="fs-sm mb-2">Word, Excel, Outlook, Teams, PowerPoint and more!</p>
+                <p class="fs-lg fw-semibold text-primary mb-0">R 849.50</p>
+              </div>
+              <div class="card-footer d-flex justify-content-center align-items-center fs-sm text-muted py-4">
+                <a href="#" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+                  <i class="bx bx-cart fs-5 lh-1 me-1"></i>
+                  &nbsp;Buy Now
+                </a>
+              </div>
+          </article>
+        </div>
+      </center>
+        <!-- Item -->
+        <div class="swiper-slide h-auto pb-3">
+          <article class="card h-100 border-0 shadow-sm mx-2">
+            <div class="position-relative">
+              <a href="{{%url 'website:product'%}" class="d-block position-absolute w-100 h-100 top-0 start-0"></a>
+              <a href="#" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-2 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Save to Favorites">
+                <i class="bx bx-bookmark"></i>
+              </a>
+              <img src="{%static 'assets/img/portfolio/courses/mcafee.png' %}" class="card-img-top" alt="Image">
+            </div>
+            <center>
+              <div class="card-body pb-3">
+                <h3 class="h5 mb-2">
+                  <a href="{%url 'website:product'%}>McAfee Internet Security</a>
+                </h3>
+                
+                  <p class="fs-sm mb-2">Award winning virus protection seucrring your online life.</p>
+                  <p class="fs-lg fw-semibold text-primary mb-0">R 349.50</p>
+                </div>
+                <div class="card-footer d-flex justify-content-center align-items-center fs-sm text-muted py-4">
+                  <a href="#" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+                    <i class="bx bx-cart fs-5 lh-1 me-1"></i>
+                    &nbsp;Buy Now
+                  </a>
+                </div>
+            </article>
+          </div>
+        </center>
+
+        <!-- Item -->
+        <div class="swiper-slide h-auto pb-3">
+          <article class="card h-100 border-0 shadow-sm mx-2">
+            <div class="position-relative">
+              <a href="{%url 'website:product'%}" class="d-block position-absolute w-100 h-100 top-0 start-0"></a>
+              <span class="badge bg-danger position-absolute top-0 start-0 zindex-2 mt-3 ms-3">Sale!</span>
+              <a href="#" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-2 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Save to Favorites">
+                <i class="bx bx-bookmark"></i>
+              </a>
+              <img src="{%static 'assets/img/portfolio/courses/xbox.png' %}" class="card-img-top" alt="Image">
+            </div>
+            <center>
+              <div class="card-body pb-3">
+                <h3 class="h5 mb-2">
+                  <a href="{%url 'website:product'%}">Xbox Series S 512 GB</a>
+                </h3>
+                
+                  <p class="fs-sm mb-2">Enter a world of entertainment and competition with the series S Xbox!</p>
+                  <p class="fs-lg fw-semibold text-primary mb-0">R 6 799.50</p>
+                </div>
+                <div class="card-footer d-flex justify-content-center align-items-center fs-sm text-muted py-4">
+                  <a href="#" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+                    <i class="bx bx-cart fs-5 lh-1 me-1"></i>
+                    &nbsp;Buy Now
+                  </a>
+                </div>
+            </article>
+          </div>
+        </center>
+
+        <!-- Item -->
+        <div class="swiper-slide h-auto pb-3">
+          <article class="card h-100 border-0 shadow-sm mx-2">
+            <div class="position-relative">
+              <a href="{%url 'website:product'%}" class="d-block position-absolute w-100 h-100 top-0 start-0"></a>
+              <a href="#" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-2 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Save to Favorites">
+                <i class="bx bx-bookmark"></i>
+              </a>
+              <img src="{%url 'website:product'%}" class="card-img-top" alt="Image">
+            </div>
+            <<center>
+              <div class="card-body pb-3">
+                <h3 class="h5 mb-2">
+                  <a href="{%url 'website:product'%}">Xbox Wireless Controller</a>
+                </h3>
+                
+                  <p class="fs-sm mb-2">Black is the new...black never goes out of fashion so buy the remote.</p>
+                  <p class="fs-lg fw-semibold text-primary mb-0">R 1 299.50</p>
+                </div>
+                <div class="card-footer d-flex justify-content-center align-items-center fs-sm text-muted py-4">
+                  <a href="#" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+                    <i class="bx bx-cart fs-5 lh-1 me-1"></i>
+                    &nbsp;Buy Now
+                  </a>
+                </div>
+            </article>
+          </div>
+        </center>
+
+        <!-- Item -->
+        <div class="swiper-slide h-auto pb-3">
+          <article class="card h-100 border-0 shadow-sm mx-2">
+            <div class="position-relative">
+              <a href="{%url 'website:product'%}" class="d-block position-absolute w-100 h-100 top-0 start-0"></a>
+              <a href="#" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-2 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Save to Favorites">
+                <i class="bx bx-bookmark"></i>
+              </a>
+              <img src="{%static 'assets/img/portfolio/courses/xboxlive.png' %}" class="card-img-top" alt="Image">
+              <center>
+                <div class="card-body pb-3">
+                  <h3 class="h5 mb-2">
+                    <a href="{%url 'website:product'%}">Xbox Live</a>
+                  </h3>
+                  
+                    <p class="fs-sm mb-2">Join the online Xbox community and enter into the relm of the elite, not sure if it's for you, give it a shot for 3 months and find out.</p>
+                    <p class="fs-lg fw-semibold text-primary mb-0">R 849.50</p>
+                  </div>
+                  <div class="card-footer d-flex justify-content-center align-items-center fs-sm text-muted py-4">
+                    <a href="#" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+                      <i class="bx bx-cart fs-5 lh-1 me-1"></i>
+                      &nbsp;Buy Now
+                    </a>
+                  </div>
+              </article>
+            </div>
+          </center>
+
+      <!-- Pagination (bullets) -->
+      <div class="swiper-pagination position-relative pt-2 pt-sm-3 mt-4"></div>
+    </div>
+    <a href="{%url 'website:product'%}" class="btn btn-outline-primary btn-lg w-100 d-md-none mt-3">
+      See all courses
+      <i class="bx bx-right-arrow-alt fs-xl ms-2"></i>
+    </a>
+  </div>
+</div>
+</section>
+
+
+    <!-- Footer -->
+<footer class="footer dark-mode bg-dark pt-5 pb-4 pb-lg-5">
+  <div class="container pt-lg-4">
+    <div class="row pb-5">
+      <div class="col-lg-4 col-md-6">
+        <div class="navbar-brand text-dark p-0 me-0 mb-3 mb-lg-4">
+          <img src="{%static 'assets/img/bt.svg' %}" width="47" alt="Silicon">
+          braintree
+        </div>
+        <p class="fs-sm text-light opacity-70 pb-lg-3 mb-4">A Gold Certified Partner 
+          trusted by thousands of customers for their homes 
+          and businesses. We make a difference to our 
+          customers by unlocking the potential of
+          the cloud, software, and hardware so that
+          they can digitally transform and provide them
+          with support centres to keep them productive,
+          and having fun.</p>
+        <form class="needs-validation" novalidate>
+          <label for="subscr-email" class="form-label">Subscribe to our newsletter</label>
+          <div class="input-group">
+            <input type="email" id="subscr-email" class="form-control rounded-start ps-5" placeholder="Your email" required>
+            <i class="bx bx-envelope fs-lg text-muted position-absolute top-50 start-0 translate-middle-y ms-3 zindex-5"></i>
+            <div class="invalid-tooltip position-absolute top-100 start-0">Please provide a valid email address.</div>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-xl-6 col-lg-7 col-md-5 offset-xl-2 offset-md-1 pt-4 pt-md-1 pt-lg-0">
+        <div id="footer-links" class="row">
+          <div class="col-lg-4">
+            <h6 class="mb-2">
+              <a href="#useful-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Useful Links</a>
+            </h6>
+            <div id="useful-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+              <ul class="nav flex-column pb-lg-1 mb-lg-3">
+                <li class="nav-item"><a href="{%url 'website:home'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Home</a></li>
+                <li class="nav-item"><a href="{%url 'website:shop'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Shop</a></li>
+                <li class="nav-item"><a href="{%url 'website:reseller'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Partners</a></li>
+                <li class="nav-item"><a href="{%url 'website:case'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">News &amp; Insights</a></li>
+                <li class="nav-item"><a href="{%url 'website:contact'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Contact Us</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-3">
+            <h6 class="mb-2">
+              <a href="#social-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Socials</a>
+            </h6>
+            <div id="social-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+              <ul class="nav flex-column mb-2 mb-lg-0">
+                <li class="nav-item"><a href="https://www.facebook.com/BraintreeZA1" class="nav-link d-inline-block px-0 pt-1 pb-2">Facebook</a></li>
+                <li class="nav-item"><a href="https://www.linkedin.com/company/braintreebyvox/" class="nav-link d-inline-block px-0 pt-1 pb-2">LinkedIn</a></li>
+                <li class="nav-item"><a href="https://twitter.com/braintree_za" class="nav-link d-inline-block px-0 pt-1 pb-2">Twitter</a></li>
+                <li class="nav-item"><a href="https://www.instagram.com/braintree_by_vox/" class="nav-link d-inline-block px-0 pt-1 pb-2">Instagram</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-3">
+            <h6 class="mb-2">
+              <a href="#social-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Socials</a>
+            </h6>
+            <div id="social-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+              <ul class="nav flex-column mb-2 mb-lg-0">
+            <h6 class="mb-2">Resources</h6>
+            <li class="nav-item"><a href="https://www.braintree.co.za/Files/Files/Business%20Documents/2021-2022%20BEE%20Verification%20Certifciate.pdf" class="nav-link">BEE Certification</a></li>
+            <li class="nav-item"><a href="https://www.braintree.co.za/Files/Images/PAIA-manual-Braintree.pdf" class="nav-link">PAIA</a></li>
+            <li class="nav-item"><a href="https://www.braintree.co.za/take-down-notice" class="nav-link">Take Down Notice</a></li>
+            <li class="nav-item"><a href="https://www.braintree.co.za/terms-and-conditions" class="nav-link">Terms & Conditions</a></li>
+            <li class="nav-item"><a href="https://www.braintree.co.za/code-of-conduct" class="nav-link">Code of Conduct</a></li>
+            <li class="nav-item"><a href="https://www.braintree.co.za/privacy-policy" class="nav-link">Privacy Policy</a></li>
+            <li class="nav-item"><a href="https://www.braintree.co.za/acceptable-use" class="nav-link">Acceptable Use</a></li>
+            <li class="nav-item"><a href="https://powerapps.microsoft.com/en-gb/support/" class="nav-link">Dev Support</a></li>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="fs-xs text-center text-md-start pb-2 pb-lg-0 mb-0">
+      <span class="text-light opacity-50">&copy; All rights reserved. Made by </span>
+      <a class="nav-link d-inline-block p-0" href="https://za.linkedin.com/in/dimitri-k-8b70b18b" target="_blank" rel="noopener">Dimitri Kalamoudacos</a>
+    </p>
+  </div>
+</footer>
+
+
+
+<!-- Back to top button -->
+<a href="#top" class="btn-scroll-top" data-scroll>
+  <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+  <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+</a>
+
+<!-- JS Implementing Plugins -->
+{%block plug%}
+{%endblock%}
+
+<!-- JS Space -->
+{%block space%}
+{%endblock%}
+
+{%block js%}
+<script>
+$(window).on('load', function () {
+  // initialization of HSMegaMenu component
+  $('.js-mega-menu').HSMegaMenu({
+    event: 'hover',
+    pageContainer: $('.container'),
+    breakpoint: 991,
+    hideTimeOut: 0
+  });
+});
+
+$(document).on('ready', function () {
+  // initialization of header
+  $.HSCore.components.HSHeader.init($('#header'));
+
+  // initialization of unfold component
+  $.HSCore.components.HSUnfold.init($('[data-unfold-target]'), {
+    afterOpen: function () {
+      if (!$('body').hasClass('IE11')) {
+        $(this).find('input[type="search"]').focus();
+      }
+    }
+  });
+
+  // initialization of form validation
+  $.HSCore.components.HSValidation.init('.js-validate', {
+    rules: {
+      confirmPassword: {
+        equalTo: '#password'
+      }
+    }
+  });
+
+  // initialization of forms
+  $.HSCore.helpers.HSFocusState.init();
+
+  // initialization of malihu scrollbar
+  $.HSCore.components.HSMalihuScrollBar.init($('.js-scrollbar'));
+
+  // initialization of autonomous popups
+  $.HSCore.components.HSModalWindow.init('[data-modal-target]', '.js-signup-modal', {
+    autonomous: true
+  });
+
+  // initialization of show animations
+  $.HSCore.components.HSShowAnimation.init('.js-animation-link');
+
+  // initialization of slick carousel
+  $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel');
+
+  // initialization of fancybox
+  $.HSCore.components.HSFancyBox.init('.js-fancybox');
+
+  // initialization of go to
+  $.HSCore.components.HSGoTo.init('.js-go-to');
+});
+</script>
+{%endblock%}
+
+<!--Modal-->
+{%block script%}
+<script type="text/javascript">
+
+  $('#callback-form').on('submit', function(event){
+      event.preventDefault();
+      document.getElementById('callback-sub').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+      $.ajax({
+          url : '{%url "website:home"%}',
+          type : 'POST',
+          data : { callback_name : $('#id_callback_name').val(), callback_email : $('#id_callback_email').val(), callback_phone: $('#id_callback_phone').val()},
+
+          success : function(json){
+              console.log(json);
+              document.getElementById('callback-sub').innerHTML = 'Request A Consultation';
+              $("#modal_5").modal();
+          }
+      });
+  });
+
+  function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+              if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
+  var csrftoken = getCookie('csrftoken');
+
+  function csrfSafeMethod(method) {
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+      }
+  });
+
+  $('#learn-more-form').on('submit', function(event){
+  event.preventDefault();
+  document.getElementById('lm-sub').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+  $.ajax({
+      url : '{%url "website:home"%}',
+      type : 'POST',
+      data : { callback_name : $('#id_lm_name').val(), callback_email : $('#id_lm_email').val(), callback_phone: $('#id_lm_phone').val()},
+
+      success : function(json){
+          console.log(json);
+          document.getElementById('lm-sub').innerHTML = 'Submit';
+          Custombox.modal.close();
+          $("#modal_5").modal();
+      }
+  });
+});
+
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie != '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+          var cookie = jQuery.trim(cookies[i]);
+          if (cookie.substring(0, name.length + 1) == (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+
+var csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+  return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+  beforeSend: function(xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      }
+  }
+});
+
+  </script>
+  {%endblock%}
+
+<!-- Vendor Scripts -->
+<script src="{%static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{%static 'assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js' %}"></script>
+<script src="{%static 'assets/vendor/parallax-js/dist/parallax.min.js' %}"></script>
+<script src="{%static 'assets/vendor/rellax/rellax.min.js' %}"></script>
+<script src="{%static 'assets/vendor/jarallax/dist/jarallax.min.js' %}"></script>
+<script src="{%static 'assets/vendor/jarallax/dist/jarallax-element.min.js' %}"></script>
+<script src="{%static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{%static 'assets/vendor/lightgallery/lightgallery.min.js' %}"></script>
+<script src="{%static 'assets/vendor/lightgallery/plugins/video/lg-video.min.js' %}"></script>
+<script src="{%static 'assets/vendor/custombox/dist/custombox.min.js' %}"></script>
+<script src="{%static 'assets/vendor/custombox/dist/custombox.legacy.min.js' %}"></script>
+<script src="{%static 'assets/js/components/hs.fancybox.js' %}"></script>
+<script src="{%static 'assets/js/components/hs.go-to.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<!-- Main Theme Script -->
+<script src="{%static 'assets/js/theme.min.js' %}"></script>
+<script>
+  $(window).on('load', function () {
+    // initialization of HSMegaMenu component
+    $('.js-mega-menu').HSMegaMenu({
+      event: 'hover',
+      pageContainer: $('.container'),
+      breakpoint: 767.98,
+      hideTimeOut: 0
+    });
+
+    // initialization of svg injector module
+    $.HSCore.components.HSSVGIngector.init('.js-svg-injector');
+
+    $.HSCore.components.HSScrollNav.init($('.js-scroll-nav'), {
+      duration: 700
+    });
+
+  });
+
+  $(document).on('ready', function () {
+    // initialization of header
+    $.HSCore.components.HSHeader.init($('#header'));
+
+    // initialization of text animation (typing)
+    var typed = new Typed(".u-text-animation.u-text-animation--typing", {
+      strings: ["grow", "thrive", "succeed"],
+      typeSpeed: 60,
+      loop: true,
+      backSpeed: 25,
+      backDelay: 1500
+    });
+
+    // initialization of fancybox
+    $.HSCore.components.HSFancyBox.init('.js-fancybox');
+
+    // initialization of go to
+    $.HSCore.components.HSGoTo.init('.js-go-to');
+
+  });
+
+</script>
+
+<script type="text/javascript">
+
+$('#landing-form').on('submit', function(event){
+    event.preventDefault();
+    document.getElementById('landing-sub').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+    $.ajax({
+        url : '{%url "website:home"%}',
+        type : 'POST',
+        data : { name : $('#id_name').val(), email : $('#id_email').val(), phone: $('#id_phone').val()},
+
+        success : function(json){
+            console.log(json);
+            document.getElementById('landing-sub').innerHTML = 'Submit';
+            $("#modal_6").modal('toggle');
+            $("#modal_5").modal();
+        }
+    });
+});
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+var csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});</script>  
+</body>
+</html>

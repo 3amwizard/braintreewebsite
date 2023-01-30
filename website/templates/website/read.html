@@ -1,0 +1,1162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Braintree |</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Verde - make every workday a good one.">
+    <meta name="keywords" content="verde, people management, fleet management, power apps, MS teams, leave management, employee lifecycle, vaccine management, covid management, covid-19, employee covid management">
+    <meta name="author" content="Dimitri Kalamoudacos">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon and Touch Icons -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'asets/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'assets/favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'assets/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.ico' %}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="{%static 'assets/favicon/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Vendor Styles -->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'assets/vendor/lightgallery/css/lightgallery-bundle.min.css' %}"/>
+
+    <!-- Main Theme Styles + Bootstrap -->
+    <link rel="stylesheet" media="screen" href="{% static 'assets/css/theme.min.css' %}">
+
+    <!-- Page loading styles -->
+    <style>
+      .modal-success .modal-content{
+        background-color: MediumSeaGreen;
+        color: #fff;
+      }
+
+      .page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+      .dark-mode .page-loading {
+        background-color: #131022;
+      }
+      .page-loading.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .page-loading-inner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+      }
+      .page-loading.active > .page-loading-inner {
+        opacity: 1;
+      }
+      .page-loading-inner > span {
+        display: block;
+        font-size: 1rem;
+        font-weight: normal;
+        color: #9397ad;
+      }
+      .dark-mode .page-loading-inner > span {
+        color: #fff;
+        opacity: .6;
+      }
+      .page-spinner {
+        display: inline-block;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: .75rem;
+        vertical-align: text-bottom;
+        border: .15em solid #b4b7c9;
+        border-right-color: transparent;
+        border-radius: 50%;
+        -webkit-animation: spinner .75s linear infinite;
+        animation: spinner .75s linear infinite;
+      }
+      .dark-mode .page-spinner {
+        border-color: rgba(255,255,255,.4);
+        border-right-color: transparent;
+      }
+      @-webkit-keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinner {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+
+    <!-- Theme mode -->
+    <script>
+      let mode = window.localStorage.getItem('mode'),
+          root = document.getElementsByTagName('html')[0];
+      if (mode !== undefined && mode === 'dark') {
+        root.classList.add('dark-mode');
+      } else {
+        root.classList.remove('dark-mode');
+      }
+    </script>
+
+    <!-- Page loading scripts -->
+    <script>
+      (function () {
+        window.onload = function () {
+          const preloader = document.querySelector('.page-loading');
+          preloader.classList.remove('active');
+          setTimeout(function () {
+            preloader.remove();
+          }, 1000);
+        };
+      })();
+    </script>
+  </head>
+
+
+
+  <!-- Body -->
+  <body>
+
+    <!-- Page loading spinner -->
+    <div class="page-loading active">
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div><span>Loading...</span>
+      </div>
+    </div>
+
+
+    <!-- Page wrapper for sticky footer -->
+    <!-- Wraps everything except footer to push footer to the bottom of the page if there is little content -->
+    <main class="page-wrapper">
+
+
+      <!-- Navbar -->
+      <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page -->
+      <header class="header navbar navbar-expand-lg navbar-light bg-light navbar-sticky">
+        <div class="container px-3">
+          <a href="{%url 'website:home'%}" class="navbar-brand pe-3">
+            <img src="{%static 'assets/img/bt.svg' %}" width="47" alt="braintree">
+            braintree
+          </a>
+          <div id="navbarNav" class="offcanvas offcanvas-end">
+            <div class="offcanvas-header border-bottom">
+              <h5 class="offcanvas-title">Menu</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Solutions</a>
+                  <div class="dropdown-menu p-0">
+                    <div class="d-lg-flex">
+                      <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/2.svg' %}); margin: -1px;"></div>
+                      <div class="mega-dropdown-column">
+                        <h6 class="px-3 mb-2">BizApps Platform</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">Business Central</a></li>
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">Customer Engage</a></li>
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">Finance & Operations</a></li>
+                          <li><a href="{%url 'website:b2b'%}" class="dropdown-item">DynamicWeb</a></li>
+                        </ul>
+                        <h6 class="px-3 mb-2">Azure Platform</h6>
+                        <ul class="list-unstyled">
+                          <li><a href="{%url 'website:azure'%}" icons class="dropdown-item py-1">Cloud Services</a></li>
+                        </ul>
+                      </div>
+                      <div class="mega-dropdown-column">
+                        <h6 class="px-3 mb-2">Microsoft 365</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="{%url 'website:ms'%}" class="dropdown-item">Apps & Services</a></li> <!--licences office, devices for surface -->
+                        </ul>
+                        <h6 class="px-3 mb-2">Power Platform</h6>
+                        <ul class="list-unstyled mb-3">
+                          <li><a href="{%static 'services.html' %}" class="dropdown-item py-1">Power BI</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                
+                <div class="offcanvas-body">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Industry Solutions</a>
+                      <div class="dropdown-menu p-0">
+                        <div class="d-lg-flex">
+                          <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/6.svg' %}); margin: -1px;"></div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2 fs-xl">Industries</h6> <!--change on all-->
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Manufacturing</a></li>
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Financial Services</a></li>
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Retail</a></li>
+                              <li><a href="{%url 'website:industry'%}" class="dropdown-item">Supply Chain</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                
+                <div class="offcanvas-body">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                      <a href="{%url 'website:shop'%}" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Shop</a>
+                      <div class="dropdown-menu p-0">
+                        <div class="d-lg-flex">
+                          <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/3.svg' %}); margin: -1px;"></div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2">Home Office</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:product'%}" class="dropdown-item">Microsoft 365</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Windows 10 Pro</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Windows 10 Home</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">McAfee</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Qwerti IT Support</a></li>
+    
+    
+                            </ul>
+                            <h6 class="px-3 mb-2">Gaming</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Game Pass</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Series S</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Wirelss Remote</a></li>
+                              
+                            </ul>
+                          </div>
+                          <div class="mega-dropdown-column">
+                            <h6 class="px-3 mb-2">Online Gaming</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Play Station Plus</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">PUBG Mobile</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Game Pass</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item">Xbox Live</a></li>
+
+                            </ul>
+                            <h6 class="px-3 mb-2">Accessories</h6>
+                            <ul class="list-unstyled mb-3">
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item py-1">Mice</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item py-1">Keyboards</a></li>
+                              <li><a href="{%url 'website:shop'%}" class="dropdown-item py-1">Headsets</a></li>
+    
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    </ul>
+
+                    
+
+                    <div class="offcanvas-body">
+                      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                          <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-current="page">Partners</a>
+                          <div class="dropdown-menu p-0">
+                            <div class="d-lg-flex">
+                              <div class="mega-dropdown-column bg-position-center bg-repeat-0 bg-size-cover rounded-3 rounded-end-0" style="background-image: url({%static 'assets/img/5.svg' %}); margin: -1px;"></div>
+                              <div class="mega-dropdown-column">
+                                <h6 class="px-3 mb-2">Braintree Partners</h6>
+                                <ul class="list-unstyled mb-3">
+                                  <li><a href="{%url 'website:reseller'%}" class="dropdown-item">Learn More</a></li>
+                                  <li><a href="{%url 'website:signup'%}" class="dropdown-item">Sign Up</a></li>
+                                  <li><a href="{%url 'website:reseller'%}" class="dropdown-item">Login</a></li>
+                                  
+                                </ul>
+        
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+            <div class="offcanvas-footer border-top">
+              <a href="{%url 'website:gaming'%}" class="btn btn-primary w-100">
+                <i class="bx bx-game fs-4 lh-1 me-1"></i>
+                &nbsp;Gaming
+              </a>
+            </div>      
+          </div>
+          <div class="form-check form-switch mode-switch pe-lg-1 ms-auto me-4" data-bs-toggle="mode">
+            <input type="checkbox" class="form-check-input" id="theme-mode">
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Light</label>
+            <label class="form-check-label d-none d-sm-block" for="theme-mode">Dark</label>
+          </div>
+          <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a href="{%url 'website:gaming'%}" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+            <i class="bx bx-game fs-5 lh-1 me-1"></i>
+            &nbsp;Gaming
+          </a>
+        </div>
+      </header>
+
+
+      <!-- Breadcrumb -->
+      <nav class="container pt-4 mt-lg-3" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item">
+            <a href="index.html"><i class="bx bx-home-alt fs-lg me-1"></i>Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="blog-list-with-sidebar.html">Blog</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">Single Post</li>
+        </ol> 
+      </nav>
+
+
+      <!-- Post title + Meta  -->
+      <section class="container mt-4 pt-lg-2 pb-3">
+        <h1 class="pb-3" style="max-width: 970px;">B2B e-Commerce Not As Foreign As We Thought</h1>
+        <div class="d-flex flex-md-row flex-column align-items-md-center justify-content-md-between mb-3">
+          <div class="d-flex align-items-center flex-wrap text-muted mb-md-0 mb-4">
+            <div class="fs-xs border-end pe-3 me-3 mb-2">
+              <span class="badge bg-faded-primary text-primary fs-base">e-Commerce</span>
+            </div>
+            <div class="fs-sm border-end pe-3 me-3 mb-2">12 hours ago</div>
+            <div class="d-flex mb-2">
+              <div class="d-flex align-items-center me-3">
+                <i class="bx bx-like fs-base me-1"></i>
+                <span class="fs-sm">8</span>
+              </div>
+              <div class="d-flex align-items-center me-3">
+                <i class="bx bx-comment fs-base me-1"></i>
+                <span class="fs-sm">4</span>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="bx bx-share-alt fs-base me-1"></i>
+                <span class="fs-sm">2</span>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex align-items-center position-relative ps-md-3 pe-lg-5 mb-2">
+            <img src="{%static 'assets/img/avatar/39.jpg' %}" class="rounded-circle" width="60" alt="Avatar">
+            <div class="ps-3">
+              <h6 class="mb-1">Author</h6>
+              <a href="#" class="fw-semibold stretched-link">Nosipho Mtshali</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Post image (parallax) -->
+      <div class="jarallax mb-lg-5 mb-4" data-jarallax data-speed="0.35" style="height: 36.45vw; min-height: 300px;">
+        <div class="jarallax-img" style="background-image: url({%static 'assets/img/blog/single/ncover.png' %});"></div>
+      </div>
+
+
+      <!-- Post content + Sharing -->
+      <section class="container mb-5 pt-4 pb-2 py-mg-4">
+        <div class="row gy-4">
+
+          <!-- Content -->
+          <div class="col-lg-9">
+            <h3 class="h5 mb-4 pb-2 fw-medium">e-Commerce is quickly becoming a consumer favourite but does it have B2B applications? Find out here as we interigate the ins and out of e-Commerce and where the opporutnities and threats lie.</h3>
+            <h2 class="h4">Order From Home</h2>
+            <p class="mb-4 pb-2">Covid changed the retail environment forever and pushed e-Commerce transactions through the roof as we sat at home and ordered to our harts content, because what else where we going to do??? The industry grew by a total of 450% in the period between 2020 and 2022, Netflix made three years worth of sales in one year and their share price has slumped since but their investors are smiling! The interesting aspect is we didn't just buy more stuff from home, we also bought more services so what did business do?.</p>
+
+            <!-- Video -->
+            <div class="gallery mb-4 pb-2" data-video="true">
+              <a href="https://www.youtube.com/watch?v=P9_BMlPFP0M" class="gallery-item video-item is-hovered rounded-3" data-sub-html='<h6 class="fs-sm text-light">Video inside blog post</h6>'>
+                <img src="{%static 'assets/img/blog/single/skyrocket.png' %}" alt="Video preview">
+              </a>
+            </div>
+
+            <p class="mb-4 pb-2">Electronic commerce has been around since the early 1990s when Amazon just sold books, but today, it’s a multibillion-dollar industry – and it has gotten even bigger during the pandemic. According to Digital Commerce 360’s analysis of U.S. Department of Commerce data, e-commerce spending hit $347.26 billion in the first half of 2020, up 30% year over year. For comparison, e-commerce sales only increased 12.7% during the first six months of 2019.</p>
+
+            <!-- Quotation -->
+            <figure class="position-relative mb-4 ps-4">
+              <span class="position-absolute top-0 start-0 w-3 h-100 bg-primary"></span>
+              <blockquote class="blockquote fs-xl fw-medium text-dark ps-1 ps-sm-3">
+                <p>e-commerce spending hit $347.26 billion in the first half of 2020, up 30% year over year.</p>
+              </blockquote>
+              <figcaption class="d-flex align-items-center pt-3 ps-1 ps-sm-3">
+                <img src="{%static 'assets/img/avatar/04.jpg' %}" width="48" class="rounded-circle" alt="Jane Cooper">
+                <div class="ps-3">
+                  <h6 class="fw-semibold lh-base mb-0">Gareth Voster</h6>
+                  <span class="fs-sm text-muted">CEO of America</span>
+                </div>
+              </figcaption>
+            </figure>
+
+            <p class="mb-4 pb-2">It’s not surprising. With few other options, consumers got used to buying everything from food to furniture from online stores. “We’re certainly seeing several studies that show folks are going to keep their new habits,” Tory Brunker, director of product marketing at Adobe, told Business News Daily. “I really think this is our new normal.”</p>
+            
+            <h2 class="h4">How Does e-Commerce Work?</h2>
+            <p class="mb-4 pb-2">E-commerce works on the same principles as a physical store. Customers come into your e-commerce store, browse products and make a purchase. The big difference is they don’t have to get off their couch to do so, and your customer base isn’t limited to a specific geographic area or region. Whether you’re selling running shoes or home supplies, you go through the same process when operating an e-commerce website:</p>
+            <h4 class="h6">
+              <i class="bx bx-plus-circle me-1 mt-n1 align-middle fs-5 text-primary"></i>
+              The idea
+            </h4>
+            <ul class="mb-4 pb-2 ps-4">
+              <li class="mb-1">Accept the order. The customer places an order on your website or e-commerce platform. You’ll be alerted that an order was placed.</li>
+              <li class="mb-1">Process the order. Next, the payment is processed, the sale is logged, and the order is marked complete. Payment transactions are usually processed through what is known as a payment gateway; think of it as the online equivalent of your cash register. [Read related article: What Is a Merchant Account?]</li>
+              <li class="mb-1">Ship the order. The last step in the e-commerce process is shipment. You have to ensure prompt delivery if you want repeat customers. Thanks to Amazon, consumers are used to getting items within two days.</li>
+            </ul>
+            <h4 class="h6">
+              <i class="bx bx-minus-circle me-1 mt-n1 align-middle fs-5 text-primary"></i>
+              The reality
+            </h4>
+            <ul class="mb-4 pb-2 ps-4">
+              <li class="mb-1">A customer visits your online shop and browses your products. She settles on a shirt. She chooses the size and color and adds it to the shopping cart.</li>
+              <li class="mb-1">An order manager or order management software confirms the product is in stock.</li>
+              <li class="mb-1">If the product is available and the customer is ready to check out, she enters her payment card details and shipping information on your payment form or page.</li>
+              <li class="mb-1">The payment processor, typically a bank, confirms the customer has enough cash in the bank or enough credit on her card to complete the transaction.</li>
+              <li>The customer gets a message on the website that the transaction went through. This all happens in seconds.</li>
+              <li class="mb-1">The order is dispatched from the warehouse and shipped. The customer will receive an email that the product is out for delivery.</li>
+              <li class="mb-1">The order is delivered, and the transaction is complete.</li>
+            </ul>
+            <h2 class="h4">Conclusion</h2>
+            <p class="mb-4 pb-2">To be successful at electronic commerce, you should have a comprehensive list of the products and services you sell on your website or marketplace page. The online shop should be easy to navigate, user friendly and aesthetically appealing. It should also be optimized for mobile devices. According to data from e-commerce platform Oberlo, mobile commerce sales are set to reach $2.91 trillion in 2020 and increase to $3.56 trillion in 2021. With so many consumers shopping on mobile devices, it’s critical to optimize your online store for them.</p>
+            <p class="mb-4 pb-2">The checkout experience is another important aspect of e-commerce functionality. It is the process the customer goes through to buy your product or service. If your checkout process is clunky and cumbersome or requires too many steps, you may lose the sale. Shopping cart abandonment is a real phenomenon, with the Baymard Institute finding the ;average abandonment rate stands at 69.57%.</p>
+
+            <!-- Tags -->
+            <hr class="mb-4">
+            <div class="d-flex flex-sm-row flex-column pt-2">
+              <h6 class="mt-sm-1 mb-sm-2 mb-3 me-2 text-nowrap">Related Tags:</h6>
+              <div>
+                <a href="#" class="btn btn-sm btn-outline-secondary me-2 mb-2">#e-commerce</a>
+                <a href="#" class="btn btn-sm btn-outline-secondary me-2 mb-2">#business solutions</a>
+                <a href="#" class="btn btn-sm btn-outline-secondary me-2 mb-2">#braintree</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sharing -->
+          <div class="col-lg-3 position-relative">
+            <div class="sticky-top ms-xl-5 ms-lg-4 ps-xxl-4" style="top: 105px !important;">
+              <span class="d-block mb-3">5 min read</span>
+              <h6>Share this post:</h6>
+              <div class="mb-4 pb-lg-3">
+                <a href="#" class="btn btn-icon btn-secondary btn-linkedin me-2 mb-2">
+                  <i class="bx bxl-linkedin"></i>
+                </a>
+                <a href="#" class="btn btn-icon btn-secondary btn-facebook me-2 mb-2">
+                  <i class="bx bxl-facebook"></i>
+                </a>
+                <a href="#" class="btn btn-icon btn-secondary btn-twitter me-2 mb-2">
+                  <i class="bx bxl-twitter"></i>
+                </a>
+                <a href="#" class="btn btn-icon btn-secondary btn-instagram me-2 mb-2">
+                  <i class="bx bxl-instagram"></i>
+                </a>
+              </div>
+              <!-- Item -->
+        <div class="swiper-slide h-auto pb-3">
+          <article class="card h-100 border-0 shadow-sm mx-2">
+            <div class="position-relative">
+              <a href="{%static 'portfolio-single-course.html' %}" class="d-block position-absolute w-100 h-100 top-0 start-0"></a>
+              <span class="badge bg-success position-absolute top-0 start-0 zindex-2 mt-3 ms-3">Best Seller</span>
+              </a>
+              <img src="{%static 'assets/img/blog/single/qs.png' %}" class="card-img-top" alt="Image">
+            </div>
+            <center>
+            <div class="card-body pb-3">
+              <h3 class="h5 mb-2">
+                <a href="{%static 'portfolio-single-course.html' %}">QuickStore</a>
+              </h3>
+              
+                <p class="fs-sm mb-2">Enter the virtual world of commerce</p>
+              </div>
+              <div class="card-footer d-flex justify-content-center align-items-center fs-sm text-muted py-4">
+                <a href="#" class="btn btn-primary btn-sm fs-sm rounded d-none d-lg-inline-flex">
+                  <i class="bx bx-cart fs-5 lh-1 me-1"></i>
+                  &nbsp;Buy Now
+                </a>
+              </div>
+          </article>
+        </div>
+      </center>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Post comments -->
+      <section class="container mb-4 pt-lg-4 pb-lg-3">
+        <h2 class="h1 text-center text-sm-start">4 comments</h2>
+        <div class="row">
+
+          <!-- Comments -->
+          <div class="col-lg-9">
+
+            <!-- Comment -->
+            <div class="py-4">
+              <div class="d-flex align-items-center justify-content-between pb-2 mb-1">
+                <div class="d-flex align-items-center me-3">
+                  <img src="{%static 'assets/img/avatar/03.jpg' %}" class="rounded-circle" width="48" alt="Avatar">
+                  <div class="ps-3">
+                    <h6 class="fw-semibold mb-0">Theo Gildenhuys</h6>
+                    <span class="fs-sm text-muted">4 mins ago</span>
+                  </div>
+                </div>
+                <a href="#" class="nav-link fs-sm px-0">
+                  <i class="bx bx-share fs-lg me-2"></i>
+                  Reply
+                </a>
+              </div>
+              <p class="mb-0">Nibh enim porta ut augue felis, donec sit luctus. Quis ullamcorper dolor sit mauris. Hendrerit eu libero, eu tristique sodales ultrices etiam adipiscing. Donec viverra sodales arcu gravida nibh at. Neque lobortis quis porta integer et placerat lectus scelerisque. Velit eget malesuada morbi faucibus at sed euismod. Tortor, eu ut id tincidunt leo placerat luctus.</p>
+            </div>
+
+            <hr class="my-2">
+
+            <!-- Comment -->
+            <div class="py-4">
+              <div class="d-flex align-items-center justify-content-between pb-2 mb-1">
+                <div class="d-flex align-items-center me-3">
+                  <img src="{% static 'assets/img/avatar/02.jpg' %}" class="rounded-circle" width="48" alt="Avatar">
+                  <div class="ps-3">
+                    <h6 class="fw-semibold mb-0">Chris Badenhorst</h6>
+                    <span class="fs-sm text-muted">September 9 at 12:48</span>
+                  </div>
+                </div>
+                <a href="#" class="nav-link fs-sm px-0">
+                  <i class="bx bx-share fs-lg me-2"></i>
+                  Reply
+                </a>
+              </div>
+              <p class="mb-0 pb-2">Eget amet, ac scelerisque tellus sed. Sapien duis sit neque pulvinar. Est sit aenean nisl etiam donec mattis ut diam. Luctus massa eu nunc aliquam viverra tempus, eu amet, luctus. Ac faucibus vestibulum eu lacus. Ullamcorper sem ultrices tincidunt pharetra?</p>
+
+              <!-- Comment reply -->
+              <div class="position-relative ps-4 mt-4">
+                <span class="position-absolute top-0 start-0 w-1 h-100 bg-primary"></span>
+                <div class="d-flex align-items-center justify-content-between ps-3 pb-2 mb-1">
+                  <div class="d-flex align-items-center me-3">
+                    <img src="{%static 'assets/img/avatar/05.jpg' %}" class="rounded-circle" width="48" alt="Avatar">
+                    <div class="ps-3">
+                      <h6 class="fw-semibold mb-0">Doug Morrison</h6>
+                      <span class="fs-sm text-muted">16 hours ago</span>
+                    </div>
+                  </div>
+                  <a href="#" class="nav-link fs-sm px-0">
+                    <i class="bx bx-share fs-lg me-2"></i>
+                    Reply
+                  </a>
+                </div>
+                <p class="ps-3 mb-0"><a href="#" class="fw-semibold text-decoration-none">@Ralph Edwards</a> Vulputate malesuada amet, consequat ullamcorper. Orci, cras maecenas in sit purus pellentesque. Ridiculus blandit pellentesque eget arcu morbi nisl. Morbi volutpat adipiscing sapien sed ut tempor.</p>
+              </div>
+            </div>
+
+            <hr class="my-2">
+
+            <!-- Comment -->
+            <div class="py-4">
+              <div class="d-flex align-items-center justify-content-between pb-2 mb-1">
+                <div class="d-flex align-items-center me-3">
+                  <img src="{%static 'assets/img/avatar/07.jpg' %}" class="rounded-circle" width="48" alt="Avatar">
+                  <div class="ps-3">
+                    <h6 class="fw-semibold mb-0">Cameron Williamson</h6>
+                    <span class="fs-sm text-muted">March 24 at 8:20</span>
+                  </div>
+                </div>
+                <a href="#" class="nav-link fs-sm px-0">
+                  <i class="bx bx-share fs-lg me-2"></i>
+                  Reply
+                </a>
+              </div>
+              <p class="mb-0">Mattis id ut sed arcu metus elit faucibus condimentum aliquam. Nam adipiscing diam et suspendisse. Sagittis massa maecenas laoreet nulla amet nunc sagittis, pulvinar neque. Duis imperdiet ipsum suspendisse massa lectus habitasse. Id ante volutpat hendrerit augue parturient eget. Ac vitae posuere leo morbi vitae at hac lectus. Nibh neque quam quis amet mattis sit. Faucibus risus at sit tempus ut.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Comment form + Subscription -->
+      <section class="container mb-4 pb-2 mb-md-5 pb-lg-5">
+        <div class="row gy-5">
+
+          <!-- Comment form -->
+          <div class="col-lg-9">
+            <div class="card p-md-5 p-4 border-0 bg-secondary">
+              <div class="card-body w-100 mx-auto px-0" style="max-width: 746px;">
+                <h2 class="mb-4 pb-3">Leave a Comment</h2>
+                <form class="row gy-4 needs-validation" novalidate>
+                  <div class="col-sm-6 col-12">
+                    <label for="c-name" class="form-label fs-base">Name</label>
+                    <input id="c-name" type="text" class="form-control form-control-lg" required>
+                    <span class="invalid-tooltip">Please, enter your name.</span>
+                  </div>
+                  <div class="col-sm-6 col-12">
+                    <label for="c-email" class="form-label fs-base">Email</label>
+                    <input id="c-email" type="email" class="form-control form-control-lg" required>
+                    <span class="invalid-tooltip">Please, provide a valid email address.</span>
+                  </div>
+                  <div class="col-12">
+                    <label for="c-comment" class="form-label fs-base">Comment</label>
+                    <textarea id="c-comment" class="form-control form-control-lg" rows="3" placeholder="Type your comment here..." required></textarea>
+                    <span class="invalid-tooltip">Please, enter your comment.</span>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-check">
+                      <input id="c-save" type="checkbox" class="form-check-input">
+                      <label for="c-save" class="form-check-label">Save my name and email in this browser for the next time I comment.</label>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-lg btn-primary w-sm-auto w-100 mt-2">Post comment</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subscription form + Sharing -->
+          <div class="col-lg-3 position-relative">
+            <div class="sticky-top ms-xl-5 ms-lg-4 ps-xxl-4" style="top: 70px !important;">
+              <div class="row gy-lg-5 gy-4 justify-content-center text-lg-start text-center">
+
+                <!-- Subscription form -->
+                <div class="col-lg-12 col-sm-7 col-11">
+                  <h6 class="fs-lg">Enjoy this post? Join our newsletter</h6>
+                  <form class="needs-validation" novalidate>
+                    <div class="input-group mb-3">
+                      <i class="bx bx-envelope position-absolute start-0 top-50 translate-middle-y zindex-5 ms-3 text-muted d-lg-inline-block d-none"></i>
+                      <input type="email" placeholder="Your Email" class="form-control ps-lg-5 rounded text-lg-start text-center" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Subscribe</button>
+                  </form>
+                </div>
+
+                <!-- Sharing -->
+                <div class="col-lg-12 col-sm-7 col-11">
+                  <h6 class="fs-lg">Don’t forget to share it</h6>
+                  <div class="mb-4 pb-lg-3">
+                    <a href="#" class="btn btn-icon btn-secondary btn-linkedin me-2 mb-2">
+                      <i class="bx bxl-linkedin"></i>
+                    </a>
+                    <a href="#" class="btn btn-icon btn-secondary btn-facebook me-2 mb-2">
+                      <i class="bx bxl-facebook"></i>
+                    </a>
+                    <a href="#" class="btn btn-icon btn-secondary btn-twitter me-2 mb-2">
+                      <i class="bx bxl-twitter"></i>
+                    </a>
+                    <a href="#" class="btn btn-icon btn-secondary btn-instagram me-2 mb-2">
+                      <i class="bx bxl-instagram"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Related articles (Slider below lg breakpoint) -->
+      <section class="container mb-5 pt-md-4">
+        <div class="d-flex flex-sm-row flex-column align-items-center justify-content-between mb-4 pb-1 pb-md-3">
+          <h2 class="h1 mb-sm-0">Related Articles</h2>
+          <a href="blog-list-with-sidebar.html" class="btn btn-lg btn-outline-primary ms-4">
+            All posts
+            <i class="bx bx-right-arrow-alt ms-1 me-n1 lh-1 lead"></i>
+          </a>
+        </div>
+
+        <div class="swiper mx-n2" data-swiper-options='{
+          "slidesPerView": 1,
+          "spaceBetween": 8,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "clickable": true
+          },
+          "breakpoints": {
+            "500": {
+              "slidesPerView": 2
+            },
+            "1000": {
+              "slidesPerView": 3
+            }
+          }
+        }'>
+          <div class="swiper-wrapper">
+
+            <!-- Item -->
+            <div class="swiper-slide h-auto pb-3">
+              <article class="card border-0 shadow-sm h-100 mx-2">
+                <div class="position-relative">
+                  <a href="blog-single.html" class="position-absolute top-0 start-0 w-100 h-100" aria-label="Read more"></a>
+                  <a href="#" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-5 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Read later">
+                    <i class="bx bx-bookmark"></i>
+                  </a>
+                  <img src="{%static 'assets/img/blog/01.jpg' %}" class="card-img-top" alt="Image">
+                </div>
+                <div class="card-body pb-4">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <a href="#" class="badge fs-sm text-nav bg-secondary text-decoration-none">ERP</a>
+                    <span class="fs-sm text-muted">May 19, 2021</span>
+                  </div>
+                  <h3 class="h5 mb-0">
+                    <a href="blog-single.html">How To Connect Your ERP To Your Website</a>
+                  </h3>
+                </div>
+                <div class="card-footer py-4">
+                  <a href="#" class="d-flex align-items-center fw-bold text-dark text-decoration-none">
+                    <img src="{%static 'assets/img/avatar/01.jpg' %}" class="rounded-circle me-3" width="48" alt="Avatar">
+                    Theo Gildenhuys
+                  </a>
+                </div>
+              </article>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide h-auto pb-3">
+              <article class="card border-0 shadow-sm h-100 mx-2">
+                <div class="position-relative">
+                  <a href="blog-single.html" class="position-absolute top-0 start-0 w-100 h-100" aria-label="Read more"></a>
+                  <a href="#" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-5 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Read later">
+                    <i class="bx bx-bookmark"></i>
+                  </a>
+                  <img src="{%static 'assets/img/blog/06.jpg' %}" class="card-img-top" alt="Image">
+                </div>
+                <div class="card-body pb-4">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <a href="#" class="badge fs-sm text-nav bg-secondary text-decoration-none">PowerApps</a>
+                    <span class="fs-sm text-muted">Apr 2, 2021</span>
+                  </div>
+                  <h3 class="h5 mb-0">
+                    <a href="blog-single.html">Verde The People First Solution</a>
+                  </h3>
+                </div>
+                <div class="card-footer py-4">
+                  <a href="#" class="d-flex align-items-center fw-bold text-dark text-decoration-none">
+                    <img src="{%static 'assets/img/avatar/05.jpg' %}" class="rounded-circle me-3" width="48" alt="Avatar">
+                    Pieter Cornelius
+                  </a>
+                </div>
+              </article>
+            </div>
+
+            <!-- Item -->
+            <div class="swiper-slide h-auto pb-3">
+              <article class="card border-0 shadow-sm h-100 mx-2">
+                <div class="position-relative">
+                  <a href="blog-single.html" class="position-absolute top-0 start-0 w-100 h-100" aria-label="Read more"></a>
+                  <a href="#" class="btn btn-icon btn-light bg-white border-white btn-sm rounded-circle position-absolute top-0 end-0 zindex-5 me-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="left" title="Read later">
+                    <i class="bx bx-bookmark"></i>
+                  </a>
+                  <img src="{%static 'assets/img/blog/05.jpg' %}" class="card-img-top" alt="Image">
+                </div>
+                <div class="card-body pb-4">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <a href="#" class="badge fs-sm text-nav bg-secondary text-decoration-none">e-Commerce</a>
+                    <span class="fs-sm text-muted">Sep 16, 2021</span>
+                  </div>
+                  <h3 class="h5 mb-0">
+                    <a href="blog-single.html">SEO: New Limits and Exciting Features</a>
+                  </h3>
+                </div>
+                <div class="card-footer py-4">
+                  <a href="#" class="d-flex align-items-center fw-bold text-dark text-decoration-none">
+                    <img src="{%static 'assets/img/avatar/02.jpg' %}" class="rounded-circle me-3" width="48" alt="Avatar">
+                    Chris Badenhorst
+                  </a>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Pagination (bullets) -->
+          <div class="swiper-pagination position-relative pt-2 pt-sm-3 mt-4"></div>
+        </div>
+      </section>
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer dark-mode bg-dark pt-5 pb-4 pb-lg-5">
+      <div class="container pt-lg-4">
+        <div class="row pb-5">
+          <div class="col-lg-4 col-md-6">
+            <div class="navbar-brand text-dark p-0 me-0 mb-3 mb-lg-4">
+              <img src="{%static 'assets/img/bt.svg' %}" width="47" alt="Silicon">
+              braintree
+            </div>
+            <p class="fs-sm text-light opacity-70 pb-lg-3 mb-4">A Gold Certified Partner 
+              trusted by thousands of customers for their homes 
+              and businesses. We make a difference to our 
+              customers by unlocking the potential of
+              the cloud, software, and hardware so that
+              they can digitally transform and provide them
+              with support centres to keep them productive,
+              and having fun.</p>
+            <form class="needs-validation" novalidate>
+              <label for="subscr-email" class="form-label">Subscribe to our newsletter</label>
+              <div class="input-group">
+                <input type="email" id="subscr-email" class="form-control rounded-start ps-5" placeholder="Your email" required>
+                <i class="bx bx-envelope fs-lg text-muted position-absolute top-50 start-0 translate-middle-y ms-3 zindex-5"></i>
+                <div class="invalid-tooltip position-absolute top-100 start-0">Please provide a valid email address.</div>
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+              </div>
+            </form>
+          </div>
+          <div class="col-xl-6 col-lg-7 col-md-5 offset-xl-2 offset-md-1 pt-4 pt-md-1 pt-lg-0">
+            <div id="footer-links" class="row">
+              <div class="col-lg-4">
+                <h6 class="mb-2">
+                  <a href="#useful-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Useful Links</a>
+                </h6>
+                <div id="useful-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+                  <ul class="nav flex-column pb-lg-1 mb-lg-3">
+                    <li class="nav-item"><a href="{%url 'website:home'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Home</a></li>
+                    <li class="nav-item"><a href="{%url 'website:shop'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Shop</a></li>
+                    <li class="nav-item"><a href="{%url 'website:reseller'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Partners</a></li>
+                    <li class="nav-item"><a href="{%url 'website:case'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">News &amp; Insights</a></li>
+                    <li class="nav-item"><a href="{%url 'website:contact'%}" class="nav-link d-inline-block px-0 pt-1 pb-2">Contact Us</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-3">
+                <h6 class="mb-2">
+                  <a href="#social-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Socials</a>
+                </h6>
+                <div id="social-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+                  <ul class="nav flex-column mb-2 mb-lg-0">
+                    <li class="nav-item"><a href="https://www.facebook.com/BraintreeZA1" class="nav-link d-inline-block px-0 pt-1 pb-2">Facebook</a></li>
+                    <li class="nav-item"><a href="https://www.linkedin.com/company/braintreebyvox/" class="nav-link d-inline-block px-0 pt-1 pb-2">LinkedIn</a></li>
+                    <li class="nav-item"><a href="https://twitter.com/braintree_za" class="nav-link d-inline-block px-0 pt-1 pb-2">Twitter</a></li>
+                    <li class="nav-item"><a href="https://www.instagram.com/braintree_by_vox/" class="nav-link d-inline-block px-0 pt-1 pb-2">Instagram</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-3">
+                <h6 class="mb-2">
+                  <a href="#social-links" class="d-block text-dark dropdown-toggle d-lg-none py-2" data-bs-toggle="collapse">Socials</a>
+                </h6>
+                <div id="social-links" class="collapse d-lg-block" data-bs-parent="#footer-links">
+                  <ul class="nav flex-column mb-2 mb-lg-0">
+                <h6 class="mb-2">Resources</h6>
+                <li class="nav-item"><a href="https://www.braintree.co.za/Files/Files/Business%20Documents/2021-2022%20BEE%20Verification%20Certifciate.pdf" class="nav-link">BEE Certification</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/Files/Images/PAIA-manual-Braintree.pdf" class="nav-link">PAIA</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/take-down-notice" class="nav-link">Take Down Notice</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/terms-and-conditions" class="nav-link">Terms & Conditions</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/code-of-conduct" class="nav-link">Code of Conduct</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/privacy-policy" class="nav-link">Privacy Policy</a></li>
+                <li class="nav-item"><a href="https://www.braintree.co.za/acceptable-use" class="nav-link">Acceptable Use</a></li>
+                <li class="nav-item"><a href="https://powerapps.microsoft.com/en-gb/support/" class="nav-link">Dev Support</a></li>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="fs-xs text-center text-md-start pb-2 pb-lg-0 mb-0">
+          <span class="text-light opacity-50">&copy; All rights reserved. Made by </span>
+          <a class="nav-link d-inline-block p-0" href="https://za.linkedin.com/in/dimitri-k-8b70b18b" target="_blank" rel="noopener">Dimitri Kalamoudacos</a>
+        </p>
+      </div>
+    </footer>
+
+    
+
+    <!-- Back to top button -->
+    <a href="#top" class="btn-scroll-top" data-scroll>
+      <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
+      <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
+    </a>
+
+    <!-- JS Implementing Plugins -->
+  {%block plug%}
+  {%endblock%}
+
+  <!-- JS Space -->
+  {%block space%}
+  {%endblock%}
+
+  {%block js%}
+  <script>
+    $(window).on('load', function () {
+      // initialization of HSMegaMenu component
+      $('.js-mega-menu').HSMegaMenu({
+        event: 'hover',
+        pageContainer: $('.container'),
+        breakpoint: 991,
+        hideTimeOut: 0
+      });
+    });
+
+    $(document).on('ready', function () {
+      // initialization of header
+      $.HSCore.components.HSHeader.init($('#header'));
+
+      // initialization of unfold component
+      $.HSCore.components.HSUnfold.init($('[data-unfold-target]'), {
+        afterOpen: function () {
+          if (!$('body').hasClass('IE11')) {
+            $(this).find('input[type="search"]').focus();
+          }
+        }
+      });
+
+      // initialization of form validation
+      $.HSCore.components.HSValidation.init('.js-validate', {
+        rules: {
+          confirmPassword: {
+            equalTo: '#password'
+          }
+        }
+      });
+
+      // initialization of forms
+      $.HSCore.helpers.HSFocusState.init();
+
+      // initialization of malihu scrollbar
+      $.HSCore.components.HSMalihuScrollBar.init($('.js-scrollbar'));
+
+      // initialization of autonomous popups
+      $.HSCore.components.HSModalWindow.init('[data-modal-target]', '.js-signup-modal', {
+        autonomous: true
+      });
+
+      // initialization of show animations
+      $.HSCore.components.HSShowAnimation.init('.js-animation-link');
+
+      // initialization of slick carousel
+      $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel');
+
+      // initialization of fancybox
+      $.HSCore.components.HSFancyBox.init('.js-fancybox');
+
+      // initialization of go to
+      $.HSCore.components.HSGoTo.init('.js-go-to');
+    });
+  </script>
+    {%endblock%}
+
+    <!--Modal-->
+    {%block script%}
+    <script type="text/javascript">
+  
+      $('#callback-form').on('submit', function(event){
+          event.preventDefault();
+          document.getElementById('callback-sub').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    
+          $.ajax({
+              url : '{%url "website:home"%}',
+              type : 'POST',
+              data : { callback_name : $('#id_callback_name').val(), callback_email : $('#id_callback_email').val(), callback_phone: $('#id_callback_phone').val()},
+    
+              success : function(json){
+                  console.log(json);
+                  document.getElementById('callback-sub').innerHTML = 'Request A Consultation';
+                  $("#modal_5").modal();
+              }
+          });
+      });
+    
+      function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie != '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = jQuery.trim(cookies[i]);
+                  if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+    
+      var csrftoken = getCookie('csrftoken');
+    
+      function csrfSafeMethod(method) {
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+      $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+          }
+      });
+
+      $('#learn-more-form').on('submit', function(event){
+      event.preventDefault();
+      document.getElementById('lm-sub').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+      $.ajax({
+          url : '{%url "website:home"%}',
+          type : 'POST',
+          data : { callback_name : $('#id_lm_name').val(), callback_email : $('#id_lm_email').val(), callback_phone: $('#id_lm_phone').val()},
+
+          success : function(json){
+              console.log(json);
+              document.getElementById('lm-sub').innerHTML = 'Submit';
+              Custombox.modal.close();
+              $("#modal_5").modal();
+          }
+      });
+  });
+
+  function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+              if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
+  var csrftoken = getCookie('csrftoken');
+
+  function csrfSafeMethod(method) {
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+      }
+  });
+
+      </script>
+      {%endblock%}
+
+    <!-- Vendor Scripts -->
+    <script src="{%static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/parallax-js/dist/parallax.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/rellax/rellax.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/jarallax/dist/jarallax.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/jarallax/dist/jarallax-element.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/lightgallery/lightgallery.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/lightgallery/plugins/video/lg-video.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/custombox/dist/custombox.min.js' %}"></script>
+    <script src="{%static 'assets/vendor/custombox/dist/custombox.legacy.min.js' %}"></script>
+    <script src="{%static 'assets/js/components/hs.fancybox.js' %}"></script>
+    <script src="{%static 'assets/js/components/hs.go-to.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- Main Theme Script -->
+    <script src="{%static 'assets/js/theme.min.js' %}"></script>
+    <script>
+      $(window).on('load', function () {
+        // initialization of HSMegaMenu component
+        $('.js-mega-menu').HSMegaMenu({
+          event: 'hover',
+          pageContainer: $('.container'),
+          breakpoint: 767.98,
+          hideTimeOut: 0
+        });
+  
+        // initialization of svg injector module
+        $.HSCore.components.HSSVGIngector.init('.js-svg-injector');
+  
+        $.HSCore.components.HSScrollNav.init($('.js-scroll-nav'), {
+          duration: 700
+        });
+  
+      });
+  
+      $(document).on('ready', function () {
+        // initialization of header
+        $.HSCore.components.HSHeader.init($('#header'));
+  
+        // initialization of text animation (typing)
+        var typed = new Typed(".u-text-animation.u-text-animation--typing", {
+          strings: ["grow", "thrive", "succeed"],
+          typeSpeed: 60,
+          loop: true,
+          backSpeed: 25,
+          backDelay: 1500
+        });
+  
+        // initialization of fancybox
+        $.HSCore.components.HSFancyBox.init('.js-fancybox');
+  
+        // initialization of go to
+        $.HSCore.components.HSGoTo.init('.js-go-to');
+  
+      });
+  
+    </script>
+  
+  <script type="text/javascript">
+  
+    $('#landing-form').on('submit', function(event){
+        event.preventDefault();
+        document.getElementById('landing-sub').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  
+        $.ajax({
+            url : '{%url "website:home"%}',
+            type : 'POST',
+            data : { name : $('#id_name').val(), email : $('#id_email').val(), phone: $('#id_phone').val()},
+  
+            success : function(json){
+                console.log(json);
+                document.getElementById('landing-sub').innerHTML = 'Submit';
+                $("#modal_6").modal('toggle');
+                $("#modal_5").modal();
+            }
+        });
+    });
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });</script>  
+</body>
+</html>
